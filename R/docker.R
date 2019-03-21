@@ -31,7 +31,7 @@ has_docker <- function() {
 #'
 #' @return If everything has gone as expected, `TRUE`
 #' @export
-install_docker <- function() {
+docker_install <- function() {
 
   docker <- sys("which docker", intern = TRUE, ignore.stderr = TRUE)$result
   if (length(docker) == 0) {
