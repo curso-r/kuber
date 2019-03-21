@@ -7,7 +7,7 @@
 install_docker()
 }
 \value{
-If everything has gone as expected, \code{TRUE}.
+If everything has gone as expected, \code{TRUE}
 }
 \description{
 This function can run two routines: full docker installation

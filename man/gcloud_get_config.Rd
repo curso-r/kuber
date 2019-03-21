@@ -7,7 +7,7 @@
 gcloud_get_config()
 }
 \value{
-The string vector returned by the command (invisibly).
+The string vector returned by the command (invisibly)
 }
 \description{
 Prints to the console gcloud's current configuration by running

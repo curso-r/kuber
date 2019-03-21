@@ -14,7 +14,7 @@ gcloud_set_config(project = NULL, zone = NULL, region = NULL)
 \item{region}{The desired \code{[COMPUTE_REGION]} (or \code{NULL} to skip)}
 }
 \value{
-If everything has gone as expected, \code{TRUE}.
+If everything has gone as expected, \code{TRUE}
 }
 \description{
 Sets gcloud's current project and zone configs by running

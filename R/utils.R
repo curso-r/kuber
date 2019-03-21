@@ -11,3 +11,6 @@ get_sudo <- function() {
   sys('sudo -S true', input = readline("Password: "))
 }
 
+make_flags <- function(all_flags) {
+  paste(purrr::imap(all_flags, ~paste0("--", .y, " ", .x)), collapse = " ")
+}

@@ -23,7 +23,7 @@ has_gcloud <- function() {
 #' execution. All commands run this way are **printed** to the console so
 #' the user can know everything that's happening.
 #'
-#' @return If everything has gone as expected, `TRUE`.
+#' @return If everything has gone as expected, `TRUE`
 #' @export
 install_gcloud <- function() {
 
@@ -37,11 +37,15 @@ install_gcloud <- function() {
     version <- system('echo $(lsb_release -c -s)', intern = TRUE)
     print_run(paste0('echo "deb http://packages.cloud.google.com/apt cloud-sdk-', version, ' main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list'))
     print_run("curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -")
-    print_run("sudo apt-get update && sudo apt-get install google-cloud-sdk")
-    print_run("sudo apt-get install kubectl")
+    print_run("sudo apt-get update && sudo apt-get install -y google-cloud-sdk")
+    print_run("sudo apt-get install -y kubectl")
 
     message("Login in...")
-    system("gcloud init")
+    if (interactive()) {
+      message("Since your session is interactive, please run 'gcloud init' on your console.")
+    } else {
+      system("gcloud init")
+    }
 
     return(TRUE)
   }
@@ -58,7 +62,7 @@ install_gcloud <- function() {
 #' @param zone The desired `[COMPUTE_ZONE]` (or `NULL` to skip)
 #' @param region The desired `[COMPUTE_REGION]` (or `NULL` to skip)
 #'
-#' @return If everything has gone as expected, `TRUE`.
+#' @return If everything has gone as expected, `TRUE`
 #' @export
 gcloud_set_config <- function(project = NULL, zone = NULL, region = NULL) {
   if (!is.null(project)) { print_run(paste0("gcloud config set project ", project)) }
@@ -73,7 +77,7 @@ gcloud_set_config <- function(project = NULL, zone = NULL, region = NULL) {
 #' @description Prints to the console gcloud's current configuration by running
 #' the `gcloud config list` command.
 #'
-#' @return The string vector returned by the command (invisibly).
+#' @return The string vector returned by the command (invisibly)
 #' @export
 gcloud_get_config <- function() {
   out <- system("gcloud config list", intern = TRUE, ignore.stderr = TRUE)

@@ -29,7 +29,7 @@ has_docker <- function() {
 #' execution. All commands run this way are **printed** to the console so
 #' the user can know everything that's happening.
 #'
-#' @return If everything has gone as expected, `TRUE`.
+#' @return If everything has gone as expected, `TRUE`
 #' @export
 install_docker <- function() {
 

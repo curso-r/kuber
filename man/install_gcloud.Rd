@@ -7,7 +7,7 @@
 install_gcloud()
 }
 \value{
-If everything has gone as expected, \code{TRUE}.
+If everything has gone as expected, \code{TRUE}
 }
 \description{
 This function runs the gcloud installation routine via
