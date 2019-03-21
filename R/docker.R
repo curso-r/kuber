@@ -1,4 +1,9 @@
 
+#' Check whether current user has docker setup
+#'
+#' @description This function checks two things: if the curent user has docker
+#' installed (via the `which docker` shell command) and if docker can be run
+#' without sudo privileges (by testing the `docker info` command).
 has_docker <- function() {
 
   docker <- sys("which docker", intern = TRUE, ignore.stderr = TRUE)$result
@@ -10,6 +15,22 @@ has_docker <- function() {
   return(TRUE)
 }
 
+#' Install docker for the current user
+#'
+#' @description This function can run two routines: full docker installation
+#' if the user doesn't have it or correct privilege setup if the user runs
+#' docker with sudo. The first method fetches and runs the script located
+#' at \url{https://get.docker.com} and the second only runs
+#' `sudo usermod -aG docker $USER`.
+#'
+#' @section Sudo:
+#' To install docker, this function requires sudo privileges. To do that, it
+#' prompts the user for their password and maintains it until the end of
+#' execution. All commands run this way are **printed** to the console so
+#' the user can know everything that's happening.
+#'
+#' @return If everything has gone as expected, `TRUE`.
+#' @export
 install_docker <- function() {
 
   docker <- sys("which docker", intern = TRUE, ignore.stderr = TRUE)$result
@@ -45,4 +66,3 @@ install_docker <- function() {
 
   return(TRUE)
 }
-
