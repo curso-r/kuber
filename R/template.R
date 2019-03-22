@@ -95,7 +95,7 @@ docker_template <- function(path, bucket_name, image_name) {
     "    --deps TRUE \\",
     "    googleCloudStorageR \\",
     "    abjutils",
-    'RUN wget -O ./k8s.httr-oauth "https://drive.google.com/open?id=1DnNMt6JAPwhFqcZpD78XoDj1PZfSOLte"',
+    'RUN wget -O ./k8s.httr-oauth "https://drive.google.com/uc?id=1DnNMt6JAPwhFqcZpD78XoDj1PZfSOLte&authuser=0&export=download"',
     "COPY exec.R ./",
     "COPY ids.rds ./")
   exec_r_file <- c(
@@ -125,10 +125,10 @@ docker_template <- function(path, bucket_name, image_name) {
     paste0("      name: ", job),
     "    spec:",
     "      containers:",
-    "        - name: c",
-    paste0("          image: ", image_name),
-    '          command: ["Rscript", "--vanilla", "exec.R", "$ITEM"]',
-    "        restartPolicy: Never")
+    "      - name: c",
+    paste0("        image: ", image_name),
+    '        command: ["Rscript", "--vanilla", "exec.R", "$ITEM"]',
+    "      restartPolicy: Never")
 
   dockerfile <- paste0(path, "/Dockerfile")
   exec_r <- paste0(path, "/exec.R")
