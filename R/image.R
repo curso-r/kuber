@@ -16,7 +16,6 @@
 #' @return If everything has gone as expected, `TRUE`
 #' @export
 docker_image <- function(path, num_jobs) {
-
   lines <- readLines(paste0(path, "/job-tmpl.yaml"))
   image <- gsub(" +image: ", "", lines[grep(" image: ", lines)])
 
@@ -26,7 +25,8 @@ docker_image <- function(path, num_jobs) {
 
   print_run(paste0(
     "cd ", path, "; for i in {1..", as.integer(num_jobs),
-    '}; do cat job-tmpl.yaml | sed "s/\\$ITEM/$i/" > ./jobs/job-$i.yaml; done'))
+    '}; do cat job-tmpl.yaml | sed "s/\\$ITEM/$i/" > ./jobs/job-$i.yaml; done'
+  ))
 
   return(TRUE)
 }

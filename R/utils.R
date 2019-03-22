@@ -7,11 +7,11 @@ print_run <- function(cmd) {
 
 get_sudo <- function() {
   message("Enter your password for sudo privileges.")
-  sys('sudo -S true', input = readline("Password: "))
+  sys("sudo -S true", input = readline("Password: "))
 }
 
 make_flags <- function(all_flags) {
-  paste(purrr::imap(all_flags, ~paste0("--", .y, " ", .x)), collapse = " ")
+  paste(purrr::imap(all_flags, ~ paste0("--", .y, " ", .x)), collapse = " ")
 }
 
 is_rstudio <- function() {

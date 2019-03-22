@@ -31,8 +31,9 @@ shell command.
 \examples{
 \dontrun{
 create_cluster("r-cluster",
-    disk_size = "100GB",
-    flags = list("tags" = "k8s", "enable-autoupgrade" = "", "disk-type" = "pd-ssd"))
+  disk_size = "100GB",
+  flags = list("tags" = "k8s", "enable-autoupgrade" = "", "disk-type" = "pd-ssd")
+)
 }
 
 }

@@ -5,12 +5,15 @@
 #' installed (via the `which docker` shell command) and if docker can be run
 #' without sudo privileges (by testing the `docker info` command).
 has_docker <- function() {
-
   docker <- sys("which docker", intern = TRUE, ignore.stderr = TRUE)$result
-  if (length(docker) == 0) { return(FALSE) }
+  if (length(docker) == 0) {
+    return(FALSE)
+  }
 
   group <- sys("docker info", intern = TRUE, ignore.stderr = TRUE)$result
-  if (length(group) == 0) { return(FALSE) }
+  if (length(group) == 0) {
+    return(FALSE)
+  }
 
   return(TRUE)
 }
@@ -34,10 +37,8 @@ has_docker <- function() {
 #' @return If everything has gone as expected, `TRUE`
 #' @export
 docker_install <- function() {
-
   docker <- sys("which docker", intern = TRUE, ignore.stderr = TRUE)$result
   if (length(docker) == 0) {
-
     message("Downloading installation file...")
     Sys.sleep(2)
 
@@ -55,7 +56,6 @@ docker_install <- function() {
 
   group <- sys("docker info", intern = TRUE, ignore.stderr = TRUE)$result
   if (length(group) == 0) {
-
     message("Docker must be able to run without sudo.")
 
     get_sudo()

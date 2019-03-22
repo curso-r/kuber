@@ -18,19 +18,22 @@
 #' @examples
 #' \dontrun{
 #' create_cluster("r-cluster",
-#'     disk_size = "100GB",
-#'     flags = list("tags" = "k8s", "enable-autoupgrade" = "", "disk-type" = "pd-ssd"))
+#'   disk_size = "100GB",
+#'   flags = list("tags" = "k8s", "enable-autoupgrade" = "", "disk-type" = "pd-ssd")
+#' )
 #' }
-#'
+#' 
 #' @return If everything has gone as expected, `TRUE`
 #' @export
 gcloud_cluster <- function(name, machine_type = "g1-small", num_nodes = 3L, disk_size = "20GB", flags = list()) {
-
-  all_flags <- c(list(
-    "machine-type" = machine_type,
-    "num-nodes" = as.integer(num_nodes),
-    "disk-size" = disk_size),
-    flags)
+  all_flags <- c(
+    list(
+      "machine-type" = machine_type,
+      "num-nodes" = as.integer(num_nodes),
+      "disk-size" = disk_size
+    ),
+    flags
+  )
 
   name <- as.character(name)
   cmd <- paste("gcloud container clusters create", name, make_flags(all_flags))

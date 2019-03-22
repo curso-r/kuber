@@ -57,7 +57,6 @@
 #' @return If everything has gone as expected, `TRUE`
 #' @export
 docker_template <- function(path, bucket_name, image_name) {
-
   dir.create(path, showWarnings = FALSE, recursive = TRUE)
   if (length(list.files(path, all.files = TRUE, no.. = TRUE)) > 0) {
     stop("Directory must be empty.")
@@ -65,7 +64,8 @@ docker_template <- function(path, bucket_name, image_name) {
 
   bucket_exists <- any(grepl(
     paste0("/", bucket_name, "/"),
-    system(paste0("gsutil ls gs://"), intern = TRUE)))
+    system(paste0("gsutil ls gs://"), intern = TRUE)
+  ))
 
   if (!bucket_exists) {
     message("Creating bucket.")
@@ -97,7 +97,8 @@ docker_template <- function(path, bucket_name, image_name) {
     "    abjutils",
     'RUN wget -O ./k8s.httr-oauth "https://drive.google.com/uc?id=1DnNMt6JAPwhFqcZpD78XoDj1PZfSOLte&authuser=0&export=download"',
     "COPY exec.R ./",
-    "COPY ids.rds ./")
+    "COPY ids.rds ./"
+  )
   exec_r_file <- c(
     "#!/usr/bin/env Rscript",
     "args <- commandArgs(trailingOnly = TRUE)",
@@ -113,7 +114,8 @@ docker_template <- function(path, bucket_name, image_name) {
     'googleAuthR::gar_auth(token = "k8s.httr-oauth")',
     paste0('googleCloudStorageR::gcs_upload(file, bucket = "', bucket_name, '", name = file)'),
     "",
-    "file.remove(file)")
+    "file.remove(file)"
+  )
   job_tmpl_file <- c(
     "apiVersion: batch/v1",
     "kind: Job",
@@ -128,7 +130,8 @@ docker_template <- function(path, bucket_name, image_name) {
     "      - name: c",
     paste0("        image: ", image_name),
     '        command: ["Rscript", "--vanilla", "exec.R", "$ITEM"]',
-    "      restartPolicy: Never")
+    "      restartPolicy: Never"
+  )
 
   dockerfile <- paste0(path, "/Dockerfile")
   exec_r <- paste0(path, "/exec.R")

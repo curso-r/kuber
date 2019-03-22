@@ -13,9 +13,15 @@
 #' @return If everything has gone as expected, `TRUE`
 #' @export
 gcloud_set_config <- function(project = NULL, zone = NULL, region = NULL) {
-  if (!is.null(project)) { print_run(paste0("gcloud config set project ", project)) }
-  if (!is.null(zone)) { print_run(paste0("gcloud config set compute/zone ", zone)) }
-  if (!is.null(region)) { print_run(paste0("gcloud config set compute/region ", region)) }
+  if (!is.null(project)) {
+    print_run(paste0("gcloud config set project ", project))
+  }
+  if (!is.null(zone)) {
+    print_run(paste0("gcloud config set compute/zone ", zone))
+  }
+  if (!is.null(region)) {
+    print_run(paste0("gcloud config set compute/region ", region))
+  }
   return(TRUE)
 }
 

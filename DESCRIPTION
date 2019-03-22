@@ -6,15 +6,17 @@ Authors@R:
            family = "Lente",
            role = c("aut", "cre"),
            email = "ctlente@platipus.com.br")
-Description: Small toolkit for massively parallel tasks that leverages GCP APIs for Kubernetes clusters and Storage buckets.
+Description: Small toolkit for massively parallel tasks that
+    leverages GCP APIs for Kubernetes clusters and Storage buckets.
 License: GPL-3
-Encoding: UTF-8
-LazyData: true
 URL: https://github.com/platipusc/kuber
 BugReports: https://github.com/platipusc/kuber/issues
-Roxygen: list(markdown = TRUE, roclets = c("rd", "namespace", "collate"))
-RoxygenNote: 6.1.1
 Imports: 
     purrr
 Suggests: 
     rstudioapi
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE, roclets = c("rd", "namespace",
+    "collate"))
+RoxygenNote: 6.1.1
