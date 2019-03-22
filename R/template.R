@@ -1,0 +1,172 @@
+
+#' Create a docker directory with the kuber template for parallelism by expansion
+#'
+#' @description This function creates a directory with 5 components from the
+#' kuber template: a `Dockerfile` (that is designed for expanded parallel taks),
+#' an R file `exec.R` (which contains some code that guides how your program
+#' should work), a `job-tmpl.yaml` (a template for the yaml files that will lauch
+#' the docker jobs), an RDS `ids.rds` (which contains `as.list(seq(1, 10))` just
+#' so you don't forget to setup the inputs that each job will take) and a `jobs/`
+#' folder (where the actual job yaml files will go once you run [docker_image()]).
+#' For more information, please see the sections below.
+#'
+#' @section Dockerfile:
+#' This is a very simple `Dockerfile` based on `rocker/tidyverse` that installs
+#' `tidyverse`, `devtools` and `abjutils`, and copies `exec.R` and `ids.rds` to
+#' the home directory. If you have any extra dependencies or want to use more
+#' files for your script, this is where you should add them.
+#'
+#' @section Exec.R:
+#' The `exec.R` file is only a guide for what your script should probably be
+#' doing. It gets the number of the current job as its only argument, saves a
+#' result file as an RDS and uploads that file to the desired bucket.
+#'
+#' @section Job-tmpl.yaml:
+#' The job template is a very simple file that describes how the job should be
+#' run once it is activated by the pod, which is essentially running
+#' `Rscript --vanilla exec.R [JOB_NUMBER]`. Since this template uses parallelism
+#' via expansion, [docker_image()] will expand this template into as many job
+#' files as you want.
+#'
+#' @section Jobs/:
+#' This is simply a folder that will store the job files once the template is
+#' expanded.
+#'
+#' @section Ids.rds:
+#' This is more of a suggestion than a required file. It contains (by default)
+#' a `list()` with each integer from 1 to 10, but actually it could be any list
+#' of your choosing. The goal here is to be able to get the arguments for your
+#' script just by extracting the element with index equal to the job number
+#' (meaning that job number `N` might read and use everything stored in `ids.rds`
+#' at index `[[N]]`). To illustrate this concept, take for example a webscraping
+#' script: `ids.rds` would contain a list where each element is a character
+#' vector of URLs to scrape; each job would therefore read the file but only
+#' scrape `ids[[N]]` so that it doesn't overlap with any other job.
+#'
+#' @param path Directory where to copy the template
+#' @param bucket_name Name of the storage bucket where the files will be stored
+#' (created if not yet initialized)
+#' @param image_name Name of the docker image where to build the container (either
+#' its full path in the form `[HOSTNAME]/[PROJECT_ID]/[IMAGE_NAME]:[VERSION]` or
+#' simply `[IMAGE_NAME]` for it to be automatically pushed to the Google Cloud
+#' Registry)
+#'
+#' @references \url{https://kubernetes.io/docs/tasks/job/parallel-processing-expansion/}
+#' \url{https://cloud.google.com/container-registry/docs/quickstart}
+#'
+#' @return If everything has gone as expected, `TRUE`
+#' @export
+docker_template <- function(path, bucket_name, image_name) {
+
+  dir.create(path, showWarnings = FALSE, recursive = TRUE)
+  if (length(list.files(path, all.files = TRUE, no.. = TRUE)) > 0) {
+    stop("Directory must be empty.")
+  }
+
+  bucket_exists <- any(grepl(
+    paste0("/", bucket_name, "/"),
+    system(paste0("gsutil ls gs://"), intern = TRUE)))
+
+  if (!bucket_exists) {
+    message("Creating bucket.")
+    gcloud_bucket(bucket_name)
+  }
+
+  if (!grepl("/", image_name)) {
+    conf <- gcloud_get_config()
+    project <- gsub("project = ", "", conf[grep("project = ", conf)])
+
+    image_name <- paste0("gcr.io/", project, "/", image_name, ":latest")
+  }
+
+  job <- paste0("process-", paste0(sample(letters, 6, TRUE), collapse = ""))
+
+  dockerfile_file <- c(
+    "FROM rocker/tidyverse",
+    "RUN apt-get update -qq && apt-get -y --no-install-recommends install \\",
+    "  build-essential \\",
+    "  libcurl4-gnutls-dev \\",
+    "  libxml2-dev \\",
+    "  libssl-dev \\",
+    "  r-cran-curl \\",
+    "  r-cran-openssl \\",
+    "  r-cran-xml2 \\",
+    "  && install2.r --error \\",
+    "    --deps TRUE \\",
+    "    googleCloudStorageR \\",
+    "    abjutils",
+    'RUN wget -O ./k8s.httr-oauth "https://drive.google.com/open?id=1DnNMt6JAPwhFqcZpD78XoDj1PZfSOLte"',
+    "COPY exec.R ./",
+    "COPY ids.rds ./")
+  exec_r_file <- c(
+    "#!/usr/bin/env Rscript",
+    "args <- commandArgs(trailingOnly = TRUE)",
+    "idx <- as.numeric(args[1])",
+    "",
+    "###########################",
+    "## INSERT YOUR CODE HERE ##",
+    "###########################",
+    "",
+    'file <- paste0("file_", idx, ".rds")',
+    "saveRDS(mtcars, file) # REPLACE MTCARS WITH YOUR OBJECT",
+    "",
+    'googleAuthR::gar_auth(token = "k8s.httr-oauth")',
+    paste0('googleCloudStorageR::gcs_upload(file, bucket = "', bucket_name, '", name = file)'),
+    "",
+    "file.remove(file)")
+  job_tmpl_file <- c(
+    "apiVersion: batch/v1",
+    "kind: Job",
+    "metadata:",
+    paste0("  name: ", job, "-item-$ITEM"),
+    "spec:",
+    "  template:",
+    "    metadata:",
+    paste0("      name: ", job),
+    "    spec:",
+    "      containers:",
+    "        - name: c",
+    paste0("          image: ", image_name),
+    '          command: ["Rscript", "--vanilla", "exec.R", "$ITEM"]',
+    "        restartPolicy: Never")
+
+  dockerfile <- paste0(path, "/Dockerfile")
+  exec_r <- paste0(path, "/exec.R")
+  job_tmpl <- paste0(path, "/job-tmpl.yaml")
+  ids <- paste0(path, "/ids.rds")
+
+  file.create(dockerfile, exec_r, job_tmpl)
+  writeLines(dockerfile_file, dockerfile)
+  writeLines(exec_r_file, exec_r)
+  writeLines(job_tmpl_file, job_tmpl)
+  saveRDS(as.list(seq(1, 10)), ids)
+  dir.create(paste0(path, "/jobs"), showWarnings = FALSE, recursive = TRUE)
+
+  message("Now please do the following:")
+  message(paste0("  1. Edit '", exec_r, "'."))
+  message(paste0("  2. Create '", ids, "' with a list of char vecs."))
+  message(paste0("  3. (Optional) Add dependencies to '", dockerfile, "'."))
+  message(paste0("  4. (Optional) Add params to '", job_tmpl, "'."))
+  message(paste0("  5. Run 'docker_image(", path, ")'."))
+
+  if (requireNamespace("rstudioapi", quietly = TRUE) && is_rstudio()) {
+    rstudioapi::navigateToFile(exec_r)
+    rstudioapi::navigateToFile(dockerfile)
+    rstudioapi::navigateToFile(job_tmpl)
+  }
+
+  return(TRUE)
+}
+
+#' Create a storage bucket
+#'
+#' @description This function freates a default storage bucket using the
+#' `gsutil mb` command.
+#'
+#' @param name Name of the bucket
+#'
+#' @references \url{https://cloud.google.com/storage/docs/gsutil/commands/mb}
+gcloud_bucket <- function(name) {
+  print_run(paste0("gsutil mb gs://", name, "/"))
+  return(TRUE)
+}
