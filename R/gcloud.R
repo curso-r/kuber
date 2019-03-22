@@ -23,6 +23,8 @@ has_gcloud <- function() {
 #' execution. All commands run this way are **printed** to the console so
 #' the user can know everything that's happening.
 #'
+#' @references \url{https://cloud.google.com/sdk/docs/downloads-apt-get}
+#'
 #' @return If everything has gone as expected, `TRUE`
 #' @export
 gcloud_install <- function() {
@@ -41,7 +43,7 @@ gcloud_install <- function() {
     print_run("sudo apt-get install -y kubectl")
 
     message("Login in...")
-    if (interactive()) {
+    if (is_rstudio()) {
       message("Since your session is interactive, please run 'gcloud init' on your console.")
     } else {
       system("gcloud init")

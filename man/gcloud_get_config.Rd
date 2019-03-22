@@ -7,9 +7,12 @@
 gcloud_get_config()
 }
 \value{
-The string vector returned by the command (invisibly)
+The string vector returned by the command
 }
 \description{
-Prints to the console gcloud's current configuration by running
-the \code{gcloud config list} command.
+Checks gcloud's current configuration by running the
+\code{gcloud config list} command.
+}
+\references{
+\url{https://cloud.google.com/sdk/gcloud/reference/config/list}
 }

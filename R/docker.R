@@ -29,6 +29,8 @@ has_docker <- function() {
 #' execution. All commands run this way are **printed** to the console so
 #' the user can know everything that's happening.
 #'
+#' @references \url{https://docs.docker.com/install/linux/docker-ce/ubuntu/}
+#'
 #' @return If everything has gone as expected, `TRUE`
 #' @export
 docker_install <- function() {

@@ -5,7 +5,6 @@ print_run <- function(cmd) {
   sys(cmd, intern = TRUE, ignore.stderr = TRUE)$result
 }
 
-
 get_sudo <- function() {
   message("Enter your password for sudo privileges.")
   sys('sudo -S true', input = readline("Password: "))
@@ -13,4 +12,8 @@ get_sudo <- function() {
 
 make_flags <- function(all_flags) {
   paste(purrr::imap(all_flags, ~paste0("--", .y, " ", .x)), collapse = " ")
+}
+
+is_rstudio <- function() {
+  Sys.getenv("RSTUDIO") == "1"
 }

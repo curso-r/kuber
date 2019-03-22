@@ -4,9 +4,7 @@
 #' @description This function creates a kubernetes cluster on the current
 #' project and zone via `gcloud container clusters create`. Note that
 #' the defaults values for the parameters override the defaults of the
-#' shell command. See
-#' \url{https://cloud.google.com/sdk/gcloud/reference/container/clusters/create}
-#' for more information.
+#' shell command.
 #'
 #' @param name Name of the cluster
 #' @param machine_type Type of the machine (`f1-micro`, `g1-small`,
@@ -14,6 +12,8 @@
 #' @param num_nodes Number of nodes on cluster (must be an integer)
 #' @param disk_size Startup disk size (defaults to `20GB`)
 #' @param flags List with more flags to use and their corresponding values
+#'
+#' @references \url{https://cloud.google.com/sdk/gcloud/reference/container/clusters/create}
 #'
 #' @examples
 #' \dontrun{

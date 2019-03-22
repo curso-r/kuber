@@ -20,3 +20,6 @@ If everything has gone as expected, \code{TRUE}
 Sets gcloud's current project and zone configs by running
 \code{gcloud config set project} and \code{gcloud config set compute/zone}.
 }
+\references{
+\url{https://cloud.google.com/sdk/gcloud/reference/config/set}
+}

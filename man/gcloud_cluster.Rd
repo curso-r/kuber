@@ -26,9 +26,7 @@ If everything has gone as expected, \code{TRUE}
 This function creates a kubernetes cluster on the current
 project and zone via \code{gcloud container clusters create}. Note that
 the defaults values for the parameters override the defaults of the
-shell command. See
-\url{https://cloud.google.com/sdk/gcloud/reference/container/clusters/create}
-for more information.
+shell command.
 }
 \examples{
 \dontrun{
@@ -37,4 +35,7 @@ create_cluster("r-cluster",
     flags = list("tags" = "k8s", "enable-autoupgrade" = "", "disk-type" = "pd-ssd"))
 }
 
+}
+\references{
+\url{https://cloud.google.com/sdk/gcloud/reference/container/clusters/create}
 }
