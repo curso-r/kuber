@@ -12,7 +12,7 @@ Encoding: UTF-8
 LazyData: true
 URL: https://github.com/platipusc/kuber
 BugReports: https://github.com/platipusc/kuber/issues
-Roxygen: list(markdown = TRUE)
+Roxygen: list(markdown = TRUE, roclets = c("rd", "namespace", "collate"))
 RoxygenNote: 6.1.1
 Imports: 
     purrr
