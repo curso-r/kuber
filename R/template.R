@@ -62,15 +62,7 @@ docker_template <- function(path, bucket_name, image_name) {
     stop("Directory must be empty.")
   }
 
-  bucket_exists <- any(grepl(
-    paste0("/", bucket_name, "/"),
-    system(paste0("gsutil ls gs://"), intern = TRUE)
-  ))
-
-  if (!bucket_exists) {
-    message("Creating bucket.")
-    gcloud_bucket(bucket_name)
-  }
+  gcloud_bucket(bucket_name)
 
   if (!grepl("/", image_name)) {
     conf <- gcloud_get_config()
@@ -95,7 +87,8 @@ docker_template <- function(path, bucket_name, image_name) {
     "    --deps TRUE \\",
     "    googleCloudStorageR \\",
     "    abjutils",
-    'RUN wget -O ./k8s.httr-oauth "https://drive.google.com/uc?id=1DnNMt6JAPwhFqcZpD78XoDj1PZfSOLte&authuser=0&export=download"',
+    'RUN wget -O ./client_id.json "https://drive.google.com/uc?id=1LETUGnNGokwPPg0Y_ViFi0uKP9vy6WF2&authuser=0&export=download"',
+    'RUN wget -O ./service_account_key.json "https://drive.google.com/uc?id=1eOczW8KSGcwR7kenZaYj4EB6tatMQgL8&authuser=0&export=download"',
     "COPY exec.R ./",
     "COPY ids.rds ./"
   )
@@ -111,7 +104,10 @@ docker_template <- function(path, bucket_name, image_name) {
     'file <- paste0("file_", idx, ".rds")',
     "saveRDS(mtcars, file) # REPLACE MTCARS WITH YOUR OBJECT",
     "",
-    'googleAuthR::gar_auth(token = "k8s.httr-oauth")',
+    "# This uploads the file to your bucket (don't touch it)",
+    'scopes = c("https://www.googleapis.com/auth/devstorage.read_write")',
+    'googleAuthR::gar_set_client("client_id.json", scopes = scopes)',
+    'googleAuthR::gar_auth_service("service_account_key.json", scope = scopes)',
     paste0('googleCloudStorageR::gcs_upload(file, bucket = "', bucket_name, '", name = file)'),
     "",
     "file.remove(file)"
