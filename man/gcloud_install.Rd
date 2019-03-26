@@ -7,7 +7,7 @@
 gcloud_install()
 }
 \value{
-If everything has gone as expected, \code{TRUE}
+The path where gcloud was installed
 }
 \description{
 This function runs the gcloud installation routine via

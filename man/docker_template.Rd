@@ -18,7 +18,7 @@ simply \code{[IMAGE_NAME]} for it to be automatically pushed to the Google Cloud
 Registry)}
 }
 \value{
-If everything has gone as expected, \code{TRUE}
+The path where the template was created
 }
 \description{
 This function creates a directory with 5 components from the

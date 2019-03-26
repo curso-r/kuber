@@ -26,7 +26,7 @@ has_gcloud <- function() {
 #'
 #' @references \url{https://cloud.google.com/sdk/docs/downloads-apt-get}
 #'
-#' @return If everything has gone as expected, `TRUE`
+#' @return The path where gcloud was installed
 #' @export
 gcloud_install <- function() {
   gcloud <- sys("which gcloud", intern = TRUE, ignore.stderr = TRUE)$result
@@ -48,8 +48,8 @@ gcloud_install <- function() {
       system("gcloud init")
     }
 
-    return(TRUE)
+    return(gcloud)
   }
 
-  return(TRUE)
+  return(gcloud)
 }

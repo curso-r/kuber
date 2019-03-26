@@ -7,7 +7,7 @@
 docker_install()
 }
 \value{
-If everything has gone as expected, \code{TRUE}
+The path where docker was installed
 }
 \description{
 This function can run two routines: full docker installation

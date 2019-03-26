@@ -10,7 +10,7 @@ gcloud_run(path)
 \item{path}{Path to the image folder}
 }
 \value{
-If everything has gone as expected, \code{TRUE}
+The path to the template directory
 }
 \description{
 Given a directory with an image build via \code{\link[=docker_image]{docker_image()}}, this

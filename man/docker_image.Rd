@@ -12,7 +12,7 @@ docker_image(path, num_jobs)
 \item{num_jobs}{When run, the number of jobs spawned}
 }
 \value{
-If everything has gone as expected, \code{TRUE}
+The path to the template directory
 }
 \description{
 Once you create a docker directory for your script with

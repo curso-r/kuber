@@ -22,8 +22,8 @@
 #'   flags = list("tags" = "k8s", "enable-autoupgrade" = "", "disk-type" = "pd-ssd")
 #' )
 #' }
-#' 
-#' @return If everything has gone as expected, `TRUE`
+#'
+#' @return The name of the cluster
 #' @export
 gcloud_cluster <- function(name, machine_type = "g1-small", num_nodes = 3L, disk_size = "20GB", flags = list()) {
   all_flags <- c(
@@ -39,5 +39,5 @@ gcloud_cluster <- function(name, machine_type = "g1-small", num_nodes = 3L, disk
   cmd <- paste("gcloud container clusters create", name, make_flags(all_flags))
 
   print_run(cmd)
-  return(TRUE)
+  return(name)
 }

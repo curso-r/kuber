@@ -20,7 +20,7 @@ gcloud_cluster(name, machine_type = "g1-small", num_nodes = 3L,
 \item{flags}{List with more flags to use and their corresponding values}
 }
 \value{
-If everything has gone as expected, \code{TRUE}
+The name of the cluster
 }
 \description{
 This function creates a kubernetes cluster on the current

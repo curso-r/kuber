@@ -34,7 +34,7 @@ has_docker <- function() {
 #'
 #' @references \url{https://docs.docker.com/install/linux/docker-ce/ubuntu/}
 #'
-#' @return If everything has gone as expected, `TRUE`
+#' @return The path where docker was installed
 #' @export
 docker_install <- function() {
   docker <- sys("which docker", intern = TRUE, ignore.stderr = TRUE)$result
@@ -51,7 +51,7 @@ docker_install <- function() {
     print_run("sudo usermod -aG docker $USER")
 
     message("Restart your session and log out for changes to take effect.")
-    return(TRUE)
+    return(docker)
   }
 
   group <- sys("docker info", intern = TRUE, ignore.stderr = TRUE)$result
@@ -63,8 +63,8 @@ docker_install <- function() {
     print_run("sudo usermod -aG docker $USER")
 
     message("Restart your session and log out for changes to take effect.")
-    return(TRUE)
+    return(docker)
   }
 
-  return(TRUE)
+  return(docker)
 }

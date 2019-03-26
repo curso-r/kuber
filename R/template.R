@@ -54,7 +54,7 @@
 #' @references \url{https://kubernetes.io/docs/tasks/job/parallel-processing-expansion/}
 #' \url{https://cloud.google.com/container-registry/docs/quickstart}
 #'
-#' @return If everything has gone as expected, `TRUE`
+#' @return The path where the template was created
 #' @export
 docker_template <- function(path, bucket_name, image_name) {
   dir.create(path, showWarnings = FALSE, recursive = TRUE)
@@ -150,11 +150,9 @@ docker_template <- function(path, bucket_name, image_name) {
 
   if (requireNamespace("rstudioapi", quietly = TRUE) && is_rstudio()) {
     rstudioapi::navigateToFile(exec_r)
-    rstudioapi::navigateToFile(dockerfile)
-    rstudioapi::navigateToFile(job_tmpl)
   }
 
-  return(TRUE)
+  return(path)
 }
 
 #' Create a storage bucket
@@ -167,5 +165,5 @@ docker_template <- function(path, bucket_name, image_name) {
 #' @references \url{https://cloud.google.com/storage/docs/gsutil/commands/mb}
 gcloud_bucket <- function(name) {
   print_run(paste0("gsutil mb gs://", name, "/"))
-  return(TRUE)
+  return(name)
 }

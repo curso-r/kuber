@@ -9,12 +9,12 @@
 #'
 #' @references \url{https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#create}
 #'
-#' @return If everything has gone as expected, `TRUE`
+#' @return The path to the template directory
 #' @export
 gcloud_run <- function(path) {
   print_run(paste0("cd ", path, "; kubectl create -f ./jobs"))
-  message("Run 'gcloud_jobs()' to follow up on the jobs.")
-  return(TRUE)
+  message("Run 'gcloud_pods()' to follow up on the pods.")
+  return(path)
 }
 
 #' Get status of current Kubernetes pods
