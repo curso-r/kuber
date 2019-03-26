@@ -1,3 +1,12 @@
+# kuber 0.1.2
+
+* Password passed via askForPassword() in RStudio
+* Code commented internaly
+* Job expansion `for` syntax fixed
+* Purrr removed from dependencies
+* System calls' output displayed in console
+* System calls' errors not silenced
+
 # kuber 0.1.1
 
 * Better authentication via JSON tokens
