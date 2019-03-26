@@ -16,16 +16,18 @@
 #' @return The path to the template directory
 #' @export
 docker_image <- function(path, num_jobs) {
+
+  # Extract image information
   lines <- readLines(paste0(path, "/job-tmpl.yaml"))
   image <- gsub(" +image: ", "", lines[grep(" image: ", lines)])
   hostname <- gsub("/.+", "", image)
 
+  # Build image and push it
   print_run(paste0("docker build -t ", image, " ", path))
-
   print_run(paste0("gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://", hostname))
-
   print_run(paste0("docker push ", image))
 
+  # Create individual job files
   print_run(paste0(
     "cd ", path, "; for i in {1..", as.integer(num_jobs),
     '}; do cat job-tmpl.yaml | sed "s/\\$ITEM/$i/" > ./jobs/job-$i.yaml; done'

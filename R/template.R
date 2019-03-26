@@ -57,22 +57,27 @@
 #' @return The path where the template was created
 #' @export
 docker_template <- function(path, bucket_name, image_name) {
+
+  # Create empty directory
   dir.create(path, showWarnings = FALSE, recursive = TRUE)
   if (length(list.files(path, all.files = TRUE, no.. = TRUE)) > 0) {
     stop("Directory must be empty.")
   }
 
+  # Create bucket
   gcloud_bucket(bucket_name)
 
+  # Build image name if necessary
   if (!grepl("/", image_name)) {
     conf <- gcloud_get_config()
     project <- gsub("project = ", "", conf[grep("project = ", conf)])
-
     image_name <- paste0("gcr.io/", project, "/", image_name, ":latest")
   }
 
+  # Create job name
   job <- paste0("process-", paste0(sample(letters, 6, TRUE), collapse = ""))
 
+  # Text for files
   dockerfile_file <- c(
     "FROM rocker/tidyverse",
     "RUN apt-get update -qq && apt-get -y --no-install-recommends install \\",
@@ -129,11 +134,13 @@ docker_template <- function(path, bucket_name, image_name) {
     "      restartPolicy: Never"
   )
 
+  # Paths for files
   dockerfile <- paste0(path, "/Dockerfile")
   exec_r <- paste0(path, "/exec.R")
   job_tmpl <- paste0(path, "/job-tmpl.yaml")
   ids <- paste0(path, "/ids.rds")
 
+  # Create all files
   file.create(dockerfile, exec_r, job_tmpl)
   writeLines(dockerfile_file, dockerfile)
   writeLines(exec_r_file, exec_r)
@@ -141,6 +148,7 @@ docker_template <- function(path, bucket_name, image_name) {
   saveRDS(as.list(seq(1, 10)), ids)
   dir.create(paste0(path, "/jobs"), showWarnings = FALSE, recursive = TRUE)
 
+  # Further instructions
   message("Now please do the following:")
   message(paste0("  1. Edit '", exec_r, "'."))
   message(paste0("  2. Create '", ids, "' with a list of char vecs."))
@@ -148,6 +156,7 @@ docker_template <- function(path, bucket_name, image_name) {
   message(paste0("  4. (Optional) Add params to '", job_tmpl, "'."))
   message(paste0("  5. Run 'docker_image(", path, ")'."))
 
+  # Edit file
   if (requireNamespace("rstudioapi", quietly = TRUE) && is_rstudio()) {
     rstudioapi::navigateToFile(exec_r)
   }

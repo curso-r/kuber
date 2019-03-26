@@ -29,18 +29,22 @@ has_gcloud <- function() {
 #' @return The path where gcloud was installed
 #' @export
 gcloud_install <- function() {
+
+  # Gcloud not installed
   gcloud <- sys("which gcloud", intern = TRUE, ignore.stderr = TRUE)$result
   if (length(gcloud) == 0) {
-    message("Running installation process...")
 
+    # Run as sudo
     get_sudo()
 
+    # Run installation commands
     version <- system("echo $(lsb_release -c -s)", intern = TRUE)
     print_run(paste0('echo "deb http://packages.cloud.google.com/apt cloud-sdk-', version, ' main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list'))
     print_run("curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -")
     print_run("sudo apt-get update && sudo apt-get install -y google-cloud-sdk")
     print_run("sudo apt-get install -y kubectl")
 
+    # Run login command
     message("Login in...")
     if (is_rstudio()) {
       message("Since your session is interactive, please run 'gcloud init' on your console.")

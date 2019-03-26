@@ -5,11 +5,14 @@
 #' installed (via the `which docker` shell command) and if docker can be run
 #' without sudo privileges (by testing the `docker info` command).
 has_docker <- function() {
+
+  # Docker is installed
   docker <- sys("which docker", intern = TRUE, ignore.stderr = TRUE)$result
   if (length(docker) == 0) {
     return(FALSE)
   }
 
+  # User is in docker group
   group <- sys("docker info", intern = TRUE, ignore.stderr = TRUE)$result
   if (length(group) == 0) {
     return(FALSE)
@@ -37,16 +40,20 @@ has_docker <- function() {
 #' @return The path where docker was installed
 #' @export
 docker_install <- function() {
+
+  # Docker not installed
   docker <- sys("which docker", intern = TRUE, ignore.stderr = TRUE)$result
   if (length(docker) == 0) {
-    message("Downloading installation file...")
-    Sys.sleep(2)
 
+    # Get installation file
+    message("Downloading installation file...")
     get_docker <- tempfile(fileext = ".sh")
     print_run(paste0("curl -fsSL https://get.docker.com -o ", get_docker))
 
+    # Run as sudo
     get_sudo()
 
+    # Install and add user to docker group
     print_run(paste0("sudo sh ", get_docker))
     print_run("sudo usermod -aG docker $USER")
 
@@ -54,12 +61,14 @@ docker_install <- function() {
     return(docker)
   }
 
+  # User not in docker group
   group <- sys("docker info", intern = TRUE, ignore.stderr = TRUE)$result
   if (length(group) == 0) {
-    message("Docker must be able to run without sudo.")
 
+    # Run as sudo
     get_sudo()
 
+    # add user to docker group
     print_run("sudo usermod -aG docker $USER")
 
     message("Restart your session and log out for changes to take effect.")
