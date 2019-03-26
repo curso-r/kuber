@@ -1,7 +1,9 @@
 
 # Print and run command
 print_run <- function(cmd, print = TRUE) {
-  if (print) { cat("$ ", cmd, "\n") }
+  if (print) {
+    cat("$ ", cmd, "\n")
+  }
   suppressWarnings(system(cmd, intern = TRUE))
 }
 
@@ -23,6 +25,8 @@ get_sudo <- function() {
 
 # Create text for command flags
 make_flags <- function(all_flags) {
-  f <- function(a, b) { paste0("--", a, " ", b) }
+  f <- function(a, b) {
+    paste0("--", a, " ", b)
+  }
   paste(mapply(f, names(all_flags), all_flags, USE.NAMES = FALSE), collapse = " ")
 }

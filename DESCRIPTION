@@ -11,9 +11,8 @@ Description: Small toolkit for massively parallel tasks that
 License: GPL-3
 URL: https://github.com/platipusc/kuber
 BugReports: https://github.com/platipusc/kuber/issues
-Imports: 
-    purrr
 Suggests: 
+    googleCloudStorageR,
     rstudioapi
 Encoding: UTF-8
 LazyData: true
