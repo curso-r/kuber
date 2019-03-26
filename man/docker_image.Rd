@@ -4,12 +4,12 @@
 \alias{docker_image}
 \title{Build and push a docker image}
 \usage{
-docker_image(path, num_jobs)
+docker_image(path, num_jobs = 3L)
 }
 \arguments{
 \item{path}{Path to the image folder}
 
-\item{num_jobs}{When run, the number of jobs spawned}
+\item{num_jobs}{When run, the number of jobs spawned (3 by default)}
 }
 \value{
 The path to the template directory

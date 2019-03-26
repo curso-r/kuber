@@ -8,14 +8,14 @@
 #' with [gcloud_run()].
 #'
 #' @param path Path to the image folder
-#' @param num_jobs When run, the number of jobs spawned
+#' @param num_jobs When run, the number of jobs spawned (3 by default)
 #'
 #' @references \url{https://docs.docker.com/engine/reference/commandline/build/}
 #' \url{https://cloud.google.com/container-registry/docs/pushing-and-pulling}
 #'
 #' @return The path to the template directory
 #' @export
-docker_image <- function(path, num_jobs) {
+docker_image <- function(path, num_jobs = 3L) {
 
   # Extract image information
   lines <- readLines(paste0(path, "/job-tmpl.yaml"))
@@ -29,8 +29,8 @@ docker_image <- function(path, num_jobs) {
 
   # Create individual job files
   print_run(paste0(
-    "cd ", path, "; for i in {1..", as.integer(num_jobs),
-    '}; do cat job-tmpl.yaml | sed "s/\\$ITEM/$i/" > ./jobs/job-$i.yaml; done'
+    "cd ", path, "; for i in $(seq ", as.integer(num_jobs),
+    '); do cat job-tmpl.yaml | sed "s/$ITEM/$i/" > ./jobs/job-$i.yaml; done'
   ))
 
   return(path)
