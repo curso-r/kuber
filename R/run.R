@@ -13,7 +13,7 @@
 #' @export
 gcloud_run <- function(path) {
   print_run(paste0("cd ", path, "; kubectl create -f ./jobs"))
-  message("Run 'gcloud_pods()' to follow up on the pods.")
+  cat("Run 'gcloud_pods()' to follow up on the pods.\n")
   return(path)
 }
 

@@ -35,6 +35,6 @@ gcloud_set_config <- function(project = NULL, zone = NULL, region = NULL) {
 #' @return The string vector returned by the command
 #' @export
 gcloud_get_config <- function() {
-  out <- system("gcloud config list", intern = TRUE, ignore.stderr = TRUE)
+  out <- print_run("gcloud config list", FALSE)
   return(out)
 }

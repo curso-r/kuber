@@ -30,7 +30,7 @@ docker_image <- function(path, num_jobs = 3L) {
   # Create individual job files
   print_run(paste0(
     "cd ", path, "; for i in $(seq ", as.integer(num_jobs),
-    '); do cat job-tmpl.yaml | sed "s/$ITEM/$i/" > ./jobs/job-$i.yaml; done'
+    '); do cat job-tmpl.yaml | sed "s/\\$ITEM/$i/" > ./jobs/job-$i.yaml; done'
   ))
 
   return(path)

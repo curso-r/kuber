@@ -4,7 +4,7 @@
 #' @description This function checks if the curent user has gcloud installed
 #' (via the `which gcloud` shell command).
 has_gcloud <- function() {
-  gcloud <- sys("which gcloud", intern = TRUE, ignore.stderr = TRUE)$result
+  gcloud <- print_run("which gcloud", FALSE)
   if (length(gcloud) == 0) {
     return(FALSE)
   }
@@ -31,7 +31,7 @@ has_gcloud <- function() {
 gcloud_install <- function() {
 
   # Gcloud not installed
-  gcloud <- sys("which gcloud", intern = TRUE, ignore.stderr = TRUE)$result
+  gcloud <- print_run("which gcloud", FALSE)
   if (length(gcloud) == 0) {
 
     # Run as sudo
@@ -45,9 +45,9 @@ gcloud_install <- function() {
     print_run("sudo apt-get install -y kubectl")
 
     # Run login command
-    message("Login in...")
+    cat("Login in...\n")
     if (is_rstudio()) {
-      message("Since your session is interactive, please run 'gcloud init' on your console.")
+      cat("Since your session is interactive, please run 'gcloud init' on your console.\n")
     } else {
       system("gcloud init")
     }

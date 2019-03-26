@@ -149,12 +149,12 @@ docker_template <- function(path, bucket_name, image_name) {
   dir.create(paste0(path, "/jobs"), showWarnings = FALSE, recursive = TRUE)
 
   # Further instructions
-  message("Now please do the following:")
-  message(paste0("  1. Edit '", exec_r, "'."))
-  message(paste0("  2. Create '", ids, "' with a list of char vecs."))
-  message(paste0("  3. (Optional) Add dependencies to '", dockerfile, "'."))
-  message(paste0("  4. (Optional) Add params to '", job_tmpl, "'."))
-  message(paste0("  5. Run 'docker_image(", path, ")'."))
+  cat("Now please do the following:\n")
+  cat(paste0("  1. Edit '", exec_r, "'.\n"))
+  cat(paste0("  2. Create '", ids, "' with a list of char vecs.\n"))
+  cat(paste0("  3. (Optional) Add dependencies to '", dockerfile, "'.\n"))
+  cat(paste0("  4. (Optional) Add params to '", job_tmpl, "'.\n"))
+  cat(paste0("  5. Run 'docker_image(", path, ")'.\n"))
 
   # Edit file
   if (requireNamespace("rstudioapi", quietly = TRUE) && is_rstudio()) {
