@@ -1,7 +1,7 @@
 
 #' Run a job on a Kubernetes cluster
 #'
-#' @description Given a directory with an image build via [kuber_image()], this
+#' @description Given a directory with an image build via [kuber_push()], this
 #' function assigns all jobs in the `/jobs` folder and runs them on the
 #' associated Kubernetes cluster with the `.
 #'
@@ -9,7 +9,7 @@
 #'
 #' @references \url{https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#create}
 #'
-#' @return The path to the template directory
+#' @return The path to the kuber directory
 #' @export
 kuber_run <- function(path) {
   sys(paste0("cd ", path, "; kubectl create -f ./jobs"))

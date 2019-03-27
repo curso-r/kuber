@@ -28,7 +28,7 @@ via [expansion](https://kubernetes.io/docs/tasks/job/parallel-processing-expansi
 kuber::kuber_cluster("my-cluster", num_nodes = 5)
 
 # Create a folder with kuber's template
-kuber::kuber_template("my-dir", bucket_name = "my-bucket", image_name = "my-image")
+kuber::kuber_init("my-dir", bucket_name = "my-bucket", image_name = "my-image")
 
 # Edit the exec.R file with your script
 file.edit("my-dir/exec.R")
@@ -37,7 +37,7 @@ file.edit("my-dir/exec.R")
 file.copy("my-list.rds", "my-dir/list.rds", overwrite = TRUE)
 
 # Create a docker image from folder
-kuber::kuber_image("my-dir", num_jobs = 5)
+kuber::kuber_push("my-dir", num_jobs = 5)
 
 # Run jobs
 kuber::kuber_run("my-dir")

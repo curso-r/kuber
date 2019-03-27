@@ -2,12 +2,12 @@
 % Please edit documentation in R/config.R
 \name{kuber_get_config}
 \alias{kuber_get_config}
-\title{Get bucket and image information from a template}
+\title{Get bucket and image information from a kuber folder}
 \usage{
 kuber_get_config(path, quiet = FALSE)
 }
 \arguments{
-\item{path}{The path to the template directory}
+\item{path}{Path to the kuber directory}
 
 \item{quiet}{Whether to skip printing output (\code{FALSE} by default)}
 }

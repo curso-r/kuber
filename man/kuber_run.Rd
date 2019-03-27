@@ -10,10 +10,10 @@ kuber_run(path)
 \item{path}{Path to the image folder}
 }
 \value{
-The path to the template directory
+The path to the kuber directory
 }
 \description{
-Given a directory with an image build via \code{\link[=kuber_image]{kuber_image()}}, this
+Given a directory with an image build via \code{\link[=kuber_push]{kuber_push()}}, this
 function assigns all jobs in the \code{/jobs} folder and runs them on the
 associated Kubernetes cluster with the `.
 }

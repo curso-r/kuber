@@ -2,12 +2,12 @@
 % Please edit documentation in R/config.R
 \name{kuber_set_config}
 \alias{kuber_set_config}
-\title{Set bucket and image information from a template}
+\title{Set bucket and image information in a kuber directory}
 \usage{
 kuber_set_config(path, bucket_name = NULL, image_name = NULL)
 }
 \arguments{
-\item{path}{The path to the template directory}
+\item{path}{Path to the kuber directory}
 
 \item{bucket_name}{Desired bucket name (or \code{NULL} to skip)}
 

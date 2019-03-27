@@ -42,12 +42,12 @@ gcloud_set_config <- function(project = NULL, zone = NULL, region = NULL) {
   return(TRUE)
 }
 
-#' Get bucket and image information from a template
+#' Get bucket and image information from a kuber folder
 #'
 #' @description This function extracts the names of the docker image and of the
 #' gcloud bucket stored in `job-tmpl.yaml` at a kuber folder.
 #'
-#' @param path The path to the template directory
+#' @param path Path to the kuber directory
 #' @param quiet Whether to skip printing output (`FALSE` by default)
 #'
 #' @return The names of the bucket and image (invisibly)
@@ -64,12 +64,12 @@ kuber_get_config <- function(path, quiet = FALSE) {
   invisible(c(bucket, image))
 }
 
-#' Set bucket and image information from a template
+#' Set bucket and image information in a kuber directory
 #'
 #' @description This function sets the names of the docker image and of the
 #' gcloud bucket in `job-tmpl.yaml` at a kuber folder.
 #'
-#' @param path The path to the template directory
+#' @param path Path to the kuber directory
 #' @param bucket_name Desired bucket name (or `NULL` to skip)
 #' @param image_name Desired image name (or `NULL` to skip)
 #'
@@ -100,6 +100,6 @@ kuber_set_config <- function(path, bucket_name = NULL, image_name = NULL) {
   # Write file
   writeLines(lines, paste0(path, "/job-tmpl.yaml"))
 
-  cat("To apply changes, run kuber_image()\n")
+  cat("To apply changes, run kuber_push()\n")
   return(TRUE)
 }
