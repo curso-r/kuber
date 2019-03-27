@@ -25,7 +25,7 @@ This function creates a directory with 5 components from the
 kuber template: a \code{Dockerfile} (that is designed for expanded parallel taks),
 an R file \code{exec.R} (which contains some code that guides how your program
 should work), a \code{job-tmpl.yaml} (a template for the yaml files that will lauch
-the docker jobs), an RDS \code{ids.rds} (which contains \code{as.list(seq(1, 10))} just
+the docker jobs), an RDS \code{list.rds} (which contains \code{as.list(seq(1, 10))} just
 so you don't forget to setup the inputs that each job will take) and a \code{jobs/}
 folder (where the actual job yaml files will go once you run \code{\link[=kuber_image]{kuber_image()}}).
 For more information, please see the sections below.
@@ -33,7 +33,7 @@ For more information, please see the sections below.
 \section{Dockerfile}{
 
 This is a very simple \code{Dockerfile} based on \code{rocker/tidyverse} that installs
-\code{tidyverse}, \code{devtools} and \code{abjutils}, and copies \code{exec.R} and \code{ids.rds} to
+\code{tidyverse}, \code{devtools} and \code{abjutils}, and copies \code{exec.R} and \code{list.rds} to
 the home directory. If you have any extra dependencies or want to use more
 files for your script, this is where you should add them.
 }
@@ -60,17 +60,17 @@ This is simply a folder that will store the job files once the template is
 expanded.
 }
 
-\section{Ids.rds}{
+\section{List.rds}{
 
 This is more of a suggestion than a required file. It contains (by default)
 a \code{list()} with each integer from 1 to 10, but actually it could be any list
 of your choosing. The goal here is to be able to get the arguments for your
 script just by extracting the element with index equal to the job number
-(meaning that job number \code{N} might read and use everything stored in \code{ids.rds}
+(meaning that job number \code{N} might read and use everything stored in \code{list.rds}
 at index \code{[[N]]}). To illustrate this concept, take for example a webscraping
-script: \code{ids.rds} would contain a list where each element is a character
+script: \code{list.rds} would contain a list where each element is a character
 vector of URLs to scrape; each job would therefore read the file but only
-scrape \code{ids[[N]]} so that it doesn't overlap with any other job.
+scrape \code{list[[N]]} so that it doesn't overlap with any other job.
 }
 
 \references{

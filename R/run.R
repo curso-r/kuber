@@ -13,7 +13,7 @@
 #' @export
 kuber_run <- function(path) {
   print_run(paste0("cd ", path, "; kubectl create -f ./jobs"))
-  cat("Run 'gcloud_pods()' to follow up on the pods.\n")
+  cat("Run 'kuber_pods()' to follow up on the pods.\n")
   return(path)
 }
 
@@ -27,4 +27,19 @@ kuber_run <- function(path) {
 #' @export
 kuber_pods <- function() {
   system("kubectl get pods")
+}
+
+#' Kill all kubernetes jobs and pods
+#'
+#' @description Using the command `kubectl delete`, deletes all jobs and pods
+#' currently running in the cluster.
+#'
+#' @references \url{https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#delete}
+#'
+#' @return TRUE
+#' @export
+kuber_kill <- function() {
+  print_run("kubectl delete --all jobs")
+  print_run("kubectl delete --all pods")
+  return(TRUE)
 }

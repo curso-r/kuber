@@ -34,7 +34,7 @@ kuber::kuber_template("my-dir", bucket_name = "my-bucket", image_name = "my-imag
 file.edit("my-dir/exec.R")
 
 # Replace default IDs file with your IDs
-file.copy("my-ids.rds", "my-dir/ids.rds", overwrite = TRUE)
+file.copy("my-list.rds", "my-dir/list.rds", overwrite = TRUE)
 
 # Create a docker image from folder
 kuber::kuber_image("my-dir", num_jobs = 5)
@@ -54,9 +54,11 @@ kuber::kuber_pods()
   - [X] README.md
   - [X] Better names for the functions
   - [X] Cleaner exec.R template
+  - [X] ids.rds is a bad name
 - Patch 0.2.1
   - [ ] Remove googleCloudStorageR from Dockerfile
   - [ ] Functions for listing gcloud resources
+  - [ ] Better dir pasting
 - Minor 0.3.0
   - [ ] Vignette and packagedown
   - [ ] Use crayon for system calls
