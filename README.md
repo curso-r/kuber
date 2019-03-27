@@ -60,10 +60,10 @@ kuber::kuber_pods()
   - [X] Prettier output for gcloud_get_config
 - Patch 0.2.1
   - [ ] Remove googleCloudStorageR from Dockerfile
-  - [ ] Functions for listing other gcloud resources
   - [ ] Better dir pasting
   - [ ] Documentation about exec.R debugging
 - Minor 0.3.0
+  - [ ] Functions for listing other gcloud resources
   - [ ] Vignette and packagedown
   - [ ] Use crayon for system calls
   - [ ] If a function fails, revert what happeded

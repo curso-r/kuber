@@ -12,7 +12,7 @@
 #' @return The path to the template directory
 #' @export
 kuber_run <- function(path) {
-  print_run(paste0("cd ", path, "; kubectl create -f ./jobs"))
+  sys(paste0("cd ", path, "; kubectl create -f ./jobs"))
   cat("Run 'kuber_pods()' to follow up on the pods.\n")
   return(path)
 }
@@ -26,7 +26,7 @@ kuber_run <- function(path) {
 #'
 #' @export
 kuber_pods <- function() {
-  system("kubectl get pods")
+  sys("kubectl get pods")
 }
 
 #' Kill all kubernetes jobs and pods
@@ -39,7 +39,7 @@ kuber_pods <- function() {
 #' @return TRUE
 #' @export
 kuber_kill <- function() {
-  print_run("kubectl delete --all jobs")
-  print_run("kubectl delete --all pods")
+  sys("kubectl delete --all jobs")
+  sys("kubectl delete --all pods")
   return(TRUE)
 }

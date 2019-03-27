@@ -4,7 +4,7 @@
 #' @description This function checks if the curent user has gcloud installed
 #' (via the `which gcloud` shell command).
 has_gcloud <- function() {
-  gcloud <- print_run("which gcloud", FALSE)
+  gcloud <- sys("which gcloud", FALSE)
   if (length(gcloud) == 0) {
     return(FALSE)
   }
@@ -31,18 +31,18 @@ has_gcloud <- function() {
 gcloud_install <- function() {
 
   # Gcloud not installed
-  gcloud <- print_run("which gcloud", FALSE)
+  gcloud <- sys("which gcloud", FALSE)
   if (length(gcloud) == 0) {
 
     # Run as sudo
     get_sudo()
 
     # Run installation commands
-    version <- system("echo $(lsb_release -c -s)", intern = TRUE)
-    print_run(paste0('echo "deb http://packages.cloud.google.com/apt cloud-sdk-', version, ' main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list'))
-    print_run("curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -")
-    print_run("sudo apt-get update && sudo apt-get install -y google-cloud-sdk")
-    print_run("sudo apt-get install -y kubectl")
+    version <- sys("echo $(lsb_release -c -s)", FALSE)
+    sys(paste0('echo "deb http://packages.cloud.google.com/apt cloud-sdk-', version, ' main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list'))
+    sys("curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -")
+    sys("sudo apt-get update && sudo apt-get install -y google-cloud-sdk")
+    sys("sudo apt-get install -y kubectl")
 
     # Run login command
     cat("Login in...\n")

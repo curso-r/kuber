@@ -11,7 +11,7 @@
 #' @return The string vector returned by the command (invisibly)
 #' @export
 gcloud_get_config <- function(quiet = FALSE) {
-  out <- system("gcloud config list", intern = TRUE, ignore.stderr = TRUE)
+  out <- sys("gcloud config list", FALSE, ignore.stderr = TRUE)
   if (!quiet) { cat(out, sep = "\n") }
   invisible(out)
 }
@@ -31,13 +31,13 @@ gcloud_get_config <- function(quiet = FALSE) {
 #' @export
 gcloud_set_config <- function(project = NULL, zone = NULL, region = NULL) {
   if (!is.null(project)) {
-    print_run(paste0("gcloud config set project ", project))
+    sys(paste0("gcloud config set project ", project))
   }
   if (!is.null(zone)) {
-    print_run(paste0("gcloud config set compute/zone ", zone))
+    sys(paste0("gcloud config set compute/zone ", zone))
   }
   if (!is.null(region)) {
-    print_run(paste0("gcloud config set compute/region ", region))
+    sys(paste0("gcloud config set compute/region ", region))
   }
   return(TRUE)
 }

@@ -1,10 +1,10 @@
 
 # Print and run command
-print_run <- function(cmd, print = TRUE) {
+sys <- function(cmd, print = TRUE, ...) {
   if (print) {
     cat("$ ", cmd, "\n")
   }
-  suppressWarnings(system(cmd, intern = TRUE))
+  suppressWarnings(system(cmd, intern = TRUE, ...))
 }
 
 # Is the session running in RStudio?
@@ -16,10 +16,10 @@ is_rstudio <- function() {
 get_sudo <- function() {
   if (requireNamespace("rstudioapi", quietly = TRUE) && is_rstudio()) {
     pass <- rstudioapi::askForPassword("Enter your password for sudo privileges")
-    system(paste0("echo ", pass, " | sudo -S true"))
+    sys(paste0("echo ", pass, " | sudo -S true"), FALSE)
   } else {
     cat("Enter your password for sudo privileges.\n")
-    system("sudo -S true", input = readline("Password: "))
+    sys("sudo -S true", input = readline("Password: "))
   }
 }
 
