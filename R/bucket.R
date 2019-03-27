@@ -9,7 +9,7 @@
 #' @references \url{https://cloud.google.com/storage/docs/gsutil/commands/mb}
 kuber_bucket <- function(name) {
   sys(paste0("gsutil mb gs://", name, "/"))
-  return(name)
+  invisible(name)
 }
 
 #' List contents of a gcloud bucket

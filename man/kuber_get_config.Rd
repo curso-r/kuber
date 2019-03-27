@@ -12,7 +12,7 @@ kuber_get_config(path, quiet = FALSE)
 \item{quiet}{Whether to skip printing output (\code{FALSE} by default)}
 }
 \value{
-The names of the bucket and image (invisibly)
+The names of the bucket and image
 }
 \description{
 This function extracts the names of the docker image and of the

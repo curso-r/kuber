@@ -57,22 +57,23 @@ docker_install <- function() {
     sys("sudo usermod -aG docker $USER")
 
     cat("Restart your session and log out for changes to take effect.\n")
-    return(docker)
+    invisible(docker)
+  } else {
+
+    # User not in docker group
+    group <- sys("docker info", FALSE)
+    if (length(group) == 0) {
+
+      # Run as sudo
+      get_sudo()
+
+      # add user to docker group
+      sys("sudo usermod -aG docker $USER")
+
+      cat("Restart your session and log out for changes to take effect.\n")
+      invisible(docker)
+    }
   }
 
-  # User not in docker group
-  group <- sys("docker info", FALSE)
-  if (length(group) == 0) {
-
-    # Run as sudo
-    get_sudo()
-
-    # add user to docker group
-    sys("sudo usermod -aG docker $USER")
-
-    cat("Restart your session and log out for changes to take effect.\n")
-    return(docker)
-  }
-
-  return(docker)
+  invisible(docker)
 }

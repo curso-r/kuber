@@ -7,7 +7,7 @@
 kuber_kill()
 }
 \value{
-TRUE
+If everything has gone as expected, \code{TRUE}
 }
 \description{
 Using the command \code{kubectl delete}, deletes all jobs and pods

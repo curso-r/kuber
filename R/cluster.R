@@ -42,5 +42,5 @@ kuber_cluster <- function(name, machine_type = "g1-small", num_nodes = 3L, disk_
   cmd <- paste("gcloud container clusters create", name, make_flags(all_flags))
   sys(cmd)
 
-  return(name)
+  invisible(name)
 }

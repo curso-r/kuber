@@ -14,7 +14,7 @@
 kuber_run <- function(path) {
   sys(paste0("cd ", path, "; kubectl create -f ./jobs"))
   cat("Run 'kuber_pods()' to follow up on the pods.\n")
-  return(path)
+  invisible(path)
 }
 
 #' Get status of current Kubernetes pods
@@ -24,9 +24,16 @@ kuber_run <- function(path) {
 #'
 #' @references \url{https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#get}
 #'
+#' @return A table with pods' status information
 #' @export
 kuber_pods <- function() {
-  sys("kubectl get pods")
+  table <- sys("kubectl get pods")
+
+  # Extract full table
+  file <- tempfile(fileext = ".csv")
+  writeLines(paste(gsub(" +", ",", table), collapse = "\n"), file)
+
+  utils::read.csv(file)
 }
 
 #' Kill all kubernetes jobs and pods
@@ -36,10 +43,10 @@ kuber_pods <- function() {
 #'
 #' @references \url{https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#delete}
 #'
-#' @return TRUE
+#' @return If everything has gone as expected, `TRUE`
 #' @export
 kuber_kill <- function() {
   sys("kubectl delete --all jobs")
   sys("kubectl delete --all pods")
-  return(TRUE)
+  invisible(TRUE)
 }

@@ -52,8 +52,8 @@ gcloud_install <- function() {
       system("gcloud init")
     }
 
-    return(gcloud)
+    invisible(gcloud)
   }
 
-  return(gcloud)
+  invisible(gcloud)
 }

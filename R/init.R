@@ -165,5 +165,5 @@ kuber_init <- function(path, bucket_name, image_name) {
     rstudioapi::navigateToFile(exec_r)
   }
 
-  return(path)
+  invisible(path)
 }

@@ -10,7 +10,7 @@ gcloud_get_config(quiet = FALSE)
 \item{quiet}{Whether to skip printing output (\code{FALSE} by default)}
 }
 \value{
-The string vector returned by the command (invisibly)
+The string vector returned by the command
 }
 \description{
 Checks gcloud's current configuration by running the

@@ -33,5 +33,5 @@ kuber_push <- function(path, num_jobs = 3L) {
     '); do cat job-tmpl.yaml | sed "s/\\$ITEM/$i/" > ./jobs/job-$i.yaml; done'
   ))
 
-  return(path)
+  invisible(path)
 }

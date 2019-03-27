@@ -8,7 +8,7 @@
 #'
 #' @references \url{https://cloud.google.com/sdk/gcloud/reference/config/list}
 #'
-#' @return The string vector returned by the command (invisibly)
+#' @return The string vector returned by the command
 #' @export
 gcloud_get_config <- function(quiet = FALSE) {
   out <- sys("gcloud config list", FALSE, ignore.stderr = TRUE)
@@ -39,7 +39,7 @@ gcloud_set_config <- function(project = NULL, zone = NULL, region = NULL) {
   if (!is.null(region)) {
     sys(paste0("gcloud config set compute/region ", region))
   }
-  return(TRUE)
+  invisible(TRUE)
 }
 
 #' Get bucket and image information from a kuber folder
@@ -50,7 +50,7 @@ gcloud_set_config <- function(project = NULL, zone = NULL, region = NULL) {
 #' @param path Path to the kuber directory
 #' @param quiet Whether to skip printing output (`FALSE` by default)
 #'
-#' @return The names of the bucket and image (invisibly)
+#' @return The names of the bucket and image
 #' @export
 kuber_get_config <- function(path, quiet = FALSE) {
 
@@ -101,5 +101,5 @@ kuber_set_config <- function(path, bucket_name = NULL, image_name = NULL) {
   writeLines(lines, paste0(path, "/job-tmpl.yaml"))
 
   cat("To apply changes, run kuber_push()\n")
-  return(TRUE)
+  invisible(TRUE)
 }

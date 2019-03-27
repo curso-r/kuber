@@ -28,13 +28,13 @@ via [expansion](https://kubernetes.io/docs/tasks/job/parallel-processing-expansi
 kuber::kuber_cluster("my-cluster", num_nodes = 5)
 
 # Create a folder with kuber's template
-kuber::kuber_init("my-dir", bucket_name = "my-bucket", image_name = "my-image")
+kuber::kuber_init("my-dir", "my-bucket", "my-image")
 
 # Edit the exec.R file with your script
 file.edit("my-dir/exec.R")
 
 # Replace default IDs file with your IDs
-file.copy("my-list.rds", "my-dir/list.rds", overwrite = TRUE)
+file.copy("my-list.rds", "my-dir/list.rds", TRUE)
 
 # Create a docker image from folder
 kuber::kuber_push("my-dir", num_jobs = 5)
@@ -50,7 +50,6 @@ kuber::kuber_pods()
 
 - Minor 0.2.0
   - [X] Ability to change bucket and image names
-  - [ ] Functions for deleting cluster, bucket and image
   - [X] README.md
   - [X] Better names for the functions
   - [X] Cleaner exec.R template
@@ -62,7 +61,10 @@ kuber::kuber_pods()
   - [ ] Remove googleCloudStorageR from Dockerfile
   - [ ] Better dir pasting
   - [ ] Documentation about exec.R debugging
+  - [ ] Check if user has everything setup on load
+  - [ ] Higher restart limit
 - Minor 0.3.0
+  - [ ] Functions for deleting cluster, bucket and image
   - [ ] Functions for listing other gcloud resources
   - [ ] Vignette and packagedown
   - [ ] Use crayon for system calls

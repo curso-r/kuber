@@ -6,6 +6,9 @@
 \usage{
 kuber_pods()
 }
+\value{
+A table with pods' status information
+}
 \description{
 After running a group of jobs via \code{\link[=kuber_run]{kuber_run()}}, this function
 runs \code{kubectl get pods} to get their statuses.
