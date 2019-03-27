@@ -69,7 +69,7 @@ kuber_template <- function(path, bucket_name, image_name) {
 
   # Build image name if necessary
   if (!grepl("/", image_name)) {
-    conf <- gcloud_get_config()
+    conf <- gcloud_get_config(TRUE)
     project <- gsub("project = ", "", conf[grep("project = ", conf)])
     image_name <- paste0("gcr.io/", project, "/", image_name, ":latest")
   }
@@ -168,17 +168,4 @@ kuber_template <- function(path, bucket_name, image_name) {
   }
 
   return(path)
-}
-
-#' Create a storage bucket
-#'
-#' @description This function freates a default storage bucket using the
-#' `gsutil mb` command.
-#'
-#' @param name Name of the bucket
-#'
-#' @references \url{https://cloud.google.com/storage/docs/gsutil/commands/mb}
-kuber_bucket <- function(name) {
-  print_run(paste0("gsutil mb gs://", name, "/"))
-  return(name)
 }

@@ -4,10 +4,13 @@
 \alias{gcloud_get_config}
 \title{Get gcloud configuration}
 \usage{
-gcloud_get_config()
+gcloud_get_config(quiet = FALSE)
+}
+\arguments{
+\item{quiet}{Whether to skip printing output (\code{FALSE} by default)}
 }
 \value{
-The string vector returned by the command
+The string vector returned by the command (invisibly)
 }
 \description{
 Checks gcloud's current configuration by running the
