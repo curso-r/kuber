@@ -2,10 +2,10 @@
 #' Build and push a docker image
 #'
 #' @description Once you create a docker directory for your script with
-#' [docker_template()], this function is able to build it and push it to the
+#' [kuber_template()], this function is able to build it and push it to the
 #' appropriate cloud diretory. Aditionally, it also creates all the job
 #' yaml files so that the only remaining step is running the cluster
-#' with [gcloud_run()].
+#' with [kuber_run()].
 #'
 #' @param path Path to the image folder
 #' @param num_jobs When run, the number of jobs spawned (3 by default)
@@ -15,7 +15,7 @@
 #'
 #' @return The path to the template directory
 #' @export
-docker_image <- function(path, num_jobs = 3L) {
+kuber_image <- function(path, num_jobs = 3L) {
 
   # Extract image information
   lines <- readLines(paste0(path, "/job-tmpl.yaml"))

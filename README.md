@@ -25,10 +25,10 @@ via [expansion](https://kubernetes.io/docs/tasks/job/parallel-processing-expansi
 
 ``` r
 # Create a kubernetes cluster
-kuber::gcloud_cluster("my-cluster", num_nodes = 5)
+kuber::kuber_cluster("my-cluster", num_nodes = 5)
 
 # Create a folder with kuber's template
-kuber::docker_template("my-dir", bucket_name = "my-bucket", image_name = "my-image")
+kuber::kuber_template("my-dir", bucket_name = "my-bucket", image_name = "my-image")
 
 # Edit the exec.R file with your script
 file.edit("my-dir/exec.R")
@@ -37,25 +37,26 @@ file.edit("my-dir/exec.R")
 file.copy("my-ids.rds", "my-dir/ids.rds", overwrite = TRUE)
 
 # Create a docker image from folder
-kuber::docker_image("my-dir", num_jobs = 5)
+kuber::kuber_image("my-dir", num_jobs = 5)
 
 # Run jobs
-kuber::gcloud_run("my-dir")
+kuber::kuber_run("my-dir")
 
 # See jobs' statuses
-kuber::gcloud_pods()
+kuber::kuber_pods()
 ```
 
 ## Roadmap
 
 - Minor 0.2.0
-  - [ ] Hability to change bucket and image names
+  - [ ] Ability to change bucket and image names
   - [ ] Functions for deleting cluster, bucket and image
   - [X] README.md
-  - [ ] Better names for the functions
-  - [ ] Nicer exec.R template
+  - [X] Better names for the functions
+  - [X] Cleaner exec.R template
 - Patch 0.2.1
   - [ ] Remove googleCloudStorageR from Dockerfile
+  - [ ] Functions for listing gcloud resources
 - Minor 0.3.0
   - [ ] Vignette and packagedown
   - [ ] Use crayon for system calls
