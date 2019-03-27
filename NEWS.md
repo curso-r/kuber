@@ -1,3 +1,14 @@
+# kuber 0.2.0
+
+* Ability to change bucket and image names
+* Documented README.md
+* Better names for the functions
+* Cleaner exec.R template
+* List file now called list.rds instead of ids.rds 
+* Function to list objects in bucket
+* Function to kill all jobs
+* Prettier output for most functions
+
 # kuber 0.1.2
 
 * Password passed via askForPassword() in RStudio

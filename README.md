@@ -48,15 +48,6 @@ kuber::kuber_pods()
 
 ## Roadmap
 
-- Minor 0.2.0
-  - [X] Ability to change bucket and image names
-  - [X] README.md
-  - [X] Better names for the functions
-  - [X] Cleaner exec.R template
-  - [X] ids.rds is a bad name
-  - [X] Function to list objects in bucket
-  - [X] Function to kill all jobs
-  - [X] Prettier output for gcloud_get_config
 - Patch 0.2.1
   - [ ] Remove googleCloudStorageR from Dockerfile
   - [ ] Better dir pasting
