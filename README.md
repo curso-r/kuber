@@ -55,7 +55,7 @@ kuber::kuber_pods()
   - [X] Better names for the functions
   - [X] Cleaner exec.R template
   - [X] ids.rds is a bad name
-  - [ ] Function to list objects in bucket
+  - [X] Function to list objects in bucket
   - [X] Function to kill all jobs
   - [X] Prettier output for gcloud_get_config
 - Patch 0.2.1
