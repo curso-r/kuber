@@ -137,7 +137,7 @@ kuber_init <- function(path, bucket_name, image_name) {
     "      - name: c",
     paste0("        image: ", image_name),
     paste0('        command: ["Rscript", "--vanilla", "exec.R", "$ITEM", "', bucket_name, '"]'),
-    "      restartPolicy: Never"
+    "      restartPolicy: OnFailure"
   )
 
   # Paths for files

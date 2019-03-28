@@ -3,7 +3,7 @@
 ## Overview
 
 `kuber` is a small toolkit that leverages [docker](https://www.docker.com/),
-Google's [cloud sdk](https://cloud.google.com/sdk/) and
+Google's [cloud SDK](https://cloud.google.com/sdk/) and
 [kubernetes](https://kubernetes.io/) to help you with massively parallel tasks.
 
 ## Installation
@@ -53,7 +53,9 @@ kuber::kuber_pods()
   - [ ] Better dir pasting
   - [ ] Documentation about exec.R debugging
   - [ ] Check if user has everything setup on load
-  - [ ] Higher restart limit
+  - [ ] Describe project in license
+  - [ ] kuber_pods() errors when list is empty
+  - [X] Pods should be able to restart
 - Minor 0.3.0
   - [ ] Functions for deleting cluster, bucket and image
   - [ ] Functions for listing other gcloud resources
@@ -62,6 +64,7 @@ kuber::kuber_pods()
   - [ ] If a function fails, revert what happeded
   - [ ] User has to be able to provide their own auth
   - [ ] Documentation for auth
+  - [ ] Possibility to add project path as global option
 - Major 1.0.0
   - [ ] Automate auth creation
   - [ ] Install everything without sudo
