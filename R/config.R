@@ -12,7 +12,9 @@
 #' @export
 gcloud_get_config <- function(quiet = FALSE) {
   out <- sys("gcloud config list", FALSE, ignore.stderr = TRUE)
-  if (!quiet) { cat(out, sep = "\n") }
+  if (!quiet) {
+    cat(out, sep = "\n")
+  }
   invisible(out)
 }
 
@@ -59,8 +61,12 @@ kuber_get_config <- function(path, quiet = FALSE) {
   bucket <- gsub("..$", "", gsub(" +command: .+, .", "", lines[grep(" command: ", lines)]))
   image <- gsub(" +image: ", "", lines[grep(" image: ", lines)])
 
-  if (!quiet) { cat("Bucket: ", bucket, "\n") }
-  if (!quiet) { cat("Image: ", image, "\n") }
+  if (!quiet) {
+    cat("Bucket: ", bucket, "\n")
+  }
+  if (!quiet) {
+    cat("Image: ", image, "\n")
+  }
   invisible(c(bucket, image))
 }
 
@@ -89,12 +95,14 @@ kuber_set_config <- function(path, bucket_name = NULL, image_name = NULL) {
   if (!is.null(bucket_name)) {
     lines[grep(" command: ", lines)] <- gsub(
       'ITEM", ".+"]', paste0('ITEM", "', bucket_name, '"]'),
-      lines[grep(" command: ", lines)])
+      lines[grep(" command: ", lines)]
+    )
   }
   if (!is.null(image_name)) {
     lines[grep(" image: ", lines)] <- gsub(
       ": .+", paste0(": ", image_name),
-      lines[grep(" image: ", lines)])
+      lines[grep(" image: ", lines)]
+    )
   }
 
   # Write file
