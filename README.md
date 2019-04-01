@@ -54,7 +54,7 @@ kuber::kuber_pods()
   - [ ] Documentation about exec.R debugging
   - [ ] Check if user has everything setup on load
   - [ ] Describe project in license
-  - [ ] kuber_pods() errors when list is empty
+  - [X] kuber_pods() errors when list is empty
   - [X] kuber_push() must clean jobs/ folder
   - [X] Pods should be able to restart
   - [ ] gcloud container clusters get-credentials
