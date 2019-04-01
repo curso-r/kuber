@@ -53,7 +53,7 @@ kuber::kuber_pods()
   - [ ] Better dir pasting
   - [ ] Documentation about exec.R debugging
   - [ ] Check if user has everything setup on load
-  - [ ] Describe project in license
+  - [X] Describe project in license
   - [X] kuber_pods() errors when list is empty
   - [X] kuber_push() must clean jobs/ folder
   - [X] Pods should be able to restart
