@@ -55,7 +55,10 @@ kuber::kuber_pods()
   - [ ] Check if user has everything setup on load
   - [ ] Describe project in license
   - [ ] kuber_pods() errors when list is empty
+  - [X] kuber_push() must clean jobs/ folder
   - [X] Pods should be able to restart
+  - [ ] gcloud container clusters get-credentials
+  - [ ] Option to select folder in kuber_list()
 - Minor 0.3.0
   - [ ] Functions for deleting cluster, bucket and image
   - [ ] Functions for listing other gcloud resources

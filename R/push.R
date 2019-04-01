@@ -28,6 +28,7 @@ kuber_push <- function(path, num_jobs = 3L) {
   sys(paste0("docker push ", image))
 
   # Create individual job files
+  sys(paste0("cd ", path, "; rm -r jobs/*"))
   sys(paste0(
     "cd ", path, "; for i in $(seq ", as.integer(num_jobs),
     '); do cat job-tmpl.yaml | sed "s/\\$ITEM/$i/" > ./jobs/job-$i.yaml; done'
