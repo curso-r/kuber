@@ -51,19 +51,24 @@ kuber::kuber_pods()
 - Patch 0.2.1
   - [ ] Remove googleCloudStorageR from Dockerfile
   - [ ] Better dir pasting
-  - [ ] Documentation about exec.R debugging
-  - [ ] Check if user has everything setup on load
+  - [X] Check if user has everything setup on load
   - [X] Describe project in license
   - [X] kuber_pods() errors when list is empty
   - [X] kuber_push() must clean jobs/ folder
   - [X] Pods should be able to restart
-  - [ ] gcloud container clusters get-credentials
   - [ ] Option to select folder in kuber_list()
+- Patch 0.2.2
+  - [ ] Documentation about exec.R debugging
+  - [ ] Use crayon for system calls
+- Patch 0.2.3
+  - [ ] Save relevant gcloud information in hidden file
+  - [ ] gcloud container clusters get-credentials
+  - [ ] Select region on kuber_run
+  - [ ] Use directory in kuber_pods and _kill
 - Minor 0.3.0
   - [ ] Functions for deleting cluster, bucket and image
   - [ ] Functions for listing other gcloud resources
   - [ ] Vignette and packagedown
-  - [ ] Use crayon for system calls
   - [ ] If a function fails, revert what happeded
   - [ ] User has to be able to provide their own auth
   - [ ] Documentation for auth

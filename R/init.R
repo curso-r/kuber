@@ -94,7 +94,7 @@ kuber_init <- function(path, bucket_name, image_name) {
     "    abjutils",
     'RUN wget -O ./client_id.json "https://drive.google.com/uc?id=1LETUGnNGokwPPg0Y_ViFi0uKP9vy6WF2&authuser=0&export=download"',
     'RUN wget -O ./service_account_key.json "https://drive.google.com/uc?id=1eOczW8KSGcwR7kenZaYj4EB6tatMQgL8&authuser=0&export=download"',
-    "COPY exec.R list.rds[t] ./"
+    "COPY exec.R list.rds* ./"
   )
   exec_r_file <- c(
     "#!/usr/bin/env Rscript",

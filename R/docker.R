@@ -13,7 +13,7 @@ has_docker <- function() {
   }
 
   # User is in docker group
-  group <- sys("docker info", FALSE)
+  group <- sys("docker info", FALSE, ignore.stderr = TRUE)
   if (length(group) == 0) {
     return(FALSE)
   }
