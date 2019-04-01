@@ -48,14 +48,6 @@ kuber::kuber_pods()
 
 ## Roadmap
 
-- Patch 0.2.1
-  - [X] Better dir pasting
-  - [X] Check if user has everything setup on load
-  - [X] Describe project in license
-  - [X] kuber_pods() errors when list is empty
-  - [X] kuber_push() must clean jobs/ folder
-  - [X] Pods should be able to restart
-  - [X] Option to select folder in kuber_list()
 - Patch 0.2.2
   - [ ] Documentation about exec.R debugging
   - [ ] Use crayon for system calls

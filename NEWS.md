@@ -1,3 +1,13 @@
+# kuber 0.2.1
+
+* Internal refactoring of system commands
+* Check if user has everything setup on load
+* Project described in license
+* If list.rds is missing, kuber_pods() still works
+* kuber_push() cleans jobs/ folder
+* Restart policy for pods
+* Added folder option to kuber_list()
+
 # kuber 0.2.0
 
 * Ability to change bucket and image names
