@@ -56,7 +56,7 @@ kuber::kuber_pods()
   - [X] kuber_pods() errors when list is empty
   - [X] kuber_push() must clean jobs/ folder
   - [X] Pods should be able to restart
-  - [ ] Option to select folder in kuber_list()
+  - [X] Option to select folder in kuber_list()
 - Patch 0.2.2
   - [ ] Documentation about exec.R debugging
   - [ ] Use crayon for system calls

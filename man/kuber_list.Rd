@@ -4,10 +4,12 @@
 \alias{kuber_list}
 \title{List contents of a gcloud bucket}
 \usage{
-kuber_list(path, recursive = FALSE)
+kuber_list(path, folder = "", recursive = FALSE)
 }
 \arguments{
 \item{path}{Path to the image folder}
+
+\item{folder}{List files in which directory from the bucket}
 
 \item{recursive}{Whether to list files inside folders (\code{FALSE} by default)}
 }

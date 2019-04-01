@@ -18,18 +18,19 @@ kuber_bucket <- function(name) {
 #' objects stored in a gclould bucket.
 #'
 #' @param path Path to the image folder
+#' @param folder List files in which directory from the bucket
 #' @param recursive Whether to list files inside folders (`FALSE` by default)
 #'
 #' @references \url{https://cloud.google.com/storage/docs/gsutil/commands/ls}
 #'
 #' @return A character vector with file names
 #' @export
-kuber_list <- function(path, recursive = FALSE) {
+kuber_list <- function(path, folder = "", recursive = FALSE) {
   bucket <- kuber_get_config(path, TRUE)[1]
   if (!recursive) {
-    out <- sys(paste0("gsutil ls gs://", bucket))
+    out <- sys(paste0("gsutil ls gs://", bucket, "/", folder))
   } else {
-    out <- sys(paste0("gsutil ls -r gs://", bucket))
+    out <- sys(paste0("gsutil ls -r gs://", bucket, "/", folder))
   }
   gsub(paste0("gs://", bucket, "/"), "", out)
 }
