@@ -8,7 +8,7 @@
 #'
 #' @references \url{https://cloud.google.com/storage/docs/gsutil/commands/mb}
 kuber_bucket <- function(name) {
-  sys(paste0("gsutil mb gs://", name, "/"))
+  sys("gsutil mb gs://", name, "/")
   invisible(name)
 }
 
@@ -28,9 +28,9 @@ kuber_bucket <- function(name) {
 kuber_list <- function(path, folder = "", recursive = FALSE) {
   bucket <- kuber_get_config(path, TRUE)[1]
   if (!recursive) {
-    out <- sys(paste0("gsutil ls gs://", bucket, "/", folder))
+    out <- sys("gsutil ls gs://", bucket, "/", folder)
   } else {
-    out <- sys(paste0("gsutil ls -r gs://", bucket, "/", folder))
+    out <- sys("gsutil ls -r gs://", bucket, "/", folder)
   }
   gsub(paste0("gs://", bucket, "/"), "", out)
 }

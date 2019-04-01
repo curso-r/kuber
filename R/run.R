@@ -12,7 +12,7 @@
 #' @return The path to the kuber directory
 #' @export
 kuber_run <- function(path) {
-  sys(paste0("cd ", path, "; kubectl create -f ./jobs"))
+  sys("cd ", path, "; kubectl create -f ./jobs")
   cat("Run 'kuber_pods()' to follow up on the pods.\n")
   invisible(path)
 }

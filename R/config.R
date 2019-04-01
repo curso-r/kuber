@@ -31,13 +31,13 @@ gcloud_get_config <- function(quiet = FALSE) {
 #' @export
 gcloud_set_config <- function(project = NULL, zone = NULL, region = NULL) {
   if (!is.null(project)) {
-    sys(paste0("gcloud config set project ", project))
+    sys("gcloud config set project ", project)
   }
   if (!is.null(zone)) {
-    sys(paste0("gcloud config set compute/zone ", zone))
+    sys("gcloud config set compute/zone ", zone)
   }
   if (!is.null(region)) {
-    sys(paste0("gcloud config set compute/region ", region))
+    sys("gcloud config set compute/region ", region)
   }
   invisible(TRUE)
 }

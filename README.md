@@ -49,8 +49,7 @@ kuber::kuber_pods()
 ## Roadmap
 
 - Patch 0.2.1
-  - [ ] Remove googleCloudStorageR from Dockerfile
-  - [ ] Better dir pasting
+  - [X] Better dir pasting
   - [X] Check if user has everything setup on load
   - [X] Describe project in license
   - [X] kuber_pods() errors when list is empty
@@ -66,6 +65,7 @@ kuber::kuber_pods()
   - [ ] Select region on kuber_run
   - [ ] Use directory in kuber_pods and _kill
 - Minor 0.3.0
+  - [ ] Remove googleCloudStorageR from Dockerfile
   - [ ] Functions for deleting cluster, bucket and image
   - [ ] Functions for listing other gcloud resources
   - [ ] Vignette and packagedown
