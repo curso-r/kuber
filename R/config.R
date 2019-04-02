@@ -108,6 +108,6 @@ kuber_set_config <- function(path, bucket_name = NULL, image_name = NULL) {
   # Write file
   writeLines(lines, paste0(path, "/job-tmpl.yaml"))
 
-  cat("To apply changes, run kuber_push()\n")
+  todo("To apply changes, run 'kuber_push()'")
   invisible(TRUE)
 }

@@ -27,6 +27,15 @@ sys <- function(txt, ..., print = TRUE, ignore.stderr = FALSE) {
   return(out)
 }
 
+# Print task for user
+todo <- function(txt) {
+  if (!requireNamespace("callr", quietly = TRUE)) {
+    cat(txt, "\n", sep = "")
+  } else {
+    cat(crayon::red(clisymbols::symbol$bullet), "  ", txt, "\n", sep = "")
+  }
+}
+
 # Is the session running in RStudio?
 is_rstudio <- function() {
   Sys.getenv("RSTUDIO") == "1"

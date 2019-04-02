@@ -154,10 +154,9 @@ kuber_init <- function(path, bucket_name, image_name) {
   dir.create(paste0(path, "/jobs"), showWarnings = FALSE, recursive = TRUE)
 
   # Further instructions
-  cat("Now please do the following:\n")
-  cat(paste0("  1. Edit '", exec_r, "'.\n"))
-  cat(paste0("  2. Create '", list, "' with usable objects.\n"))
-  cat(paste0("  3. Run 'kuber_push(", path, ")'.\n"))
+  todo(paste0("Edit '", exec_r, "'"))
+  todo(paste0("Create '", list, "' with usable objects"))
+  todo(paste0("Run 'kuber_push(", path, ")'"))
 
   # Edit file
   if (requireNamespace("rstudioapi", quietly = TRUE) && is_rstudio()) {

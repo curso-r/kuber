@@ -56,7 +56,7 @@ docker_install <- function() {
     sys("Running script", "sudo sh ", get_docker)
     sys("Adding user to docker group", "sudo usermod -aG docker $USER")
 
-    cat("Restart your session and log out for changes to take effect.\n")
+    todo("Restart your session and log out for changes to take effect")
     invisible(docker)
   } else {
 
@@ -70,7 +70,7 @@ docker_install <- function() {
       # add user to docker group
       sys("Adding user to docker group", "sudo usermod -aG docker $USER")
 
-      cat("Restart your session and log out for changes to take effect.\n")
+      todo("Restart your session and log out for changes to take effect")
       invisible(docker)
     }
   }

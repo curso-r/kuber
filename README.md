@@ -42,7 +42,7 @@ kuber::kuber_push("my-dir", num_jobs = 5)
 # Run jobs
 kuber::kuber_run("my-dir")
 
-# See jobs' statuses
+# See pods' statuses
 kuber::kuber_pods()
 ```
 
@@ -51,7 +51,7 @@ kuber::kuber_pods()
 - Patch 0.2.2
   - [ ] Documentation about exec.R debugging
   - [X] Use crayon for system calls
-  - [ ] Add todo to user tasks
+  - [X] Add todo to user tasks
 - Patch 0.2.3
   - [ ] Save relevant gcloud information in hidden file
   - [ ] gcloud container clusters get-credentials

@@ -13,7 +13,7 @@
 #' @export
 kuber_run <- function(path) {
   sys("Creating jobs", "cd ", path, "; kubectl create -f ./jobs")
-  cat("Run 'kuber_pods()' to follow up on the pods.\n")
+  todo("Run 'kuber_pods()' to follow up on the pods")
   invisible(path)
 }
 

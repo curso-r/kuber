@@ -45,9 +45,8 @@ gcloud_install <- function() {
     sys("Installing kubectl", "sudo apt-get install -y kubectl")
 
     # Run login command
-    cat("Login in...\n")
     if (is_rstudio()) {
-      cat("Since your session is interactive, please run 'gcloud init' on your console.\n")
+      todo("Since your session is interactive, please run 'gcloud init' on your terminal")
     } else {
       system("gcloud init")
     }
