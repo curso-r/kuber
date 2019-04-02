@@ -23,14 +23,14 @@ kuber_push <- function(path, num_jobs = 3L) {
   hostname <- gsub("/.+", "", image)
 
   # Build image and push it
-  sys("docker build -t ", image, " ", path)
-  sys("gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://", hostname)
-  sys("docker push ", image)
+  sys("Building image", "docker build -t ", image, " ", path)
+  sys("Authenticating", "gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://", hostname)
+  sys("Pushing image", "docker push ", image)
 
   # Create individual job files
-  sys("cd ", path, "; rm -r jobs/*")
+  sys("Removing old jobs", "cd ", path, "; rm -r jobs/*")
   sys(
-    "cd ", path, "; for i in $(seq ", as.integer(num_jobs),
+    "Creating new jobs", "cd ", path, "; for i in $(seq ", as.integer(num_jobs),
     '); do cat job-tmpl.yaml | sed "s/\\$ITEM/$i/" > ./jobs/job-$i.yaml; done'
   )
 

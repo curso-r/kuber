@@ -7,13 +7,13 @@
 has_docker <- function() {
 
   # Docker is installed
-  docker <- sys("which docker", print = FALSE)
+  docker <- sys("", "which docker", print = FALSE)
   if (length(docker) == 0) {
     return(FALSE)
   }
 
   # User is in docker group
-  group <- sys("docker info", print = FALSE, ignore.stderr = TRUE)
+  group <- sys("", "docker info", print = FALSE, ignore.stderr = TRUE)
   if (length(group) == 0) {
     return(FALSE)
   }
@@ -42,33 +42,33 @@ has_docker <- function() {
 docker_install <- function() {
 
   # Docker not installed
-  docker <- sys("which docker", print = FALSE)
+  docker <- sys("", "which docker", print = FALSE)
   if (length(docker) == 0) {
 
     # Get installation file
     get_docker <- tempfile(fileext = ".sh")
-    sys("curl -fsSL https://get.docker.com -o ", get_docker)
+    sys("Fetching installation file", "curl -fsSL https://get.docker.com -o ", get_docker)
 
     # Run as sudo
     get_sudo()
 
     # Install and add user to docker group
-    sys("sudo sh ", get_docker)
-    sys("sudo usermod -aG docker $USER")
+    sys("Running script", "sudo sh ", get_docker)
+    sys("Adding user to docker group", "sudo usermod -aG docker $USER")
 
     cat("Restart your session and log out for changes to take effect.\n")
     invisible(docker)
   } else {
 
     # User not in docker group
-    group <- sys("docker info", print = FALSE)
+    group <- sys("", "docker info", print = FALSE)
     if (length(group) == 0) {
 
       # Run as sudo
       get_sudo()
 
       # add user to docker group
-      sys("sudo usermod -aG docker $USER")
+      sys("Adding user to docker group", "sudo usermod -aG docker $USER")
 
       cat("Restart your session and log out for changes to take effect.\n")
       invisible(docker)

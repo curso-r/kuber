@@ -12,7 +12,7 @@
 #' @return The path to the kuber directory
 #' @export
 kuber_run <- function(path) {
-  sys("cd ", path, "; kubectl create -f ./jobs")
+  sys("Creating jobs", "cd ", path, "; kubectl create -f ./jobs")
   cat("Run 'kuber_pods()' to follow up on the pods.\n")
   invisible(path)
 }
@@ -27,7 +27,7 @@ kuber_run <- function(path) {
 #' @return A table with pods' status information
 #' @export
 kuber_pods <- function() {
-  table <- sys("kubectl get pods")
+  table <- sys("Fetching pods", "kubectl get pods")
 
   # Extract full table
   file <- tempfile(fileext = ".csv")
@@ -46,7 +46,7 @@ kuber_pods <- function() {
 #' @return If everything has gone as expected, `TRUE`
 #' @export
 kuber_kill <- function() {
-  sys("kubectl delete --all jobs")
-  sys("kubectl delete --all pods")
+  sys("Deleting jobs", "kubectl delete --all jobs")
+  sys("Deleting pods", "kubectl delete --all pods")
   invisible(TRUE)
 }
