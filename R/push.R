@@ -8,6 +8,8 @@
 #' with [kuber_run()].
 #'
 #' @param path Path to the kuber directory
+#' @param image_name Name of the image where to build the container (if `NULL`,
+#' the default, the name of the image set by [kuber_init()])
 #' @param num_jobs When run, the number of jobs spawned (if `NULL`, the default,
 #' `[NUM_NODES]` of the cluster)
 #'
@@ -16,9 +18,12 @@
 #'
 #' @return Path to the kuber directory
 #' @export
-kuber_push <- function(path, num_jobs = NULL) {
+kuber_push <- function(path, image_name = NULL, num_jobs = NULL) {
 
   # Extract image information
+  if (!is.null(image_name)) {
+    kuber_set_config(path, list("image" = image_name))
+  }
   image <- kuber_get_config(path, "image", TRUE)
   hostname <- gsub("/.+", "", image)
 

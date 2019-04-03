@@ -48,6 +48,8 @@ kuber_push("~/my-dir")
 #> ✔  Creating new jobs
 
 kuber_run("my-dir")
+#> ✔  Authenticating
+#> ✔  Setting cluster configuration
 #> ✔  Creating jobs
 #> ●  Run `kuber_pods()` to follow up on the pods
 
@@ -63,8 +65,8 @@ kuber_pods()
 
 - Patch 0.2.3
   - [X] Save relevant gcloud information in hidden file
-  - [ ] gcloud container clusters get-credentials
-  - [ ] Select cluster on kuber_run
+  - [X] gcloud container clusters get-credentials
+  - [X] Select image and cluster on the fly
   - [ ] Use directory in kuber_pods and _kill
   - [ ] Documentation for sys and todo
   - [ ] Warnings on has_*()

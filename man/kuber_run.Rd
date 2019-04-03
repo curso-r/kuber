@@ -4,10 +4,13 @@
 \alias{kuber_run}
 \title{Run a job on a Kubernetes cluster}
 \usage{
-kuber_run(path)
+kuber_run(path, cluster_name = NULL)
 }
 \arguments{
 \item{path}{Path to the image folder}
+
+\item{cluster_name}{Name of the cluster where to run the jobs (if \code{NULL},
+the default, the name of the cluster set by \code{\link[=kuber_init]{kuber_init()}})}
 }
 \value{
 The path to the kuber directory

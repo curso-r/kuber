@@ -4,10 +4,13 @@
 \alias{kuber_push}
 \title{Build and push the docker image of a kuber directory}
 \usage{
-kuber_push(path, num_jobs = NULL)
+kuber_push(path, image_name = NULL, num_jobs = NULL)
 }
 \arguments{
 \item{path}{Path to the kuber directory}
+
+\item{image_name}{Name of the image where to build the container (if \code{NULL},
+the default, the name of the image set by \code{\link[=kuber_init]{kuber_init()}})}
 
 \item{num_jobs}{When run, the number of jobs spawned (if \code{NULL}, the default,
 \code{[NUM_NODES]} of the cluster)}

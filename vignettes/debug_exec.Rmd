@@ -54,6 +54,8 @@ kuber_push("~/my-dir")
 #> ✔  Creating new jobs
 
 kuber::kuber_run("my-dir")
+#> ✔  Authenticating
+#> ✔  Setting cluster configuration
 #> ✔  Creating jobs
 #> ●  Run `kuber_pods()` to follow up on the pods
 ```

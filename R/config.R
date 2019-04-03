@@ -96,7 +96,7 @@ kuber_set_config <- function(path, parameters = list("cluster" = NULL, "bucket" 
     cluster_name <- parameters$cluster
     cl <- cluster_info(cluster_name)
 
-    config[1] <- paste("bucket:", cluster_name)
+    config[1] <- paste("cluster:", cluster_name)
     config[2] <- paste("location:", cl$LOCATION)
     config[3] <- paste("region:", gsub("-[a-z]$", "", cl$LOCATION))
     config[4] <- paste("num_nodes:", cl$NUM_NODES)
@@ -131,8 +131,6 @@ kuber_set_config <- function(path, parameters = list("cluster" = NULL, "bucket" 
       lines[grep(" image: ", lines)]
     )
     config[6] <- paste("image:", image_name)
-
-    todo("To apply changes, run 'kuber_push()'")
   }
 
   # Write files
