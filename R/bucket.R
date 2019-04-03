@@ -7,8 +7,14 @@
 #' @param name Name of the bucket
 #'
 #' @references \url{https://cloud.google.com/storage/docs/gsutil/commands/mb}
+#'
+#' @return The name of the bucket
+#' @export
 kuber_bucket <- function(name) {
-  sys("Creating bucket", "gsutil mb gs://", name, "/")
+  buckets <- sys("Fetching bucket information", "gsutil ls")
+  if (!any(gsub("(gs://|/)", "", buckets) == name)) {
+    sys("Creating bucket", "gsutil mb gs://", name, "/")
+  }
   invisible(name)
 }
 

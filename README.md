@@ -31,6 +31,7 @@ kuber_cluster("my-cluster")
 
 kuber_init("~/my-dir", "my-cluster", "my-bucket", "my-image")
 #> ✔  Fetching cluster information
+#> ✔  Fetching bucket information
 #> ✔  Creating bucket
 #> ●  Edit `~/my-dir/exec.R'`
 #> ●  Create `~/my-dir/list.rds` with usable objects
@@ -65,9 +66,10 @@ kuber_pods()
   - [ ] gcloud container clusters get-credentials
   - [ ] Select cluster on kuber_run
   - [ ] Use directory in kuber_pods and _kill
-  - [ ] kuber_set_config() must work with .kuber
   - [ ] Documentation for sys and todo
+  - [ ] Warnings on has_*()
 - Minor 0.3.0
+  - [ ] Better function names
   - [ ] Remove googleCloudStorageR from Dockerfile
   - [ ] Functions for deleting cluster, bucket and image
   - [ ] Functions for listing other gcloud resources

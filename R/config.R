@@ -78,38 +78,66 @@ kuber_get_config <- function(path, what = "all", quiet = FALSE) {
 #' gcloud bucket in `job-tmpl.yaml` at a kuber folder.
 #'
 #' @param path Path to the kuber directory
-#' @param bucket_name Desired bucket name (or `NULL` to skip)
-#' @param image_name Desired image name (or `NULL` to skip)
+#' @param parameters A list with parameters to change: `cluster`, `bucket`,
+#' and/or `image` plus their respective values (or `NULL` to keep)
 #'
 #' @return If everything has gone as expected, `TRUE`
 #' @export
-kuber_set_config <- function(path, bucket_name = NULL, image_name = NULL) {
+kuber_set_config <- function(path, parameters = list("cluster" = NULL, "bucket" = NULL, "image" = NULL)) {
 
-  # Build image name if necessary
-  if (!grepl("/", image_name)) {
-    conf <- gcloud_get_config(TRUE)
-    project <- gsub("project = ", "", conf[grep("project = ", conf)])
-    image_name <- paste0("gcr.io/", project, "/", image_name, ":latest")
-  }
+  # Read files
+  config <- kuber_get_config(path, quiet = TRUE)
+  lines <- readLines(paste0(path, "/job-tmpl.yaml"))
 
   # Change settings
-  lines <- readLines(paste0(path, "/job-tmpl.yaml"))
-  if (!is.null(bucket_name)) {
+  if (!is.null(parameters$cluster)) {
+
+    # Fetch cluster information
+    cluster_name <- parameters$cluster
+    cl <- cluster_info(cluster_name)
+
+    config[1] <- paste("bucket:", cluster_name)
+    config[2] <- paste("location:", cl$LOCATION)
+    config[3] <- paste("region:", gsub("-[a-z]$", "", cl$LOCATION))
+    config[4] <- paste("num_nodes:", cl$NUM_NODES)
+
+  }
+  if (!is.null(parameters$bucket)) {
+
+    # Create bucket if necessary
+    bucket_name <- parameters$bucket
+    kuber_bucket(bucket_name)
+
     lines[grep(" command: ", lines)] <- gsub(
       'ITEM", ".+"]', paste0('ITEM", "', bucket_name, '"]'),
       lines[grep(" command: ", lines)]
     )
+
+    config[5] <- paste("bucket:", bucket_name)
+
   }
-  if (!is.null(image_name)) {
+  if (!is.null(parameters$image)) {
+
+    # Build image name if necessary
+    image_name <- parameters$image
+    if (!grepl("/", image_name)) {
+      conf <- gcloud_get_config(TRUE)
+      project <- gsub("project = ", "", conf[grep("project = ", conf)])
+      image_name <- paste0("gcr.io/", project, "/", image_name, ":latest")
+    }
+
     lines[grep(" image: ", lines)] <- gsub(
       ": .+", paste0(": ", image_name),
       lines[grep(" image: ", lines)]
     )
+    config[6] <- paste("image:", image_name)
+
+    todo("To apply changes, run 'kuber_push()'")
   }
 
-  # Write file
+  # Write files
   writeLines(lines, paste0(path, "/job-tmpl.yaml"))
+  writeLines(config, paste0(path, "/.kuber"))
 
-  todo("To apply changes, run 'kuber_push()'")
   invisible(TRUE)
 }

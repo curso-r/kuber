@@ -13,7 +13,7 @@ kuber_init(path, cluster_name, bucket_name, image_name)
 already)}
 
 \item{bucket_name}{Name of the storage bucket where the files will be stored
-(created if not yet initialized)}
+(will be created if necessary)}
 
 \item{image_name}{Name of the docker image where to build the container (either
 its full path in the form \code{[HOSTNAME]/[PROJECT_ID]/[IMAGE_NAME]:[VERSION]} or

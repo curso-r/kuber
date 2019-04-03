@@ -4,14 +4,14 @@
 \alias{kuber_set_config}
 \title{Set bucket and image information in a kuber directory}
 \usage{
-kuber_set_config(path, bucket_name = NULL, image_name = NULL)
+kuber_set_config(path, parameters = list(cluster = NULL, bucket = NULL,
+  image = NULL))
 }
 \arguments{
 \item{path}{Path to the kuber directory}
 
-\item{bucket_name}{Desired bucket name (or \code{NULL} to skip)}
-
-\item{image_name}{Desired image name (or \code{NULL} to skip)}
+\item{parameters}{A list with parameters to change: \code{cluster}, \code{bucket},
+and/or \code{image} plus their respective values (or \code{NULL} to keep)}
 }
 \value{
 If everything has gone as expected, \code{TRUE}

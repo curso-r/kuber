@@ -47,7 +47,7 @@
 #' @param cluster_name Name of the cluster where to execute jobs (must exist
 #' already)
 #' @param bucket_name Name of the storage bucket where the files will be stored
-#' (created if not yet initialized)
+#' (will be created if necessary)
 #' @param image_name Name of the docker image where to build the container (either
 #' its full path in the form `[HOSTNAME]/[PROJECT_ID]/[IMAGE_NAME]:[VERSION]` or
 #' simply `[IMAGE_NAME]` for it to be automatically pushed to the Google Cloud
