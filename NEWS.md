@@ -1,3 +1,12 @@
+# kuber 0.2.3
+
+* Save relevant gcloud information in hidden file
+* Select image and cluster on the fly
+* Authenticate cluster before running
+* Use directory in kuber_pods() and kuber_kill()
+* Documentation for sys() and todo()
+* Tell user what to install on load
+
 # kuber 0.2.2
 
 * Documentation about exec.R debugging
