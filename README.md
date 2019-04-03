@@ -52,6 +52,7 @@ kuber::kuber_pods()
   - [ ] Documentation about exec.R debugging
   - [X] Use crayon for system calls
   - [X] Add todo to user tasks
+  - [X] Handle system warnings
 - Patch 0.2.3
   - [ ] Save relevant gcloud information in hidden file
   - [ ] gcloud container clusters get-credentials

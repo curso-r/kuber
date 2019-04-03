@@ -12,15 +12,23 @@ sys <- function(txt, ..., print = TRUE, ignore.stderr = FALSE) {
 
   } else {
 
-    run <- function(txt, cmd, ig) {
+    run <- function(txt, cmd, err) {
       cat("   ", txt, sep = "")
-      suppressWarnings(system(cmd, intern = TRUE, ignore.stderr = ig))
+      suppressWarnings(system2(gsub(" .+", "", cmd), gsub("^[a-z]+ ", "", cmd), stdout = TRUE, stderr = err))
     }
 
-    out <- callr::r(run, list(txt, cmd, ignore.stderr), spinner = TRUE, show = TRUE)
+    err <- tempfile()
+    out <- out <- callr::r(run, list(txt, cmd, err), spinner = TRUE, show = TRUE)
 
     grey <- crayon::make_style("#A9A9A9", grey = TRUE)
     cat(crayon::green(clisymbols::symbol$tick), "  ", grey(txt), "\n", sep = "")
+
+    err_ <- readLines(err)
+    err_ <- err_[err_ != ""]
+    if (length(err_) > 0) {
+      warning(err_, call. = FALSE)
+    }
+    file.remove(err)
 
   }
 
