@@ -46,28 +46,30 @@ gcloud_set_config <- function(project = NULL, zone = NULL, region = NULL) {
 
 #' Get bucket and image information from a kuber folder
 #'
-#' @description This function extracts the names of the docker image and of the
-#' gcloud bucket stored in `job-tmpl.yaml` at a kuber folder.
+#' @description This function extracts the names of all important kuber
+#' parameters stored in the `.kuber` hidden file.
 #'
 #' @param path Path to the kuber directory
+#' @param what What parameter to return: `all`, `cluster`, `location`,
+#' `region`, `num_nodes`, `bucket`, or `image`
 #' @param quiet Whether to skip printing output (`FALSE` by default)
 #'
-#' @return The names of the bucket and image
+#' @return A character vector with each parameter
 #' @export
-kuber_get_config <- function(path, quiet = FALSE) {
+kuber_get_config <- function(path, what = "all", quiet = FALSE) {
 
   # Extract information
-  lines <- readLines(paste0(path, "/job-tmpl.yaml"))
-  bucket <- gsub("..$", "", gsub(" +command: .+, .", "", lines[grep(" command: ", lines)]))
-  image <- gsub(" +image: ", "", lines[grep(" image: ", lines)])
+  lines <- readLines(paste0(path, "/.kuber"))
+
+  # Get chosen parameter
+  if (what != "all") {
+    lines <- gsub(paste0(what, ": "), "", lines[grepl(what, lines)])
+  }
 
   if (!quiet) {
-    cat("Bucket: ", bucket, "\n")
+    cat(lines, sep = "\n")
   }
-  if (!quiet) {
-    cat("Image: ", image, "\n")
-  }
-  invisible(c(bucket, image))
+  invisible(lines)
 }
 
 #' Set bucket and image information in a kuber directory

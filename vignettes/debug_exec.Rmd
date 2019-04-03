@@ -35,7 +35,8 @@ library(kuber)
 kuber_cluster("my-cluster")
 #> ✔  Creating cluster
 
-kuber_init("~/my-dir", "my-bucket", "my-image")
+kuber_init("~/my-dir", "my-cluster", "my-bucket", "my-image")
+#> ✔  Fetching cluster information
 #> ✔  Creating bucket
 #> ●  Edit `~/my-dir/exec.R'`
 #> ●  Create `~/my-dir/list.rds` with usable objects

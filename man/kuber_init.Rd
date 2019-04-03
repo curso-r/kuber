@@ -4,10 +4,13 @@
 \alias{kuber_init}
 \title{Create a docker directory with the kuber template for parallelism by expansion}
 \usage{
-kuber_init(path, bucket_name, image_name)
+kuber_init(path, cluster_name, bucket_name, image_name)
 }
 \arguments{
 \item{path}{Directory where to initialize kuber}
+
+\item{cluster_name}{Name of the cluster where to execute jobs (must exist
+already)}
 
 \item{bucket_name}{Name of the storage bucket where the files will be stored
 (created if not yet initialized)}

@@ -4,17 +4,20 @@
 \alias{kuber_get_config}
 \title{Get bucket and image information from a kuber folder}
 \usage{
-kuber_get_config(path, quiet = FALSE)
+kuber_get_config(path, what = "all", quiet = FALSE)
 }
 \arguments{
 \item{path}{Path to the kuber directory}
 
+\item{what}{What parameter to return: \code{all}, \code{cluster}, \code{location},
+\code{region}, \code{num_nodes}, \code{bucket}, or \code{image}}
+
 \item{quiet}{Whether to skip printing output (\code{FALSE} by default)}
 }
 \value{
-The names of the bucket and image
+A character vector with each parameter
 }
 \description{
-This function extracts the names of the docker image and of the
-gcloud bucket stored in \code{job-tmpl.yaml} at a kuber folder.
+This function extracts the names of all important kuber
+parameters stored in the \code{.kuber} hidden file.
 }

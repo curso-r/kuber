@@ -44,6 +44,8 @@
 #' scrape `list[[N]]` so that it doesn't overlap with any other job.
 #'
 #' @param path Directory where to initialize kuber
+#' @param cluster_name Name of the cluster where to execute jobs (must exist
+#' already)
 #' @param bucket_name Name of the storage bucket where the files will be stored
 #' (created if not yet initialized)
 #' @param image_name Name of the docker image where to build the container (either
@@ -56,7 +58,7 @@
 #'
 #' @return Path where the kuber folder was created
 #' @export
-kuber_init <- function(path, bucket_name, image_name) {
+kuber_init <- function(path, cluster_name, bucket_name, image_name) {
 
   # Create empty directory
   dir.create(path, showWarnings = FALSE, recursive = TRUE)
@@ -64,8 +66,19 @@ kuber_init <- function(path, bucket_name, image_name) {
     stop("Directory must be empty")
   }
 
+  # Hidden file for information
+  file.create(paste0(path, "/.kuber"))
+
+  # Fetch cluster info
+  cl <- cluster_info(cluster_name)
+  write(paste("cluster:", cluster_name), paste0(path, "/.kuber"), append = TRUE)
+  write(paste("location:", cl$LOCATION), paste0(path, "/.kuber"), append = TRUE)
+  write(paste("region:", gsub("-[a-z]$", "", cl$LOCATION)), paste0(path, "/.kuber"), append = TRUE)
+  write(paste("num_nodes:", cl$NUM_NODES), paste0(path, "/.kuber"), append = TRUE)
+
   # Create bucket
   kuber_bucket(bucket_name)
+  write(paste("bucket:", bucket_name), paste0(path, "/.kuber"), append = TRUE)
 
   # Build image name if necessary
   if (!grepl("/", image_name)) {
@@ -73,6 +86,7 @@ kuber_init <- function(path, bucket_name, image_name) {
     project <- gsub("project = ", "", conf[grep("project = ", conf)])
     image_name <- paste0("gcr.io/", project, "/", image_name, ":latest")
   }
+  write(paste("image:", image_name), paste0(path, "/.kuber"), append = TRUE)
 
   # Create job name
   job <- paste0("process-", paste0(sample(letters, 6, TRUE), collapse = ""))

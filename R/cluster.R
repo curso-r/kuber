@@ -22,7 +22,7 @@
 #'   flags = list("tags" = "k8s", "enable-autoupgrade" = "", "disk-type" = "pd-ssd")
 #' )
 #' }
-#' 
+#'
 #' @return The name of the cluster
 #' @export
 kuber_cluster <- function(name, machine_type = "g1-small", num_nodes = 3L, disk_size = "20GB", flags = list()) {
@@ -43,4 +43,29 @@ kuber_cluster <- function(name, machine_type = "g1-small", num_nodes = 3L, disk_
   sys("Creating cluster", cmd)
 
   invisible(name)
+}
+
+#' Fetch cluster information
+#'
+#' @description This function returns the row of information about a cluster
+#' named `name_cluster` from the results in `gcloud container clusters list`.
+#'
+#' @param cluster_name Name of the cluster (must exist)
+cluster_info <- function(cluster_name) {
+  table <- sys("Fetching cluster information", "gcloud container clusters list")
+
+  # Extract full table
+  file <- tempfile(fileext = ".csv")
+  writeLines(paste(gsub(" +", ",", table), collapse = "\n"), file)
+  on.exit(file.remove(file))
+
+  # Get corresponding row
+  table <- utils::read.csv(file, stringsAsFactors = FALSE)
+  id <- which(table$NAME == cluster_name)
+
+
+  if (length(id) == 0) {
+    stop("Cluster must exist")
+  }
+  return(table[id,])
 }

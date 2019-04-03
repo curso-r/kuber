@@ -32,8 +32,9 @@ kuber_pods <- function() {
   # Extract full table
   file <- tempfile(fileext = ".csv")
   writeLines(paste(gsub(" +", ",", table), collapse = "\n"), file)
+  on.exit(file.remove(file))
 
-  utils::read.csv(file)
+  utils::read.csv(file, stringsAsFactors = FALSE)
 }
 
 #' Kill all kubernetes jobs and pods

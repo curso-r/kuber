@@ -8,19 +8,24 @@
 #' with [kuber_run()].
 #'
 #' @param path Path to the kuber directory
-#' @param num_jobs When run, the number of jobs spawned (3 by default)
+#' @param num_jobs When run, the number of jobs spawned (if `NULL`, the default,
+#' `[NUM_NODES]` of the cluster)
 #'
 #' @references \url{https://docs.docker.com/engine/reference/commandline/build/}
 #' \url{https://cloud.google.com/container-registry/docs/pushing-and-pulling}
 #'
 #' @return Path to the kuber directory
 #' @export
-kuber_push <- function(path, num_jobs = 3L) {
+kuber_push <- function(path, num_jobs = NULL) {
 
   # Extract image information
-  lines <- readLines(paste0(path, "/job-tmpl.yaml"))
-  image <- gsub(" +image: ", "", lines[grep(" image: ", lines)])
+  image <- kuber_get_config(path, "image", TRUE)
   hostname <- gsub("/.+", "", image)
+
+  # Number of jobs
+  if (is.null(num_jobs)) {
+    num_jobs <- as.numeric(kuber_get_config(path, "num_nodes", TRUE))
+  }
 
   # Build image and push it
   sys("Building image", "docker build -t ", image, " ", path)

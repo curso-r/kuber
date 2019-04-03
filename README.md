@@ -29,7 +29,8 @@ library(kuber)
 kuber_cluster("my-cluster")
 #> ✔  Creating cluster
 
-kuber_init("~/my-dir", "my-bucket", "my-image")
+kuber_init("~/my-dir", "my-cluster", "my-bucket", "my-image")
+#> ✔  Fetching cluster information
 #> ✔  Creating bucket
 #> ●  Edit `~/my-dir/exec.R'`
 #> ●  Create `~/my-dir/list.rds` with usable objects
@@ -60,16 +61,18 @@ kuber_pods()
 ## Roadmap
 
 - Patch 0.2.3
-  - [ ] Save relevant gcloud information in hidden file
+  - [X] Save relevant gcloud information in hidden file
   - [ ] gcloud container clusters get-credentials
-  - [ ] Select region on kuber_run
+  - [ ] Select cluster on kuber_run
   - [ ] Use directory in kuber_pods and _kill
-  - [ ] Reference to vignettes
+  - [ ] kuber_set_config() must work with .kuber
+  - [ ] Documentation for sys and todo
 - Minor 0.3.0
   - [ ] Remove googleCloudStorageR from Dockerfile
   - [ ] Functions for deleting cluster, bucket and image
   - [ ] Functions for listing other gcloud resources
-  - [ ] Vignette and packagedown
+  - [ ] Vignettes and packagedown
+  - [ ] Reference to vignettes
   - [ ] If a function fails, revert what happeded
   - [ ] User has to be able to provide their own auth
   - [ ] Documentation for auth
