@@ -12,16 +12,17 @@ License: GPL-3
 URL: https://github.com/platipusc/kuber
 BugReports: https://github.com/platipusc/kuber/issues
 Suggests: 
-    googleCloudStorageR,
-    rstudioapi,
     callr,
     clisymbols,
     crayon,
+    googleCloudStorageR,
     knitr,
-    rmarkdown
+    rmarkdown,
+    rstudioapi
+VignetteBuilder: 
+    knitr
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE, roclets = c("rd", "namespace",
     "collate"))
 RoxygenNote: 6.1.1
-VignetteBuilder: knitr

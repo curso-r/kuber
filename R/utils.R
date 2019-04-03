@@ -4,14 +4,11 @@ sys <- function(txt, ..., print = TRUE, ignore.stderr = FALSE) {
   cmd <- paste0(...)
 
   if (!requireNamespace("callr", quietly = TRUE) || !print) {
-
     if (print) {
       cat("$ ", cmd, "\n")
     }
     out <- suppressWarnings(system(cmd, intern = TRUE, ignore.stderr = ignore.stderr))
-
   } else {
-
     run <- function(txt, cmd, err) {
       cat("   ", txt, sep = "")
       suppressWarnings(system2(gsub(" .+", "", cmd), gsub("^[a-z]+ ", "", cmd), stdout = TRUE, stderr = err))
@@ -29,7 +26,6 @@ sys <- function(txt, ..., print = TRUE, ignore.stderr = FALSE) {
       warning(err_, call. = FALSE)
     }
     file.remove(err)
-
   }
 
   return(out)
