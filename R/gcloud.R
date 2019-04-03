@@ -6,6 +6,7 @@
 has_gcloud <- function() {
   gcloud <- sys("", "which gcloud", print = FALSE)
   if (length(gcloud) == 0) {
+    todo("Install gcloud with 'gcloud_install()'")
     return(FALSE)
   }
 

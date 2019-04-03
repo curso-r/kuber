@@ -69,7 +69,7 @@ kuber_pods()
   - [X] Select image and cluster on the fly
   - [X] Use directory in kuber_pods and _kill
   - [X] Documentation for sys and todo
-  - [ ] Warnings on has_*()
+  - [X] Todo on has_*()
 - Minor 0.3.0
   - [ ] Better function names
   - [ ] Remove googleCloudStorageR from Dockerfile

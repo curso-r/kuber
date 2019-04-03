@@ -9,12 +9,14 @@ has_docker <- function() {
   # Docker is installed
   docker <- sys("", "which docker", print = FALSE)
   if (length(docker) == 0) {
+    todo("Install docker with 'docker_install()'")
     return(FALSE)
   }
 
   # User is in docker group
   group <- sys("", "docker info", print = FALSE, ignore.stderr = TRUE)
   if (length(group) == 0) {
+    todo("Set user privileges with 'docker_install()'")
     return(FALSE)
   }
 
