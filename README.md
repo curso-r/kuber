@@ -68,7 +68,7 @@ kuber_pods()
   - [X] gcloud container clusters get-credentials
   - [X] Select image and cluster on the fly
   - [X] Use directory in kuber_pods and _kill
-  - [ ] Documentation for sys and todo
+  - [X] Documentation for sys and todo
   - [ ] Warnings on has_*()
 - Minor 0.3.0
   - [ ] Better function names
