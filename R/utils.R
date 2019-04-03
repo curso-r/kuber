@@ -36,10 +36,14 @@ sys <- function(txt, ..., print = TRUE, ignore.stderr = FALSE) {
 }
 
 # Print task for user
-todo <- function(txt) {
+todo <- function(...) {
+  txt <- paste0(...)
+
   if (!requireNamespace("callr", quietly = TRUE)) {
     cat(txt, "\n", sep = "")
   } else {
+    cmd <- crayon::cyan(paste0("`", gsub("'.+", "", gsub("^.*?'", "", txt)), "`"))
+    txt <- gsub("'.+'", cmd, txt)
     cat(crayon::red(clisymbols::symbol$bullet), "  ", txt, "\n", sep = "")
   }
 }

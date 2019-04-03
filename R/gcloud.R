@@ -46,7 +46,7 @@ gcloud_install <- function() {
 
     # Run login command
     if (is_rstudio()) {
-      todo("Since your session is interactive, please run 'gcloud init' on your terminal")
+      todo("Please run 'gcloud init' on your terminal")
     } else {
       system("gcloud init")
     }
