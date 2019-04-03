@@ -61,7 +61,7 @@ kuber_init <- function(path, bucket_name, image_name) {
   # Create empty directory
   dir.create(path, showWarnings = FALSE, recursive = TRUE)
   if (length(list.files(path, all.files = TRUE, no.. = TRUE)) > 0) {
-    stop("Directory must be empty.")
+    stop("Directory must be empty")
   }
 
   # Create bucket

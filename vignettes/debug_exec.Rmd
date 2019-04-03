@@ -1,0 +1,125 @@
+---
+title: "Debugging exec.R"
+author: "Caio Lente"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+Sometimes you might be faced with the fact that your `exec.R` file isn't working
+properly. This may be due to problems in the file itself, in the way your script
+tries to upload the results to a bucket or on how the pods are handling
+arguments.
+
+This vignette tries to show you how to debug your deployment on these three
+scenarios while at the same time giving you an example of how to write your
+`exec.R`.
+
+## Something's fishy
+
+Suppose you've just been through the deployment workflow for your task: 
+
+```r
+library(kuber)
+
+kuber_cluster("my-cluster")
+#> ✔  Creating cluster
+
+kuber_init("~/my-dir", "my-bucket", "my-image")
+#> ✔  Creating bucket
+#> ●  Edit `~/my-dir/exec.R'`
+#> ●  Create `~/my-dir/list.rds` with usable objects
+#> ●  Run `kuber_push(~/my-dir)'`
+
+file.edit("my-dir/exec.R")
+file.copy("my-list.rds", "my-dir/list.rds", TRUE)
+
+kuber_push("~/my-dir")
+#> ✔  Building image
+#> ✔  Authenticating
+#> ✔  Pushing image
+#> ✔  Removing old jobs
+#> ✔  Creating new jobs
+
+kuber::kuber_run("my-dir")
+#> ✔  Creating jobs
+#> ●  Run `kuber_pods()` to follow up on the pods
+```
+
+But now, when you run `kuber_pods()`, the `STATUS` column says "Error" or some
+other equivalent undesirable message. First you must check whether
+
+## Your script isn't working
+
+The first debug strategy should be lightly editing your `exec.R` file in
+order for it to run in your local machine. For instance, replace every instance
+of `save_rds()` with `saveRDS()` and run the script locally:
+
+```bash
+$ cd ~/my-dir/
+$ Rscript --vanilla exec.R 1 my-bucket
+```
+
+If the expected RDS files aren't written to disk, then your problem might be
+in the code. You can also run the script step by step by also replacing the
+command line arguments at the top of the file:
+
+```r
+idx <- 1   # as.numeric(args[1])
+```
+
+In case none of this works, then consider whether
+
+## Your upload isn't working
+
+Now you should see what's happening to the pods themselves. Run `kuber_pods()`
+and copy the name of the pod you want to examine:
+
+```bash
+$ kubectl logs [POD_NAME]
+```
+
+This command will show you the output of your script, which could inform your
+debugging process. If this isn't enough, try running the docker container
+manually:
+
+```bash
+$ docker run my-image Rscript exec.R 1 my-bucket
+```
+
+This will execute your `exec.R` inside the container environment and is the
+closest you will get to your pod without getting inside it. Speaking of which,
+if nothing has worked up until now, then you should see whether
+
+## Your pods aren't working
+
+To do this, you must open two terminal windows. In the first one, run your
+container:
+
+```bash
+$ docker run my-image
+```
+
+In the second one, get your container's ID in order to access it:
+
+```bash
+$ docker container list
+$ docker exec -it [CONTAINER_ID] /bin/bash
+```
+
+With this last command, you'll essentially be ssh-ing into your pod. This
+allows you to run any shell command you want, run R scripts in the local
+environment or even edit any files that might not be setup properly.
+
+If even this doesn't help you debug your deployment, please create an issue
+on [Github](https://github.com/platipusc/kuber).

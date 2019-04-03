@@ -24,32 +24,43 @@ A simple example of how you could use `kuber` to help you deploy a parallel task
 via [expansion](https://kubernetes.io/docs/tasks/job/parallel-processing-expansion/):
 
 ``` r
-# Create a kubernetes cluster
-kuber::kuber_cluster("my-cluster", num_nodes = 5)
+library(kuber)
 
-# Create a folder with kuber's template
-kuber::kuber_init("my-dir", "my-bucket", "my-image")
+kuber_cluster("my-cluster")
+#> ✔  Creating cluster
 
-# Edit the exec.R file with your script
+kuber_init("~/my-dir", "my-bucket", "my-image")
+#> ✔  Creating bucket
+#> ●  Edit `~/my-dir/exec.R'`
+#> ●  Create `~/my-dir/list.rds` with usable objects
+#> ●  Run `kuber_push(~/my-dir)'`
+
 file.edit("my-dir/exec.R")
-
-# Replace default IDs file with your IDs
 file.copy("my-list.rds", "my-dir/list.rds", TRUE)
 
-# Create a docker image from folder
-kuber::kuber_push("my-dir", num_jobs = 5)
+kuber_push("~/my-dir")
+#> ✔  Building image
+#> ✔  Authenticating
+#> ✔  Pushing image
+#> ✔  Removing old jobs
+#> ✔  Creating new jobs
 
-# Run jobs
-kuber::kuber_run("my-dir")
+kuber_run("my-dir")
+#> ✔  Creating jobs
+#> ●  Run `kuber_pods()` to follow up on the pods
 
-# See pods' statuses
-kuber::kuber_pods()
+kuber_pods()
+#> ✔  Fetching pods
+#>                          NAME READY  STATUS RESTARTS AGE
+#> 1 process-ykwgkf-item-1-zxdbx   1/1 Running        0  2h
+#> 2 process-ykwgkf-item-2-zkt4t   1/1 Running        0  2h
+#> 3 process-ykwgkf-item-3-74nxj   1/1 Running        0  2h
 ```
 
 ## Roadmap
 
 - Patch 0.2.2
-  - [ ] Documentation about exec.R debugging
+  - [X] Documentation about exec.R debugging
   - [X] Use crayon for system calls
   - [X] Add todo to user tasks
   - [X] Handle system warnings
