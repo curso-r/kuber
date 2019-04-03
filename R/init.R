@@ -155,8 +155,8 @@ kuber_init <- function(path, bucket_name, image_name) {
 
   # Further instructions
   todo("Edit '", exec_r, "'")
-  todo("Create '", list, "' with usable objects")
-  todo("Run 'kuber_push(", path, ")'")
+  todo("Create '", list, "' with usable parameters")
+  todo("Run 'kuber_push(\\\"", path, "\\\")'")
 
   # Edit file
   if (requireNamespace("rstudioapi", quietly = TRUE) && is_rstudio()) {

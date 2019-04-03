@@ -33,7 +33,7 @@ kuber_init("~/my-dir", "my-bucket", "my-image")
 #> ✔  Creating bucket
 #> ●  Edit `~/my-dir/exec.R'`
 #> ●  Create `~/my-dir/list.rds` with usable objects
-#> ●  Run `kuber_push(~/my-dir)'`
+#> ●  Run `kuber_push("~/my-dir")`
 
 file.edit("my-dir/exec.R")
 file.copy("my-list.rds", "my-dir/list.rds", TRUE)
@@ -64,6 +64,7 @@ kuber_pods()
   - [ ] gcloud container clusters get-credentials
   - [ ] Select region on kuber_run
   - [ ] Use directory in kuber_pods and _kill
+  - [ ] Reference to vignettes
 - Minor 0.3.0
   - [ ] Remove googleCloudStorageR from Dockerfile
   - [ ] Functions for deleting cluster, bucket and image

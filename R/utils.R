@@ -38,7 +38,7 @@ todo <- function(...) {
   if (!requireNamespace("callr", quietly = TRUE)) {
     cat(txt, "\n", sep = "")
   } else {
-    cmd <- crayon::cyan(paste0("`", gsub("'.+", "", gsub("^.*?'", "", txt)), "`"))
+    cmd <- crayon::cyan(paste0("`", gsub("'.*", "", gsub("^.*?'", "", txt)), "`"))
     txt <- gsub("'.+'", cmd, txt)
     cat(crayon::red(clisymbols::symbol$bullet), "  ", txt, "\n", sep = "")
   }
