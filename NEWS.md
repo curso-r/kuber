@@ -1,3 +1,10 @@
+# kuber 0.2.2
+
+* Documentation about exec.R debugging
+* Use crayon for system calls
+* Add todo to user tasks
+* Handle system warnings
+
 # kuber 0.2.1
 
 * Internal refactoring of system commands
