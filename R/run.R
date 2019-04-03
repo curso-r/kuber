@@ -40,7 +40,7 @@ kuber_run <- function(path, cluster_name = NULL) {
 #' @export
 kuber_pods <- function(path) {
   template <- kuber_get_config(path, "template", TRUE)
-  table <- sys("Fetching pods", "kubectl get jobs -l jobgroup=", template)
+  table <- sys("Fetching pods", "kubectl get pods -l jobgroup=", template)
 
   # Extract full table
   file <- tempfile(fileext = ".csv")

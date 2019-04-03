@@ -53,7 +53,7 @@ kuber_run("my-dir")
 #> ✔  Creating jobs
 #> ●  Run `kuber_pods()` to follow up on the pods
 
-kuber_pods()
+kuber_pods("my-dir")
 #> ✔  Fetching pods
 #>                          NAME READY  STATUS RESTARTS AGE
 #> 1 process-ykwgkf-item-1-zxdbx   1/1 Running        0  2h
@@ -63,13 +63,6 @@ kuber_pods()
 
 ## Roadmap
 
-- Patch 0.2.3
-  - [X] Save relevant gcloud information in hidden file
-  - [X] gcloud container clusters get-credentials
-  - [X] Select image and cluster on the fly
-  - [X] Use directory in kuber_pods and _kill
-  - [X] Documentation for sys and todo
-  - [X] Todo on has_*()
 - Minor 0.3.0
   - [ ] Better function names
   - [ ] Remove googleCloudStorageR from Dockerfile
