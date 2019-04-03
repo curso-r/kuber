@@ -7,7 +7,7 @@
 kuber_run(path, cluster_name = NULL)
 }
 \arguments{
-\item{path}{Path to the image folder}
+\item{path}{Path to the kuber directory}
 
 \item{cluster_name}{Name of the cluster where to run the jobs (if \code{NULL},
 the default, the name of the cluster set by \code{\link[=kuber_init]{kuber_init()}})}

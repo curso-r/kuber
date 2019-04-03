@@ -10,7 +10,7 @@ kuber_get_config(path, what = "all", quiet = FALSE)
 \item{path}{Path to the kuber directory}
 
 \item{what}{What parameter to return: \code{all}, \code{cluster}, \code{location},
-\code{region}, \code{num_nodes}, \code{bucket}, or \code{image}}
+\code{region}, \code{num_nodes}, \code{bucket}, \code{image}, or \code{template}}
 
 \item{quiet}{Whether to skip printing output (\code{FALSE} by default)}
 }

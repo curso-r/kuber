@@ -4,7 +4,10 @@
 \alias{kuber_kill}
 \title{Kill all kubernetes jobs and pods}
 \usage{
-kuber_kill()
+kuber_kill(path)
+}
+\arguments{
+\item{path}{Path to the kuber directory}
 }
 \value{
 If everything has gone as expected, \code{TRUE}

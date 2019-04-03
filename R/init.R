@@ -90,6 +90,7 @@ kuber_init <- function(path, cluster_name, bucket_name, image_name) {
 
   # Create job name
   job <- paste0("process-", paste0(sample(letters, 6, TRUE), collapse = ""))
+  write(paste("template:", job), paste0(path, "/.kuber"), append = TRUE)
 
   # Text for files
   dockerfile_file <- c(
@@ -141,10 +142,14 @@ kuber_init <- function(path, cluster_name, bucket_name, image_name) {
     "kind: Job",
     "metadata:",
     paste0("  name: ", job, "-item-$ITEM"),
+    "  labels:",
+    paste0("    jobgroup: ", job),
     "spec:",
     "  template:",
     "    metadata:",
     paste0("      name: ", job),
+    "      labels:",
+    paste0("        jobgroup: ", job),
     "    spec:",
     "      containers:",
     "      - name: c",

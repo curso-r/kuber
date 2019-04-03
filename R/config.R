@@ -51,7 +51,7 @@ gcloud_set_config <- function(project = NULL, zone = NULL, region = NULL) {
 #'
 #' @param path Path to the kuber directory
 #' @param what What parameter to return: `all`, `cluster`, `location`,
-#' `region`, `num_nodes`, `bucket`, or `image`
+#' `region`, `num_nodes`, `bucket`, `image`, or `template`
 #' @param quiet Whether to skip printing output (`FALSE` by default)
 #'
 #' @return A character vector with each parameter

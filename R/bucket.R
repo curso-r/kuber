@@ -32,7 +32,7 @@ kuber_bucket <- function(name) {
 #' @return A character vector with file names
 #' @export
 kuber_list <- function(path, folder = "", recursive = FALSE) {
-  bucket <- kuber_get_config(path, TRUE)[1]
+  bucket <- kuber_get_config(path, "bucket", TRUE)
   if (!recursive) {
     out <- sys("Listing content", "gsutil ls gs://", bucket, "/", folder)
   } else {

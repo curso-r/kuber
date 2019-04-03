@@ -67,7 +67,7 @@ kuber_pods()
   - [X] Save relevant gcloud information in hidden file
   - [X] gcloud container clusters get-credentials
   - [X] Select image and cluster on the fly
-  - [ ] Use directory in kuber_pods and _kill
+  - [X] Use directory in kuber_pods and _kill
   - [ ] Documentation for sys and todo
   - [ ] Warnings on has_*()
 - Minor 0.3.0

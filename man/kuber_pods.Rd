@@ -4,7 +4,10 @@
 \alias{kuber_pods}
 \title{Get status of current Kubernetes pods}
 \usage{
-kuber_pods()
+kuber_pods(path)
+}
+\arguments{
+\item{path}{Path to the kuber directory}
 }
 \value{
 A table with pods' status information
