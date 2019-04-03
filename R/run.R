@@ -14,7 +14,6 @@
 #' @return The path to the kuber directory
 #' @export
 kuber_run <- function(path, cluster_name = NULL) {
-
   if (is.null(cluster_name)) {
     cluster_name <- kuber_get_config(path, "cluster", TRUE)
   } else {
@@ -40,7 +39,6 @@ kuber_run <- function(path, cluster_name = NULL) {
 #' @return A table with pods' status information
 #' @export
 kuber_pods <- function(path) {
-
   template <- kuber_get_config(path, "template", TRUE)
   table <- sys("Fetching pods", "kubectl get jobs -l jobgroup=", template)
 

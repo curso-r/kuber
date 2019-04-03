@@ -100,7 +100,6 @@ kuber_set_config <- function(path, parameters = list("cluster" = NULL, "bucket" 
     config[2] <- paste("location:", cl$LOCATION)
     config[3] <- paste("region:", gsub("-[a-z]$", "", cl$LOCATION))
     config[4] <- paste("num_nodes:", cl$NUM_NODES)
-
   }
   if (!is.null(parameters$bucket)) {
 
@@ -114,7 +113,6 @@ kuber_set_config <- function(path, parameters = list("cluster" = NULL, "bucket" 
     )
 
     config[5] <- paste("bucket:", bucket_name)
-
   }
   if (!is.null(parameters$image)) {
 

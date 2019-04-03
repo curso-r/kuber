@@ -22,7 +22,7 @@
 #'   flags = list("tags" = "k8s", "enable-autoupgrade" = "", "disk-type" = "pd-ssd")
 #' )
 #' }
-#'
+#' 
 #' @return The name of the cluster
 #' @export
 kuber_cluster <- function(name, machine_type = "g1-small", num_nodes = 3L, disk_size = "20GB", flags = list()) {
@@ -67,5 +67,5 @@ cluster_info <- function(cluster_name) {
   if (length(id) == 0) {
     stop("Cluster must exist")
   }
-  return(table[id,])
+  return(table[id, ])
 }
