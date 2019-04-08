@@ -21,7 +21,9 @@ kuber_run <- function(path, cluster_name = NULL) {
   }
 
   suppressWarnings(sys("Authenticating", "gcloud container clusters get-credentials ", cluster_name))
-  sys("Setting cluster configuration", "kubectl config set-cluster ", cluster_name)
+  contexts <- strsplit(system("kubectl config view -o jsonpath='{.contexts[*].name}'", intern = TRUE), " ")[[1]]
+  context <- contexts[grepl(cluster_name, contexts)]
+  sys("Setting cluster context", "kubectl config use-context ", context)
   sys("Creating jobs", "cd ", path, "; kubectl create -f ./jobs")
   todo("Run 'kuber_pods()' to follow up on the pods")
   invisible(path)
@@ -39,6 +41,12 @@ kuber_run <- function(path, cluster_name = NULL) {
 #' @return A table with pods' status information
 #' @export
 kuber_pods <- function(path) {
+
+  cluster <- kuber_get_config(path, "cluster", TRUE)
+  contexts <- strsplit(system("kubectl config view -o jsonpath='{.contexts[*].name}'", intern = TRUE), " ")[[1]]
+  context <- contexts[grepl(cluster, contexts)]
+  sys("Setting cluster context", "kubectl config use-context ", context)
+
   template <- kuber_get_config(path, "template", TRUE)
   table <- sys("Fetching pods", "kubectl get pods -l jobgroup=", template)
 
@@ -62,6 +70,12 @@ kuber_pods <- function(path) {
 #' @return If everything has gone as expected, `TRUE`
 #' @export
 kuber_kill <- function(path) {
+
+  cluster <- kuber_get_config(path, "cluster", TRUE)
+  contexts <- strsplit(system("kubectl config view -o jsonpath='{.contexts[*].name}'", intern = TRUE), " ")[[1]]
+  context <- contexts[grepl(cluster, contexts)]
+  sys("Setting cluster context", "kubectl config use-context ", context)
+
   template <- kuber_get_config(path, "template", TRUE)
 
   sys("Deleting jobs", "kubectl delete jobs -l jobgroup=", template)
