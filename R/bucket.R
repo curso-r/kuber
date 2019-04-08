@@ -10,7 +10,7 @@
 #'
 #' @return The name of the bucket
 #' @export
-kuber_bucket <- function(name) {
+kub_create_bucket <- function(name) {
   buckets <- sys("Fetching bucket information", "gsutil ls")
   if (!any(gsub("(gs://|/)", "", buckets) == name)) {
     sys("Creating bucket", "gsutil mb gs://", name, "/")
@@ -31,8 +31,8 @@ kuber_bucket <- function(name) {
 #'
 #' @return A character vector with file names
 #' @export
-kuber_list <- function(path, folder = "", recursive = FALSE) {
-  bucket <- kuber_get_config(path, "bucket", TRUE)
+kub_list_bucket <- function(path, folder = "", recursive = FALSE) {
+  bucket <- kub_get_config(path, "bucket", TRUE)
   if (!recursive) {
     out <- sys("Listing content", "gsutil ls gs://", bucket, "/", folder)
   } else {

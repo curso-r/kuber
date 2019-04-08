@@ -32,35 +32,35 @@ Suppose you've just been through the deployment workflow for your task:
 ```r
 library(kuber)
 
-kuber_cluster("my-cluster")
+kub_create_cluster("my-cluster")
 #> ✔  Creating cluster
 
-kuber_init("~/my-dir", "my-cluster", "my-bucket", "my-image")
+kub_init_task("~/my-dir", "my-cluster", "my-bucket", "my-image")
 #> ✔  Fetching cluster information
 #> ✔  Fetching bucket information
 #> ✔  Creating bucket
 #> ●  Edit `~/my-dir/exec.R'`
 #> ●  Create `~/my-dir/list.rds` with usable objects
-#> ●  Run `kuber_push("~/my-dir")`
+#> ●  Run `kub_push_task("~/my-dir")`
 
 file.edit("my-dir/exec.R")
 file.copy("my-list.rds", "my-dir/list.rds", TRUE)
 
-kuber_push("~/my-dir")
+kub_push_task("~/my-dir")
 #> ✔  Building image
 #> ✔  Authenticating
 #> ✔  Pushing image
 #> ✔  Removing old jobs
 #> ✔  Creating new jobs
 
-kuber::kuber_run("my-dir")
+kub_run_task("my-dir")
 #> ✔  Authenticating
 #> ✔  Setting cluster configuration
 #> ✔  Creating jobs
-#> ●  Run `kuber_pods()` to follow up on the pods
+#> ●  Run `kub_list_pods()` to follow up on the pods
 ```
 
-But now, when you run `kuber_pods()`, the `STATUS` column says "Error" or some
+But now, when you run `kub_list_pods()`, the `STATUS` column says "Error" or some
 other equivalent undesirable message. First you must check whether
 
 ## Your script isn't working
@@ -86,7 +86,7 @@ In case none of this works, then consider whether
 
 ## Your upload isn't working
 
-Now you should see what's happening to the pods themselves. Run `kuber_pods()`
+Now you should see what's happening to the pods themselves. Run `kub_list_pods()`
 and copy the name of the pod you want to examine:
 
 ```bash

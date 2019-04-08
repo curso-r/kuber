@@ -26,34 +26,34 @@ via [expansion](https://kubernetes.io/docs/tasks/job/parallel-processing-expansi
 ``` r
 library(kuber)
 
-kuber_cluster("my-cluster")
+kub_create_cluster("my-cluster")
 #> ✔  Creating cluster
 
-kuber_init("~/my-dir", "my-cluster", "my-bucket", "my-image")
+kub_init_task("~/my-dir", "my-cluster", "my-bucket", "my-image")
 #> ✔  Fetching cluster information
 #> ✔  Fetching bucket information
 #> ✔  Creating bucket
 #> ●  Edit `~/my-dir/exec.R'`
 #> ●  Create `~/my-dir/list.rds` with usable objects
-#> ●  Run `kuber_push("~/my-dir")`
+#> ●  Run `kub_push_task("~/my-dir")`
 
 file.edit("my-dir/exec.R")
 file.copy("my-list.rds", "my-dir/list.rds", TRUE)
 
-kuber_push("~/my-dir")
+kub_push_task("~/my-dir")
 #> ✔  Building image
 #> ✔  Authenticating
 #> ✔  Pushing image
 #> ✔  Removing old jobs
 #> ✔  Creating new jobs
 
-kuber_run("~/my-dir")
+kub_run_task("~/my-dir")
 #> ✔  Authenticating
 #> ✔  Setting cluster context
 #> ✔  Creating jobs
-#> ●  Run `kuber_pods()` to follow up on the pods
+#> ●  Run `kub_list_pods()` to follow up on the pods
 
-kuber_pods("~/my-dir")
+kub_list_pods("~/my-dir")
 #> ✔  Setting cluster context
 #> ✔  Fetching pods
 #>                          NAME READY  STATUS RESTARTS AGE
@@ -67,7 +67,7 @@ kuber_pods("~/my-dir")
 - Minor 0.3.0
   - [X] Remove googleCloudStorageR from Dockerfile
   - [X] Work with more than one cluster
-  - [ ] Better function names
+  - [X] Better function names
   - [ ] Functions for listing other gcloud resources
   - [ ] Functions for deleting cluster, bucket and image
   - [ ] User has to be able to provide their own auth

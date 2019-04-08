@@ -7,7 +7,7 @@
 #' should work), a `job-tmpl.yaml` (a template for the yaml files that will lauch
 #' the docker jobs), an RDS `list.rds` (which contains `as.list(seq(1, 10))` just
 #' so you don't forget to setup the inputs that each job will take) and a `jobs/`
-#' folder (where the actual job yaml files will go once you run [kuber_push()]).
+#' folder (where the actual job yaml files will go once you run [kub_push_task()]).
 #' For more information, please see the sections below.
 #'
 #' @section Dockerfile:
@@ -25,7 +25,7 @@
 #' The job template is a very simple file that describes how the job should be
 #' run once it is activated by the pod, which is essentially running
 #' `Rscript --vanilla exec.R [JOB_NUMBER]`. Since this template uses parallelism
-#' via expansion, [kuber_push()] will expand this template into as many job
+#' via expansion, [kub_push_task()] will expand this template into as many job
 #' files as you want.
 #'
 #' @section Jobs/:
@@ -58,7 +58,7 @@
 #'
 #' @return Path where the kuber folder was created
 #' @export
-kuber_init <- function(path, cluster_name, bucket_name, image_name) {
+kub_init_task <- function(path, cluster_name, bucket_name, image_name) {
 
   # Create empty directory
   dir.create(path, showWarnings = FALSE, recursive = TRUE)
@@ -77,7 +77,7 @@ kuber_init <- function(path, cluster_name, bucket_name, image_name) {
   write(paste("num_nodes:", cl$NUM_NODES), paste0(path, "/.kuber"), append = TRUE)
 
   # Create bucket
-  kuber_bucket(bucket_name)
+  kub_create_bucket(bucket_name)
   write(paste("bucket:", bucket_name), paste0(path, "/.kuber"), append = TRUE)
 
   # Build image name if necessary
@@ -177,7 +177,7 @@ kuber_init <- function(path, cluster_name, bucket_name, image_name) {
   # Further instructions
   todo("Edit '", exec_r, "'")
   todo("Create '", list, "' with usable parameters")
-  todo("Run 'kuber_push(\\\"", path, "\\\")'")
+  todo("Run 'kub_push_task(\\\"", path, "\\\")'")
 
   # Edit file
   if (requireNamespace("rstudioapi", quietly = TRUE) && is_rstudio()) {

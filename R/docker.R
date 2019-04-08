@@ -9,14 +9,14 @@ has_docker <- function() {
   # Docker is installed
   docker <- sys("", "which docker", print = FALSE)
   if (length(docker) == 0) {
-    todo("Install docker with 'docker_install()'")
+    todo("Install docker with 'kub_install_docker()'")
     return(FALSE)
   }
 
   # User is in docker group
   group <- sys("", "docker info", print = FALSE, ignore.stderr = TRUE)
   if (length(group) == 0) {
-    todo("Set user privileges with 'docker_install()'")
+    todo("Set user privileges with 'kub_install_docker()'")
     return(FALSE)
   }
 
@@ -41,7 +41,7 @@ has_docker <- function() {
 #'
 #' @return The path where docker was installed
 #' @export
-docker_install <- function() {
+kub_install_docker <- function() {
 
   # Docker not installed
   docker <- sys("", "which docker", print = FALSE)

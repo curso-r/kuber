@@ -6,7 +6,7 @@
 has_gcloud <- function() {
   gcloud <- sys("", "which gcloud", print = FALSE)
   if (length(gcloud) == 0) {
-    todo("Install gcloud with 'gcloud_install()'")
+    todo("Install gcloud with 'kub_install_gcloud()'")
     return(FALSE)
   }
 
@@ -29,7 +29,7 @@ has_gcloud <- function() {
 #'
 #' @return The path where gcloud was installed
 #' @export
-gcloud_install <- function() {
+kub_install_gcloud <- function() {
 
   # Gcloud not installed
   gcloud <- sys("", "which gcloud", print = FALSE)

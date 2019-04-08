@@ -22,10 +22,11 @@
 #'   flags = list("tags" = "k8s", "enable-autoupgrade" = "", "disk-type" = "pd-ssd")
 #' )
 #' }
-#' 
+#'
 #' @return The name of the cluster
 #' @export
-kuber_cluster <- function(name, machine_type = "g1-small", num_nodes = 3L, disk_size = "20GB", flags = list()) {
+kub_create_cluster <- function(name, machine_type = "g1-small", num_nodes = 3L,
+                               disk_size = "20GB", flags = list()) {
 
   # Create list with all flags for the command
   all_flags <- c(

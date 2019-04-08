@@ -9,7 +9,6 @@
 #' @references \url{https://cloud.google.com/sdk/gcloud/reference/config/list}
 #'
 #' @return The string vector returned by the command
-#' @export
 gcloud_get_config <- function(quiet = FALSE) {
   out <- sys("", "gcloud config list", print = FALSE, ignore.stderr = TRUE)
   if (!quiet) {
@@ -30,7 +29,6 @@ gcloud_get_config <- function(quiet = FALSE) {
 #' @references \url{https://cloud.google.com/sdk/gcloud/reference/config/set}
 #'
 #' @return If everything has gone as expected, `TRUE`
-#' @export
 gcloud_set_config <- function(project = NULL, zone = NULL, region = NULL) {
   if (!is.null(project)) {
     sys("Setting project", "gcloud config set project ", project)
@@ -56,7 +54,7 @@ gcloud_set_config <- function(project = NULL, zone = NULL, region = NULL) {
 #'
 #' @return A character vector with each parameter
 #' @export
-kuber_get_config <- function(path, what = "all", quiet = FALSE) {
+kub_get_config <- function(path, what = "all", quiet = FALSE) {
 
   # Extract information
   lines <- readLines(paste0(path, "/.kuber"))
@@ -83,10 +81,10 @@ kuber_get_config <- function(path, what = "all", quiet = FALSE) {
 #'
 #' @return If everything has gone as expected, `TRUE`
 #' @export
-kuber_set_config <- function(path, parameters = list("cluster" = NULL, "bucket" = NULL, "image" = NULL)) {
+kub_set_config <- function(path, parameters = list("cluster" = NULL, "bucket" = NULL, "image" = NULL)) {
 
   # Read files
-  config <- kuber_get_config(path, quiet = TRUE)
+  config <- kub_get_config(path, quiet = TRUE)
   lines <- readLines(paste0(path, "/job-tmpl.yaml"))
 
   # Change settings
@@ -105,7 +103,7 @@ kuber_set_config <- function(path, parameters = list("cluster" = NULL, "bucket" 
 
     # Create bucket if necessary
     bucket_name <- parameters$bucket
-    kuber_bucket(bucket_name)
+    kub_create_bucket(bucket_name)
 
     lines[grep(" command: ", lines)] <- gsub(
       'ITEM", ".+"]', paste0('ITEM", "', bucket_name, '"]'),
