@@ -65,7 +65,7 @@ kuber_pods("my-dir")
 
 - Minor 0.3.0
   - [ ] Better function names
-  - [ ] Remove googleCloudStorageR from Dockerfile
+  - [X] Remove googleCloudStorageR from Dockerfile
   - [ ] Functions for deleting cluster, bucket and image
   - [ ] Functions for listing other gcloud resources
   - [ ] Vignettes and packagedown

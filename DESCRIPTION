@@ -15,7 +15,6 @@ Suggests:
     callr,
     clisymbols,
     crayon,
-    googleCloudStorageR,
     knitr,
     rmarkdown,
     rstudioapi
