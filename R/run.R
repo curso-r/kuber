@@ -20,10 +20,7 @@ kub_run_task <- function(path, cluster_name = NULL) {
     kub_set_config(path, list("cluster" = cluster_name))
   }
 
-  suppressWarnings(sys("Authenticating", "gcloud container clusters get-credentials ", cluster_name))
-  contexts <- strsplit(system("kubectl config view -o jsonpath='{.contexts[*].name}'", intern = TRUE), " ")[[1]]
-  context <- contexts[grepl(cluster_name, contexts)]
-  sys("Setting cluster context", "kubectl config use-context ", context)
+  set_context(path)
   sys("Creating jobs", "cd ", path, "; kubectl create -f ./jobs")
   todo("Run 'kub_list_pods()' to follow up on the pods")
   invisible(path)
@@ -42,20 +39,12 @@ kub_run_task <- function(path, cluster_name = NULL) {
 #' @export
 kub_list_pods <- function(path) {
 
-  cluster <- kub_get_config(path, "cluster", TRUE)
-  contexts <- strsplit(system("kubectl config view -o jsonpath='{.contexts[*].name}'", intern = TRUE), " ")[[1]]
-  context <- contexts[grepl(cluster, contexts)]
-  sys("Setting cluster context", "kubectl config use-context ", context)
+  set_context(path)
 
   template <- kub_get_config(path, "template", TRUE)
   table <- sys("Fetching pods", "kubectl get pods -l jobgroup=", template)
 
-  # Extract full table
-  file <- tempfile(fileext = ".csv")
-  writeLines(paste(gsub(" +", ",", table), collapse = "\n"), file)
-  on.exit(file.remove(file))
-
-  utils::read.csv(file, stringsAsFactors = FALSE)
+  parse_table(table)
 }
 
 #' Kill all kubernetes jobs and pods
@@ -71,14 +60,34 @@ kub_list_pods <- function(path) {
 #' @export
 kub_kill_task <- function(path) {
 
-  cluster <- kub_get_config(path, "cluster", TRUE)
-  contexts <- strsplit(system("kubectl config view -o jsonpath='{.contexts[*].name}'", intern = TRUE), " ")[[1]]
-  context <- contexts[grepl(cluster, contexts)]
-  sys("Setting cluster context", "kubectl config use-context ", context)
+  set_context(path)
 
   template <- kub_get_config(path, "template", TRUE)
 
   sys("Deleting jobs", "kubectl delete jobs -l jobgroup=", template)
   sys("Deleting pods", "kubectl delete pods -l jobgroup=", template)
   invisible(TRUE)
+}
+
+#' Get status of all currently running Kubernetes jobs
+#'
+#' @description This function iterates on every available kubernetes context and
+#' runs `kubectl get jobs` to get the statuses of their jobs.
+#'
+#' @references \url{https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#get}
+#'
+#' @return A table with jobs' status information
+#' @export
+kub_list_task <- function() {
+
+  tables <- data.frame()
+  contexts <- strsplit(system("kubectl config view -o jsonpath='{.contexts[*].name}'", intern = TRUE), " ")[[1]]
+
+  for (co in contexts) {
+    sys("Setting cluster context", "kubectl config use-context ", co)
+    table <- sys("Fetching jobs", "kubectl get jobs --all-namespaces=true")
+    tables <- rbind(tables, parse_table(table))
+  }
+
+  return(tables)
 }

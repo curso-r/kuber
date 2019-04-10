@@ -68,14 +68,14 @@ kub_list_pods("~/my-dir")
   - [X] Remove googleCloudStorageR from Dockerfile
   - [X] Work with more than one cluster
   - [X] Better function names
-  - [ ] Functions for listing other gcloud resources
+  - [X] Functions for listing other gcloud resources
   - [X] Functions for deleting cluster, bucket
   - [ ] User has to be able to provide their own auth
-  - [ ] Possibility to add project path as global option
 - Patch 0.3.1
   - [ ] Vignettes and packagedown
   - [ ] Reference to vignettes
   - [ ] Documentation for auth
+  - [ ] Possibility to add project path as global option
 - Major 1.0.0
   - [ ] Automate auth creation
   - [ ] Install everything without sudo

@@ -69,6 +69,20 @@ kub_kill_cluster <- function(name, zone = NULL) {
   invisible(name)
 }
 
+#' List all clusters available in current project
+#'
+#' @description Using the `gcloud container clusters list` command, this function
+#' returns metadata about all clusters created in the current project.
+#'
+#' @references \url{https://cloud.google.com/sdk/gcloud/reference/container/clusters/list}
+#'
+#' @return A table with clusters' information
+#' @export
+kub_list_cluster <- function() {
+  table <- sys("Fetching clusters", "gcloud container clusters list")
+  parse_table(table)
+}
+
 #' Fetch cluster information
 #'
 #' @description This function returns the row of information about a cluster

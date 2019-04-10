@@ -22,3 +22,21 @@ make_flags <- function(all_flags) {
   }
   paste(mapply(f, names(all_flags), all_flags, USE.NAMES = FALSE), collapse = " ")
 }
+
+# Change cluster context
+set_context <- function(path) {
+  cluster <- kub_get_config(path, "cluster", TRUE)
+  contexts <- strsplit(system("kubectl config view -o jsonpath='{.contexts[*].name}'", intern = TRUE), " ")[[1]]
+  context <- contexts[grepl(cluster, contexts)]
+  sys("Setting cluster context", "kubectl config use-context ", context)
+}
+
+# Parse a table returned by a list command
+parse_table <- function(table) {
+  # Extract full table
+  file <- tempfile(fileext = ".csv")
+  writeLines(paste(gsub(" +", ",", table), collapse = "\n"), file)
+  on.exit(file.remove(file))
+
+  utils::read.csv(file, stringsAsFactors = FALSE)
+}
