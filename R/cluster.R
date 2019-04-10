@@ -46,6 +46,29 @@ kub_create_cluster <- function(name, machine_type = "g1-small", num_nodes = 3L,
   invisible(name)
 }
 
+#' Delete kubernetes cluster
+#'
+#' @description This function deletes a kubernetes cluster via
+#' `gcloud container clusters delete`. Specify a zone if necessary.
+#'
+#' @param name Name of the cluster
+#' @param zone Zone where the cluster was created (`NULL`, the current one, by
+#' default)
+#'
+#' @references \url{https://cloud.google.com/sdk/gcloud/reference/container/clusters/delete}
+#'
+#' @return The name of the cluster
+#' @export
+kub_kill_cluster <- function(name, zone = NULL) {
+
+  name <- as.character(name)
+  if (!is.null(zone)) { zone <- paste("--zone", zone) } else { zone <- "" }
+  cmd <- paste("gcloud --quiet container clusters delete", name, zone)
+  sys("Deleting cluster", cmd)
+
+  invisible(name)
+}
+
 #' Fetch cluster information
 #'
 #' @description This function returns the row of information about a cluster

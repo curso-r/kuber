@@ -13,7 +13,7 @@ kub_create_bucket(name)
 The name of the bucket
 }
 \description{
-This function freates a default storage bucket using the
+This function creates a default storage bucket using the
 \code{gsutil mb} command.
 }
 \references{

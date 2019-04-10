@@ -69,7 +69,7 @@ kub_list_pods("~/my-dir")
   - [X] Work with more than one cluster
   - [X] Better function names
   - [ ] Functions for listing other gcloud resources
-  - [ ] Functions for deleting cluster, bucket
+  - [X] Functions for deleting cluster, bucket
   - [ ] User has to be able to provide their own auth
   - [ ] Possibility to add project path as global option
 - Patch 0.3.1

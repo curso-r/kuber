@@ -1,7 +1,7 @@
 
 #' Create a storage bucket
 #'
-#' @description This function freates a default storage bucket using the
+#' @description This function creates a default storage bucket using the
 #' `gsutil mb` command.
 #'
 #' @param name Name of the bucket
@@ -15,6 +15,22 @@ kub_create_bucket <- function(name) {
   if (!any(gsub("(gs://|/)", "", buckets) == name)) {
     sys("Creating bucket", "gsutil mb gs://", name, "/")
   }
+  invisible(name)
+}
+
+#' Delete a storage bucket
+#'
+#' @description This function deletes a storage bucket and all of its content
+#' using the `gsutil rm` command.
+#'
+#' @param name Name of the bucket
+#'
+#' @references \url{https://cloud.google.com/storage/docs/gsutil/commands/rm}
+#'
+#' @return The name of the bucket
+#' @export
+kub_kill_bucket <- function(name) {
+  sys("Deleting bucket", "gsutil -m rm -r gs://", name, "/")
   invisible(name)
 }
 
@@ -34,9 +50,9 @@ kub_create_bucket <- function(name) {
 kub_list_bucket <- function(path, folder = "", recursive = FALSE) {
   bucket <- kub_get_config(path, "bucket", TRUE)
   if (!recursive) {
-    out <- sys("Listing content", "gsutil ls gs://", bucket, "/", folder)
+    out <- sys("Listing content", "gsutil -m ls gs://", bucket, "/", folder)
   } else {
-    out <- sys("Listing content", "gsutil ls -r gs://", bucket, "/", folder)
+    out <- sys("Listing content", "gsutil -m ls -r gs://", bucket, "/", folder)
   }
   gsub(paste0("gs://", bucket, "/"), "", out)
 }
