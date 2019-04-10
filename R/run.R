@@ -7,7 +7,7 @@
 #'
 #' @param path Path to the kuber directory
 #' @param cluster_name Name of the cluster where to run the jobs (if `NULL`,
-#' the default, the name of the cluster set by [kub_init_task()])
+#' the default, the name of the cluster set by [kub_create_task()])
 #'
 #' @references \url{https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#create}
 #'

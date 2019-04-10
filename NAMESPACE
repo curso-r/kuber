@@ -2,8 +2,8 @@
 
 export(kub_create_bucket)
 export(kub_create_cluster)
+export(kub_create_task)
 export(kub_get_config)
-export(kub_init_task)
 export(kub_install_docker)
 export(kub_install_gcloud)
 export(kub_kill_task)

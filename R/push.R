@@ -2,14 +2,14 @@
 #' Build and push the docker image of a kuber directory
 #'
 #' @description Once you create a docker directory for your script with
-#' [kub_init_task()], this function is able to build it and push it to the
+#' [kub_create_task()], this function is able to build it and push it to the
 #' appropriate cloud diretory. Aditionally, it also creates all the job
 #' yaml files so that the only remaining step is running the cluster
 #' with [kub_run_task()].
 #'
 #' @param path Path to the kuber directory
 #' @param image_name Name of the image where to build the container (if `NULL`,
-#' the default, the name of the image set by [kub_init_task()])
+#' the default, the name of the image set by [kub_create_task()])
 #' @param num_jobs When run, the number of jobs spawned (if `NULL`, the default,
 #' `[NUM_NODES]` of the cluster)
 #'

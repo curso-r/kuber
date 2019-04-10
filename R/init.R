@@ -58,7 +58,7 @@
 #'
 #' @return Path where the kuber folder was created
 #' @export
-kub_init_task <- function(path, cluster_name, bucket_name, image_name) {
+kub_create_task <- function(path, cluster_name, bucket_name, image_name) {
 
   # Create empty directory
   dir.create(path, showWarnings = FALSE, recursive = TRUE)

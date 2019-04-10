@@ -29,7 +29,7 @@ library(kuber)
 kub_create_cluster("my-cluster")
 #> ✔  Creating cluster
 
-kub_init_task("~/my-dir", "my-cluster", "my-bucket", "my-image")
+kub_create_task("~/my-dir", "my-cluster", "my-bucket", "my-image")
 #> ✔  Fetching cluster information
 #> ✔  Fetching bucket information
 #> ✔  Creating bucket
@@ -69,7 +69,7 @@ kub_list_pods("~/my-dir")
   - [X] Work with more than one cluster
   - [X] Better function names
   - [ ] Functions for listing other gcloud resources
-  - [ ] Functions for deleting cluster, bucket and image
+  - [ ] Functions for deleting cluster, bucket
   - [ ] User has to be able to provide their own auth
   - [ ] Possibility to add project path as global option
 - Patch 0.3.1
