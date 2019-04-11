@@ -43,6 +43,13 @@
 #' vector of URLs to scrape; each job would therefore read the file but only
 #' scrape `list[[N]]` so that it doesn't overlap with any other job.
 #'
+#' @section Service account:
+#' In order to create a service account (necessary to manage storage resources
+#' remotely) you must access \url{https://console.cloud.google.com/iam-admin/serviceaccounts}
+#' and add to it the "storage object administrator" role. You should then click
+#' on the account and generate a key as a JSON file. This file will be downloaded
+#' to your computer and can be referenced via the `service_account` argument.
+#'
 #' @param path Directory where to initialize kuber
 #' @param cluster_name Name of the cluster where to execute jobs (must exist
 #' already)
@@ -52,13 +59,16 @@
 #' its full path in the form `[HOSTNAME]/[PROJECT_ID]/[IMAGE_NAME]:[VERSION]` or
 #' simply `[IMAGE_NAME]` for it to be automatically pushed to the Google Cloud
 #' Registry)
+#' @param service_account Path to the Service Account JSON file that will be
+#' used to authenticate `gsutil` inside each container (must be a storage object
+#' administrator)
 #'
 #' @references \url{https://kubernetes.io/docs/tasks/job/parallel-processing-expansion/}
 #' \url{https://cloud.google.com/container-registry/docs/quickstart}
 #'
 #' @return Path where the kuber folder was created
 #' @export
-kub_create_task <- function(path, cluster_name, bucket_name, image_name) {
+kub_create_task <- function(path, cluster_name, bucket_name, image_name, service_account) {
 
   # Create empty directory
   dir.create(path, showWarnings = FALSE, recursive = TRUE)
@@ -108,8 +118,7 @@ kub_create_task <- function(path, cluster_name, bucket_name, image_name) {
     "  && install2.r --error \\",
     "    --deps TRUE \\",
     "    abjutils",
-    'RUN wget -O ./service_account_key.json "https://drive.google.com/uc?id=1eOczW8KSGcwR7kenZaYj4EB6tatMQgL8&authuser=0&export=download"',
-    "COPY exec.R list.rds* ./",
+    "COPY exec.R service_account_key.json list.rds* ./",
     'RUN export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)" && \\',
     '  echo "deb http://packages.cloud.google.com/apt $CLOUD_SDK_REPO main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && \\',
     "  curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - && \\",
@@ -171,6 +180,7 @@ kub_create_task <- function(path, cluster_name, bucket_name, image_name) {
   writeLines(dockerfile_file, dockerfile)
   writeLines(exec_r_file, exec_r)
   writeLines(job_tmpl_file, job_tmpl)
+  file.copy(service_account, paste0(path, "/service_account_key.json"))
   saveRDS(as.list(seq(1, 10)), list)
   dir.create(paste0(path, "/jobs"), showWarnings = FALSE, recursive = TRUE)
 

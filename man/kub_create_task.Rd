@@ -4,7 +4,8 @@
 \alias{kub_create_task}
 \title{Create a docker directory with the kuber template for parallelism by expansion}
 \usage{
-kub_create_task(path, cluster_name, bucket_name, image_name)
+kub_create_task(path, cluster_name, bucket_name, image_name,
+  service_account)
 }
 \arguments{
 \item{path}{Directory where to initialize kuber}
@@ -19,6 +20,10 @@ already)}
 its full path in the form \code{[HOSTNAME]/[PROJECT_ID]/[IMAGE_NAME]:[VERSION]} or
 simply \code{[IMAGE_NAME]} for it to be automatically pushed to the Google Cloud
 Registry)}
+
+\item{service_account}{Path to the Service Account JSON file that will be
+used to authenticate \code{gsutil} inside each container (must be a storage object
+administrator)}
 }
 \value{
 Path where the kuber folder was created
@@ -74,6 +79,15 @@ at index \code{[[N]]}). To illustrate this concept, take for example a webscrapi
 script: \code{list.rds} would contain a list where each element is a character
 vector of URLs to scrape; each job would therefore read the file but only
 scrape \code{list[[N]]} so that it doesn't overlap with any other job.
+}
+
+\section{Service account}{
+
+In order to create a service account (necessary to manage storage resources
+remotely) you must access \url{https://console.cloud.google.com/iam-admin/serviceaccounts}
+and add to it the "storage object administrator" role. You should then click
+on the account and generate a key as a JSON file. This file will be downloaded
+to your computer and can be referenced via the \code{service_account} argument.
 }
 
 \references{

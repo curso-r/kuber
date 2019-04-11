@@ -70,7 +70,7 @@ kub_list_pods("~/my-dir")
   - [X] Better function names
   - [X] Functions for listing other gcloud resources
   - [X] Functions for deleting cluster, bucket
-  - [ ] User has to be able to provide their own auth
+  - [X] User has to be able to provide their own auth
 - Patch 0.3.1
   - [ ] Vignettes and packagedown
   - [ ] Reference to vignettes
