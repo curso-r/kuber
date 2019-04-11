@@ -64,13 +64,6 @@ kub_list_pods("~/my-dir")
 
 ## Roadmap
 
-- Minor 0.3.0
-  - [X] Remove googleCloudStorageR from Dockerfile
-  - [X] Work with more than one cluster
-  - [X] Better function names
-  - [X] Functions for listing other gcloud resources
-  - [X] Functions for deleting cluster, bucket
-  - [X] User has to be able to provide their own auth
 - Patch 0.3.1
   - [ ] Vignettes and packagedown
   - [ ] Reference to vignettes

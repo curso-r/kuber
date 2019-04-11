@@ -1,3 +1,12 @@
+# kuber 0.3.0
+
+* googleCloudStorageR removed from Dockerfile
+* Works with more than one cluster
+* Better function names ("kub_")
+* Functions for listing other gcloud resources
+* Functions for deleting cluster, bucket
+* User is now able to provide their own service account
+
 # kuber 0.2.3
 
 * Save relevant gcloud information in hidden file
