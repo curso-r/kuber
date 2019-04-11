@@ -22,7 +22,7 @@
 #'   flags = list("tags" = "k8s", "enable-autoupgrade" = "", "disk-type" = "pd-ssd")
 #' )
 #' }
-#'
+#' 
 #' @return The name of the cluster
 #' @export
 kub_create_cluster <- function(name, machine_type = "g1-small", num_nodes = 3L,
@@ -60,9 +60,12 @@ kub_create_cluster <- function(name, machine_type = "g1-small", num_nodes = 3L,
 #' @return The name of the cluster
 #' @export
 kub_kill_cluster <- function(name, zone = NULL) {
-
   name <- as.character(name)
-  if (!is.null(zone)) { zone <- paste("--zone", zone) } else { zone <- "" }
+  if (!is.null(zone)) {
+    zone <- paste("--zone", zone)
+  } else {
+    zone <- ""
+  }
   cmd <- paste("gcloud --quiet container clusters delete", name, zone)
   sys("Deleting cluster", cmd)
 

@@ -38,7 +38,6 @@ kub_run_task <- function(path, cluster_name = NULL) {
 #' @return A table with pods' status information
 #' @export
 kub_list_pods <- function(path) {
-
   set_context(path)
 
   template <- kub_get_config(path, "template", TRUE)
@@ -59,7 +58,6 @@ kub_list_pods <- function(path) {
 #' @return If everything has gone as expected, `TRUE`
 #' @export
 kub_kill_task <- function(path) {
-
   set_context(path)
 
   template <- kub_get_config(path, "template", TRUE)
@@ -79,7 +77,6 @@ kub_kill_task <- function(path) {
 #' @return A table with jobs' status information
 #' @export
 kub_list_task <- function() {
-
   tables <- data.frame()
   contexts <- strsplit(system("kubectl config view -o jsonpath='{.contexts[*].name}'", intern = TRUE), " ")[[1]]
 
