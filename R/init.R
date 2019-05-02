@@ -136,6 +136,7 @@ kub_create_task <- function(path, cluster_name, bucket_name, image_name, service
     "",
     "# Use this function to save your results",
     "save_path <- function(path) {",
+    '  file_ <- gsub("\\./", "", path)',
     '  system(paste0("gsutil cp -r ", file_, " gs://", bucket, "/", gsub("/.+", "", file_)))',
     "  do.call(file.remove, list(list.files(path, full.names = TRUE)))",
     "  return(path)",
@@ -180,7 +181,10 @@ kub_create_task <- function(path, cluster_name, bucket_name, image_name, service
   writeLines(dockerfile_file, dockerfile)
   writeLines(exec_r_file, exec_r)
   writeLines(job_tmpl_file, job_tmpl)
-  file.copy(service_account, paste0(path, "/service_account_key.json"))
+  file.copy(service_account, path)
+  file.rename(
+    list.files(path, pattern = "json", full.names = TRUE),
+    paste0(path, "/service_account_key.json"))
   saveRDS(as.list(seq(1, 10)), list)
   dir.create(paste0(path, "/jobs"), showWarnings = FALSE, recursive = TRUE)
 
