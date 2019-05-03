@@ -4,7 +4,7 @@ author: "Caio Lente"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{Debugging exec.R}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -35,7 +35,7 @@ library(kuber)
 kub_create_cluster("my-cluster")
 #> ✔  Creating cluster
 
-kub_create_task("~/my-dir", "my-cluster", "my-bucket", "my-image")
+kub_create_task("~/my-dir", "my-cluster", "my-bucket", "my-image", "~/my-key.json")
 #> ✔  Fetching cluster information
 #> ✔  Fetching bucket information
 #> ✔  Creating bucket
@@ -43,8 +43,8 @@ kub_create_task("~/my-dir", "my-cluster", "my-bucket", "my-image")
 #> ●  Create `~/my-dir/list.rds` with usable objects
 #> ●  Run `kub_push_task("~/my-dir")`
 
-file.edit("my-dir/exec.R")
-file.copy("my-list.rds", "my-dir/list.rds", TRUE)
+file.edit("~/my-dir/exec.R")
+file.copy("~/my-list.rds", "~/my-dir/list.rds", TRUE)
 
 kub_push_task("~/my-dir")
 #> ✔  Building image
@@ -53,9 +53,9 @@ kub_push_task("~/my-dir")
 #> ✔  Removing old jobs
 #> ✔  Creating new jobs
 
-kub_run_task("my-dir")
+kub_run_task("~/my-dir")
 #> ✔  Authenticating
-#> ✔  Setting cluster configuration
+#> ✔  Setting cluster context
 #> ✔  Creating jobs
 #> ●  Run `kub_list_pods()` to follow up on the pods
 ```

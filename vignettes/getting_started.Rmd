@@ -1,0 +1,113 @@
+---
+title: "Getting started"
+author: "Caio Lente"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Getting started}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+The main goal of Kuber is to help with massively parallel computations.
+It leverages [kubernetes](https://kubernetes.io/) and
+[docker](https://www.docker.com/) in order to create a container that
+automatically runs orchestrated tasks in parallel via 
+[expansion](https://kubernetes.io/docs/tasks/job/parallel-processing-expansion/).
+If you already use [Google Cloud Platform](https://cloud.google.com/), Kuber
+is also able to automatically create clusters, run computations, and track
+their progress with Google's [cloud SDK](https://cloud.google.com/sdk/).
+
+## Before installing
+
+To take full advantage of Kuber, you must use GCP. Creating an account is
+easy and you also get a bunch of money to use in your 1-year trial, but note
+that **we are not responsible** for any expenses you incur as a result of 
+using Kuber! This is FOSS, so be very careful.
+
+The first step should be creating an account. Just head over to the
+[free trial](https://console.cloud.google.com/freetrial) page and register a
+Google account. In just a few seconds Google will create a new project (with a
+randomly generated ID) that can be explored through the
+[console](https://console.cloud.google.com/home/dashboard).
+
+There are *loads* of different solutions available, and, before using any of
+them, reading their [documentations](https://cloud.google.com/docs/) might be
+helpful. To understand how Kuber works, there are three main pages to
+look through: [Google Compute Engine](https://cloud.google.com/compute/docs/)
+(GCE), [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine/docs/)
+(GKE), and [Google Cloud Storage](https://cloud.google.com/storage/docs/) (GCS).
+
+## Installation
+
+The installation process is, at the moment, very bare bones. Installing the
+package itself is simple because it has no mandatory dependencies, but
+installing the command line tools it leverages can be a bit confusing.
+The package works by issuing Unix commands, so it is probably not going
+to work on Windows.
+
+If you're using Debian/Ubuntu, Kuber has the very convenient
+`kub_install_docker()` and `kub_install_gcloud()` functions that should
+setup the environment just right. But for any other platforms you'll
+have to setup everything yourself.
+
+Strictly speaking, Kuber needs to run three commands *without* administrative
+privileges: `docker`, `gcloud` and `kubectl`. Documentation on how to install
+them can be found at their respective websites:
+
+- Docker CE installation: [https://docs.docker.com/install/](https://docs.docker.com/install/)
+- Google Cloud SDK installation: [https://cloud.google.com/sdk/install](https://cloud.google.com/sdk/install)
+- Kubernetes command-line tool installation: [https://kubernetes.io/docs/tasks/tools/install-kubectl/](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
+
+### Sudo and docker
+
+At least on Linux, Docker commands require sudo privileges. In order to solve
+this minor issue, please refer to their
+[documentation](https://docs.docker.com/install/linux/linux-postinstall/).
+Remember that Kuber is not going to work unless it can execute without sudo.
+
+### Gcloud init
+
+In order to use the `gcloud` command, you must first allow your account to access
+some APIs. In the [API dashboard](https://console.developers.google.com/apis/dashboard),
+click on "Activate APIs and services" and choose "Compute Engine API", "Kubernetes
+Engine API" and "Cloud Storage API".
+
+After installing Google's Cloud SDK and setting up API access, make sure you
+run `gcloud init` on your terminal afterwards in order to authenticate your
+computer as a trustworthy device on GCP. Choose any default zone you want, but
+make sure to choose one.
+
+## Service account
+
+Unless your parallel task doesn't return any results, you'll want
+to save its output to a persistent storage medium (which GKE doesn't provide in
+a straightforward way). After installing and making sure everything is up and
+running, the only step left is creating a service account in GCP so that any
+Docker image can write to a persistent GCS bucket.
+
+This process is very simple and can be done in the
+[IAM tab](https://console.cloud.google.com/iam-admin/serviceaccounts/create).
+Give the service account a memorable name (like "storage"), leave the ID
+as is and describe your Kuber needs. Follow on to the next screen and chose
+the account's roles; they can be as broad as you want, but it *must* include
+"Storage Admin", "Storage Transfer Admin", and "Storage Object Admin". In the
+last screen just click "Create Key", select JSON as the type and accept the
+changes.
+
+The result of this process will be a file known as a "service account key" which
+can be used in any `gcloud` command as an authentication on your behalf. Be
+very careful with this file because it can be used to create/delete anything
+in your GCS account.
+
+## All set
+
+Now Kuber's setup process is complete. To learn more about how to create a
+parallel task, take a look at the "Toy example" vignette.

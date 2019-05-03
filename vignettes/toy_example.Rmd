@@ -1,0 +1,307 @@
+---
+title: "Toy example"
+author: "Caio Lente"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Toy example}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+If you've never heard of container orchestration, persistent cloud storage, or
+parallel computing, this tutorial might feel like a little bit too much. You
+don't need to be any type of expert in these subjects, but it would help to
+know what these terms mean.
+
+This tutorial will guide you through creating your first Kuber task. Before
+starting, make sure your environment has all requirements met with the "Getting
+started" vignette.
+
+## The task itself
+
+Kuber's main advantage over most parallelisation packages (like Parallel or
+Future/Furrr) is that it automatically creates a computing cluster that runs
+your task via container orchestration. This can be very useful for e.g.
+web scraping because (1) each node has a different IP, (2) saving scraped HTMLs
+is easy with GCS, and (3) the process can be picked up/put down at any point.
+
+In this tutorial, the function to be parallelized is the following:
+
+```r
+# Scrape a character vector of URLs
+scrape_urls <- function(urls) {
+
+  # Create a directory
+  dir <- fs::dir_create("scraped")
+
+  # Iterate over URLs
+  paths <- c()
+  for (url in urls) {
+    path <- paste0(dir, "/", stringr::str_remove_all(url, "[^a-z]"), ".html")
+    paths <- append(paths, path)
+    
+    httr::GET(url, httr::write_disk(path, overwrite = TRUE))
+  }
+
+  return(paths)
+}
+```
+
+Simple enough, this function takes a character vector of URLS, scrapes them, and
+saves the resulting HTMLs in a local directory.
+
+## Creating the cluster
+
+Now on to Kuber. If everything was installed correctly, you should be able to
+create a simple cluster with the following command:
+
+```r
+library(kuber)
+
+kub_create_cluster("toy-cluster", machine_type = "f1-micro")
+#> ✔  Creating cluster
+```
+
+With `flags = list("preemptible" = "")`, you can create a preemptible cluster.
+This can be set because `scrape_urls()` can be stopped without any consequences
+and preemptible machines are cheaper. To learn more, consult the documentation on
+[preemptible instances](https://cloud.google.com/compute/docs/instances/preemptible).
+
+Head over to the
+[Kubernetes console](https://console.cloud.google.com/kubernetes/list) to see
+if everything worked. Don't worry if you get a bunch of warnings, most of them
+are about the SDK's version.
+
+## Creating the task
+
+The most important function on Kuber is probably the next one. It creates a
+directory on your local machine that describes the parallel computation and
+its cluster, bucket, image, and service account. To run the command below,
+only `toy-key.json` (the service account key downloaded in the "Getting
+started" vignette) must already exist at the indicated location; the rest is
+all created for you.
+
+```r
+kub_create_task("~/toy-dir", "toy-cluster", "toy-bucket", "toy-image", "~/toy-key.json")
+#> ✔  Fetching cluster information
+#> ✔  Fetching bucket information
+#> ✔  Creating bucket
+#> ●  Edit `~/toy-dir/exec.R`
+#> ●  Create `~/toy-dir/list.rds` with usable parameters
+#> ●  Run `kub_push_task("~/toy-dir")`
+```
+
+If you get a working that reads something like "Bucket toy-bucket already exists",
+you must try and create a bucket with a different name. Bucket names must be
+unique between *all* GCS buckets, so most of the good ones are already taken.
+To try again, run something like the following commands:
+
+```r
+kub_create_bucket("another-toy-bucket")
+#> ✔  Fetching bucket information
+#> ✔  Creating bucket
+ 
+kub_set_config("~/toy-dir", parameters = list(bucket = "another-toy-bucket"))
+#> ✔  Fetching bucket information
+```
+
+## Editing exec.R and list.rds
+
+The directory created by `kub_create_task()` has some files that are explored in
+detail on that function's documentation, but the two most important are `exec.R`
+and `list.rds`. The first contains the R file to be executed by the docker image,
+while the latter has every object that every node needs for its own `exec.R`.
+
+Starting from `exec.R`, the file is already populated with a simple template:
+
+```
+#!/usr/bin/env Rscript
+args <- commandArgs(trailingOnly = TRUE)
+
+# Arguments
+idx <- as.numeric(args[1])
+bucket <- as.character(args[2])
+
+# Use this function to save your results
+save_path <- function(path) {
+  system(paste0("gsutil cp -r ", file_, " gs://", bucket, "/", gsub("/.+", "", file_)))
+  do.call(file.remove, list(list.files(path, full.names = TRUE)))
+  return(path)
+}
+
+# Get object passed in list[[idx]]
+obj <- readRDS("list.rds")[[idx]]
+
+###########################
+## INSERT YOUR CODE HERE ##
+###########################
+```
+
+As you can see, it is an Rscript that takes two arguments: an index and the name
+of a GCS bucket. The next chunk describes a function to be used when saving
+results; it sends the file/folder in `path` to the specified bucket and then
+deletes it from the node's disk. Lastly, the script reads `list.rds`, and selects
+the object at index `idx`.
+
+Now is time to add `scrape_urls()` to the file. There aren't any changes in the
+function itself, only in in how the resulting files are handled. Here is the
+final version of `exec.R`:
+
+```
+#!/usr/bin/env Rscript
+args <- commandArgs(trailingOnly = TRUE)
+
+# Arguments
+idx <- as.numeric(args[1])
+bucket <- as.character(args[2])
+
+# Use this function to save your results
+save_path <- function(path) {
+  system(paste0("gsutil cp -r ", file_, " gs://", bucket, "/", gsub("/.+", "", file_)))
+  do.call(file.remove, list(list.files(path, full.names = TRUE)))
+  return(path)
+}
+
+# Get object passed in list[[idx]]
+obj <- readRDS("list.rds")[[idx]]
+
+# Scrape a character vector of URLs
+scrape_urls <- function(urls) {
+
+  # Create a directory
+  dir <- fs::dir_create("scraped")
+
+  # Iterate over URLs
+  paths <- c()
+  for (url in urls) {
+    path <- paste0(dir, "/", stringr::str_remove_all(url, "[^a-z]"), ".html")
+    paths <- append(paths, path)
+    
+    httr::GET(url, httr::write_disk(path, overwrite = TRUE))
+  }
+
+  return(paths)
+}
+
+# Run the scraper
+paths <- scrape_urls(obj)
+
+# Save HTMLs in CGS
+for (path in paths) {
+  save_path(path)
+}
+```
+
+As you might have guessed from the calls above, `obj` contains the URLs to be
+scraped. This makes sense because, as described earlier, `list.rds` has every
+object that every node needs for its own `exec.R`; in this case, every node
+needs a character vector of URLs to be scraped, and `idx` is simply the ID of
+each node (so that no two nodes scrapes the same URLs). That's it.
+
+Now the only thing left is creating `list.rds`, that is, the list of URLs broken
+in one chunk for each cluster. Since in this toy example, toy-cluster was created
+with the default number of nodes (3), `list.rds` will be a list with 3 elements.
+The following commands should be run in your local machine:
+
+```r
+# URLs to be scraped, chunked by nodes
+url_list <- list(
+  c("google.com", "duckduckgo.com"),
+  c("wikipedia.org"),
+  c("facebook.com", "twitter.com", "instagram.com")
+)
+
+# Overwrite sample list.rds with list of URLs
+readr::write_rds(url_list, "~/toy-dir/list.rds")
+```
+
+With this `list.rds`, the first node will scrape search engines, the second
+will scrape Wikipedia, and the third will scrape social media.
+
+## Pushing and running the task
+
+Last but not least, the task must be pushed to Google
+[Container Registry](https://console.cloud.google.com/gcr/images) (GCR), which
+is where Kuber's docker images will live. This guarantees version control to
+all task and allows them to be run from another computer, but may take a
+while to run the first time you create a task.
+
+```r
+kub_push_task("~/toy-dir")
+#> ✔  Building image
+#> ✔  Authenticating
+#> ✔  Pushing image
+#> ✔  Removing old jobs
+#> ✔  Creating new jobs
+```
+
+If everything up to here worked, the last mandatory command is running the task: 
+
+```r
+kub_run_task("~/toy-dir")
+#> ✔  Authenticating
+#> ✔  Setting cluster context
+#> ✔  Creating jobs
+#> ●  Run `kub_list_pods()` to follow up on the pods
+```
+
+## Checking up on the task
+
+There are two main ways to check the progress of a task: listing the currently
+active pods and listing the files uploaded to the bucket. The weird strings
+in the name of each process is a unique identifier generated by Kuber to track
+those pods.
+
+```r
+kub_list_pods("~/toy-dir")
+#> ✔  Setting cluster context
+#> ✔  Fetching pods
+#>                          NAME READY  STATUS RESTARTS AGE
+#> 1 process-mkewsr-item-1-8kpg7   1/1 Running        0  1m
+#> 2 process-mkewsr-item-2-cph8z   1/1 Running        0  1m
+#> 3 process-mkewsr-item-3-kpn5f   1/1 Running        0  1m
+```
+
+If your [pods' statuses](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/)
+denote something bad, you might need to debug your `exec.R` file. This is
+absolutely normal and it can take multiple attempts until your task is running
+correctly. If you need help debugging your task, take a look at the "Debugging
+exec.R" vignette.
+
+The command bellow lists every file in a bucket. You can also specify a folder
+inside the bucket and whether the listing should be done recursively or not.
+Here it's possible to see that every download finished running correctly.
+
+```r
+kub_list_bucket("~/toy-dir", folder = "scraped")
+#> ✔  Listing content
+#> [1] "googlecom.html"     "duckduckgocom.html" "wikipediaorg.html" 
+#> [4] "facebookcom.html"   "twittercom.html"    "instagramcom.html" 
+```
+
+## Killing the cluster
+
+After you task is done, be sure to kill every unused resource so you don't
+spend unnecessary money. There are some useful commands for this built into
+Kuber, but also check your cloud console to make sure everything was deleted.
+
+```r
+kub_kill_task("~/toy-dir")
+#> ✔  Setting cluster context
+#> ✔  Deleting jobs
+#> ✔  Deleting pods
+
+kub_kill_cluster("toy-cluster")
+#> ✔  Deleting cluster
+
+kub_kill_bucket("toy-bucket")
+#> ✔  Deleting bucket
+```

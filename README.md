@@ -2,13 +2,13 @@
 
 ## Overview
 
-`kuber` is a small toolkit that leverages [docker](https://www.docker.com/),
+Kuber is a small toolkit that leverages [docker](https://www.docker.com/),
 Google's [cloud SDK](https://cloud.google.com/sdk/) and
 [kubernetes](https://kubernetes.io/) to help you with massively parallel tasks.
 
 ## Installation
 
-For now `kuber` can only be installed from Github:
+For now Kuber can only be installed from Github:
 
 ``` r
 # install.packages("devtools")
@@ -20,7 +20,7 @@ to deploy your scripts.
 
 ## Example
 
-A simple example of how you could use `kuber` to help you deploy a parallel task
+A simple example of how you could use Kuber to help you deploy a parallel task
 via [expansion](https://kubernetes.io/docs/tasks/job/parallel-processing-expansion/):
 
 ``` r
@@ -29,7 +29,7 @@ library(kuber)
 kub_create_cluster("my-cluster")
 #> ✔  Creating cluster
 
-kub_create_task("~/my-dir", "my-cluster", "my-bucket", "my-image")
+kub_create_task("~/my-dir", "my-cluster", "my-bucket", "my-image", "~/my-key.json")
 #> ✔  Fetching cluster information
 #> ✔  Fetching bucket information
 #> ✔  Creating bucket
@@ -37,8 +37,8 @@ kub_create_task("~/my-dir", "my-cluster", "my-bucket", "my-image")
 #> ●  Create `~/my-dir/list.rds` with usable objects
 #> ●  Run `kub_push_task("~/my-dir")`
 
-file.edit("my-dir/exec.R")
-file.copy("my-list.rds", "my-dir/list.rds", TRUE)
+file.edit("~/my-dir/exec.R")
+file.copy("~/my-list.rds", "~/my-dir/list.rds", TRUE)
 
 kub_push_task("~/my-dir")
 #> ✔  Building image
@@ -65,9 +65,9 @@ kub_list_pods("~/my-dir")
 ## Roadmap
 
 - Patch 0.3.1
-  - [ ] Vignettes and packagedown
+  - [X] Vignettes and packagedown
   - [ ] Reference to vignettes
-  - [ ] Documentation for auth
+  - [X] Documentation for auth
   - [ ] Possibility to add project path as global option
 - Major 1.0.0
   - [ ] Automate auth creation
