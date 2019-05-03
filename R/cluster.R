@@ -22,7 +22,7 @@
 #'   flags = list("tags" = "k8s", "enable-autoupgrade" = "", "disk-type" = "pd-ssd")
 #' )
 #' }
-#'
+#' 
 #' @return The name of the cluster
 #' @export
 kub_create_cluster <- function(name, machine_type = "g1-small", num_nodes = 3L,

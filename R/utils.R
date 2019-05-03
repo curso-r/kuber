@@ -43,7 +43,6 @@ parse_table <- function(table) {
 
 # Set path as default
 default_path <- function(path, set = FALSE) {
-
   if (missing(path)) {
     op <- options()
     if ("kuber.default_path" %in% names(op)) {

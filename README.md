@@ -1,5 +1,10 @@
 # Kuber
 
+<!-- badges: start -->
+[![CRAN status](https://www.r-pkg.org/badges/version/kuber)](https://cran.r-project.org/package=kuber)
+[![Lifecycle: maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+<!-- badges: end -->
+
 ## Overview
 
 Kuber is a small toolkit that leverages [docker](https://www.docker.com/),

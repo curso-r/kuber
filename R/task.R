@@ -189,7 +189,8 @@ kub_create_task <- function(path, cluster_name, bucket_name, image_name, service
   file.copy(service_account, path)
   file.rename(
     list.files(path, pattern = "json", full.names = TRUE),
-    paste0(path, "/service_account_key.json"))
+    paste0(path, "/service_account_key.json")
+  )
   saveRDS(as.list(seq(1, 10)), list)
   dir.create(paste0(path, "/jobs"), showWarnings = FALSE, recursive = TRUE)
 
