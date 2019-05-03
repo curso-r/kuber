@@ -7,7 +7,8 @@
 kub_kill_task(path)
 }
 \arguments{
-\item{path}{Path to the kuber directory}
+\item{path}{Path to task directory (if missing, defaults to the most recently
+created task)}
 }
 \value{
 If everything has gone as expected, \code{TRUE}

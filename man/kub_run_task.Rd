@@ -7,7 +7,8 @@
 kub_run_task(path, cluster_name = NULL)
 }
 \arguments{
-\item{path}{Path to the kuber directory}
+\item{path}{Path to task directory (if missing, defaults to the most recently
+created task)}
 
 \item{cluster_name}{Name of the cluster where to run the jobs (if \code{NULL},
 the default, the name of the cluster set by \code{\link[=kub_create_task]{kub_create_task()}})}

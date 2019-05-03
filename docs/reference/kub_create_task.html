@@ -128,7 +128,7 @@ For more information, please see the sections below." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Create a docker directory with the kuber template for parallelism by expansion</h1>
-    <small class="dont-index">Source: <a href='https://github.com/platipusc/kuber/blob/master/R/init.R'><code>R/init.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/platipusc/kuber/blob/master/R/task.R'><code>R/task.R</code></a></small>
     <div class="hidden name"><code>kub_create_task.Rd</code></div>
     </div>
 
@@ -153,7 +153,8 @@ For more information, please see the sections below.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>path</th>
-      <td><p>Directory where to initialize kuber</p></td>
+      <td><p>Directory where to initialize task (will be set as default for
+other Kuber functions)</p></td>
     </tr>
     <tr>
       <th>cluster_name</th>
@@ -197,7 +198,9 @@ files for your script, this is where you should add them.</p>
     
     <p>The <code>exec.R</code> file is only a guide for what your script should probably be
 doing. It gets the number of the current job as its only argument, saves a
-result file as an RDS and uploads that file to the desired bucket.</p>
+result file as an RDS and uploads that file to the desired bucket. For more
+information, see the "Toy example" vignette; if you're having problems, see
+the "Debugging exec.R" vignette.</p>
     
     <h2 class="hasAnchor" id="job-tmpl-yaml"><a class="anchor" href="#job-tmpl-yaml"></a>Job-tmpl.yaml</h2>
 
@@ -225,7 +228,8 @@ script just by extracting the element with index equal to the job number
 at index <code>[[N]]</code>). To illustrate this concept, take for example a webscraping
 script: <code>list.rds</code> would contain a list where each element is a character
 vector of URLs to scrape; each job would therefore read the file but only
-scrape <code>list[[N]]</code> so that it doesn't overlap with any other job.</p>
+scrape <code>list[[N]]</code> so that it doesn't overlap with any other job. Fore more
+information, see the "Toy example" vignette.</p>
     
     <h2 class="hasAnchor" id="service-account"><a class="anchor" href="#service-account"></a>Service account</h2>
 

@@ -1,8 +1,8 @@
 
-#' Check whether current user has gcloud setup
-#'
-#' @description This function checks if the curent user has gcloud installed
-#' (via the `which gcloud` shell command).
+# Check whether current user has gcloud setup
+#
+# @description This function checks if the curent user has gcloud installed
+# (via the `which gcloud` shell command).
 has_gcloud <- function() {
   gcloud <- sys("", "which gcloud", print = FALSE)
   if (length(gcloud) == 0) {

@@ -7,7 +7,8 @@
 kub_push_task(path, image_name = NULL, num_jobs = NULL)
 }
 \arguments{
-\item{path}{Path to the kuber directory}
+\item{path}{Path to task directory (if missing, defaults to the most recently
+created task)}
 
 \item{image_name}{Name of the image where to build the container (if \code{NULL},
 the default, the name of the image set by \code{\link[=kub_create_task]{kub_create_task()}})}

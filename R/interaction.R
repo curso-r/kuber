@@ -1,15 +1,15 @@
 
-#' Print and run command
-#'
-#' @description Using `clisymbols` and `crayon`, this function prints a pretty
-#' `usethis`-like step message with spinner and check-mark included.
-#'
-#' @param txt Text to print while running the command
-#' @param ... Command to be pasted and run
-#' @param print Should anything be shown to the user?
-#' @param ignore.stderr Whether to ignore stderr
-#'
-#' @return The result of the command as a character vector
+# Print and run command
+#
+# @description Using `clisymbols` and `crayon`, this function prints a pretty
+# `usethis`-like step message with spinner and check-mark included.
+#
+# @param txt Text to print while running the command
+# @param ... Command to be pasted and run
+# @param print Should anything be shown to the user?
+# @param ignore.stderr Whether to ignore stderr
+#
+# @return The result of the command as a character vector
 sys <- function(txt, ..., print = TRUE, ignore.stderr = FALSE) {
   cmd <- paste0(...)
 
@@ -41,12 +41,12 @@ sys <- function(txt, ..., print = TRUE, ignore.stderr = FALSE) {
   return(out)
 }
 
-#' Print task for user
-#'
-#' @description Using `clisymbols` and `crayon`, this function prints a pretty
-#' taks list so the user knows what's the next step.
-#'
-#' @param ... Text to be pasted and printed
+# Print task for user
+#
+# @description Using `clisymbols` and `crayon`, this function prints a pretty
+# taks list so the user knows what's the next step.
+#
+# @param ... Text to be pasted and printed
 todo <- function(...) {
   txt <- paste0(...)
 

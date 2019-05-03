@@ -5,7 +5,8 @@
 #' function assigns all jobs in the `/jobs` folder and runs them on the
 #' associated Kubernetes cluster with the `.
 #'
-#' @param path Path to the kuber directory
+#' @param path Path to task directory (if missing, defaults to the most recently
+#' created task)
 #' @param cluster_name Name of the cluster where to run the jobs (if `NULL`,
 #' the default, the name of the cluster set by [kub_create_task()])
 #'
@@ -14,6 +15,8 @@
 #' @return The path to the kuber directory
 #' @export
 kub_run_task <- function(path, cluster_name = NULL) {
+  path <- default_path(path)
+
   if (is.null(cluster_name)) {
     cluster_name <- kub_get_config(path, "cluster", TRUE)
   } else {
@@ -31,13 +34,16 @@ kub_run_task <- function(path, cluster_name = NULL) {
 #' @description After running a group of jobs via [kub_run_task()], this function
 #' runs `kubectl get pods` to get their statuses.
 #'
-#' @param path Path to the kuber directory
+#' @param path Path to task directory (if missing, defaults to the most recently
+#' created task)
 #'
 #' @references \url{https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#get}
 #'
 #' @return A table with pods' status information
 #' @export
 kub_list_pods <- function(path) {
+  path <- default_path(path)
+
   set_context(path)
 
   template <- kub_get_config(path, "template", TRUE)
@@ -51,13 +57,16 @@ kub_list_pods <- function(path) {
 #' @description Using the command `kubectl delete`, deletes all jobs and pods
 #' currently running in the cluster.
 #'
-#' @param path Path to the kuber directory
+#' @param path Path to task directory (if missing, defaults to the most recently
+#' created task)
 #'
 #' @references \url{https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#delete}
 #'
 #' @return If everything has gone as expected, `TRUE`
 #' @export
 kub_kill_task <- function(path) {
+  path <- default_path(path)
+
   set_context(path)
 
   template <- kub_get_config(path, "template", TRUE)
@@ -76,7 +85,7 @@ kub_kill_task <- function(path) {
 #'
 #' @return A table with jobs' status information
 #' @export
-kub_list_task <- function() {
+kub_list_tasks <- function() {
   tables <- data.frame()
   contexts <- strsplit(system("kubectl config view -o jsonpath='{.contexts[*].name}'", intern = TRUE), " ")[[1]]
 

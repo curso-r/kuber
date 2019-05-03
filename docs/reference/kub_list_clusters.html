@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Install docker for the current user — kub_install_docker • kuber</title>
+<title>List all clusters available in current project — kub_list_clusters • kuber</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,14 +30,10 @@
 
 
 
-<meta property="og:title" content="Install docker for the current user — kub_install_docker" />
+<meta property="og:title" content="List all clusters available in current project — kub_list_clusters" />
 
-<meta property="og:description" content="This function can run two routines: full docker installation
-if the user doesn't have it or correct privilege setup if the user runs
-docker with sudo. The first method fetches and runs the script located
-at https://get.docker.com and the second only runs
-sudo usermod -aG docker $USER. For more information, see the &quot;Getting
-started&quot; vignette." />
+<meta property="og:description" content="Using the gcloud container clusters list command, this function
+returns metadata about all clusters created in the current project." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -125,39 +121,27 @@ started&quot; vignette." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Install docker for the current user</h1>
-    <small class="dont-index">Source: <a href='https://github.com/platipusc/kuber/blob/master/R/docker.R'><code>R/docker.R</code></a></small>
-    <div class="hidden name"><code>kub_install_docker.Rd</code></div>
+    <h1>List all clusters available in current project</h1>
+    <small class="dont-index">Source: <a href='https://github.com/platipusc/kuber/blob/master/R/cluster.R'><code>R/cluster.R</code></a></small>
+    <div class="hidden name"><code>kub_list_clusters.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>This function can run two routines: full docker installation
-if the user doesn't have it or correct privilege setup if the user runs
-docker with sudo. The first method fetches and runs the script located
-at <a href='https://get.docker.com'>https://get.docker.com</a> and the second only runs
-<code>sudo usermod -aG docker $USER</code>. For more information, see the "Getting
-started" vignette.</p>
+    <p>Using the <code>gcloud container clusters list</code> command, this function
+returns metadata about all clusters created in the current project.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>kub_install_docker</span>()</pre>
+    <pre class="usage"><span class='fu'>kub_list_clusters</span>()</pre>
         
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>The path where docker was installed</p>
-    
-    <h2 class="hasAnchor" id="sudo"><a class="anchor" href="#sudo"></a>Sudo</h2>
-
-    
-    <p>To install docker, this function requires sudo privileges. To do that, it
-prompts the user for their password and maintains it until the end of
-execution. All commands run this way are <strong>printed</strong> to the console so
-the user can know everything that's happening.</p>
+    <p>A table with clusters' information</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p><a href='https://docs.docker.com/install/linux/docker-ce/ubuntu/'>https://docs.docker.com/install/linux/docker-ce/ubuntu/</a></p>
+    <p><a href='https://cloud.google.com/sdk/gcloud/reference/container/clusters/list'>https://cloud.google.com/sdk/gcloud/reference/container/clusters/list</a></p>
     
 
   </div>
@@ -166,8 +150,6 @@ the user can know everything that's happening.</p>
     <ul class="nav nav-pills nav-stacked">
       
       <li><a href="#value">Value</a></li>
-
-      <li><a href="#sudo">Sudo</a></li>
 
       <li><a href="#references">References</a></li>
           </ul>

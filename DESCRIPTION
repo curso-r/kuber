@@ -6,8 +6,7 @@ Authors@R:
            family = "Lente",
            role = c("aut", "cre"),
            email = "ctlente@platipus.com.br")
-Description: Small toolkit for massively parallel tasks that
-    leverages GCP APIs for Kubernetes clusters and Storage buckets.
+Description: Small toolkit for massively parallel tasks that leverages GCP APIs for Kubernetes clusters and Storage buckets.
 License: GPL-3
 URL: https://github.com/platipusc/kuber
 BugReports: https://github.com/platipusc/kuber/issues

@@ -39,8 +39,9 @@ kub_kill_bucket <- function(name) {
 #' @description Using `gsutil ls`, this function is able to retrieve all
 #' objects stored in a gclould bucket.
 #'
-#' @param path Path to the image folder
-#' @param folder List files in which directory from the bucket
+#' @param path Path to task directory (if missing, defaults to the most recently
+#' created task)
+#' @param folder Bucket directory from where to list files
 #' @param recursive Whether to list files inside folders (`FALSE` by default)
 #'
 #' @references \url{https://cloud.google.com/storage/docs/gsutil/commands/ls}
@@ -48,6 +49,8 @@ kub_kill_bucket <- function(name) {
 #' @return A character vector with file names
 #' @export
 kub_list_bucket <- function(path, folder = "", recursive = FALSE) {
+  path <- default_path(path)
+
   bucket <- kub_get_config(path, "bucket", TRUE)
   if (!recursive) {
     out <- sys("Listing content", "gsutil -m ls gs://", bucket, "/", folder)

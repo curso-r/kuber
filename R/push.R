@@ -7,7 +7,8 @@
 #' yaml files so that the only remaining step is running the cluster
 #' with [kub_run_task()].
 #'
-#' @param path Path to the kuber directory
+#' @param path Path to task directory (if missing, defaults to the most recently
+#' created task)
 #' @param image_name Name of the image where to build the container (if `NULL`,
 #' the default, the name of the image set by [kub_create_task()])
 #' @param num_jobs When run, the number of jobs spawned (if `NULL`, the default,
@@ -19,6 +20,7 @@
 #' @return Path to the kuber directory
 #' @export
 kub_push_task <- function(path, image_name = NULL, num_jobs = NULL) {
+  path <- default_path(path)
 
   # Extract image information
   if (!is.null(image_name)) {

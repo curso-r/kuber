@@ -1,14 +1,14 @@
 
-#' Get gcloud configuration
-#'
-#' @description Checks gcloud's current configuration by running the
-#' `gcloud config list` command.
-#'
-#' @param quiet Whether to skip printing output (`FALSE` by default)
-#'
-#' @references \url{https://cloud.google.com/sdk/gcloud/reference/config/list}
-#'
-#' @return The string vector returned by the command
+# Get gcloud configuration
+#
+# @description Checks gcloud's current configuration by running the
+# `gcloud config list` command.
+#
+# @param quiet Whether to skip printing output (`FALSE` by default)
+#
+# @references \url{https://cloud.google.com/sdk/gcloud/reference/config/list}
+#
+# @return The string vector returned by the command
 gcloud_get_config <- function(quiet = FALSE) {
   out <- sys("", "gcloud config list", print = FALSE, ignore.stderr = TRUE)
   if (!quiet) {
@@ -17,18 +17,18 @@ gcloud_get_config <- function(quiet = FALSE) {
   invisible(out)
 }
 
-#' Set gcloud configuration
-#'
-#' @description Sets gcloud's current project and zone configs by running
-#' `gcloud config set project` and `gcloud config set compute/zone`.
-#'
-#' @param project The desired `[PROJECT_ID]` (or `NULL` to skip)
-#' @param zone The desired `[COMPUTE_ZONE]` (or `NULL` to skip)
-#' @param region The desired `[COMPUTE_REGION]` (or `NULL` to skip)
-#'
-#' @references \url{https://cloud.google.com/sdk/gcloud/reference/config/set}
-#'
-#' @return If everything has gone as expected, `TRUE`
+# Set gcloud configuration
+#
+# @description Sets gcloud's current project and zone configs by running
+# `gcloud config set project` and `gcloud config set compute/zone`.
+#
+# @param project The desired `[PROJECT_ID]` (or `NULL` to skip)
+# @param zone The desired `[COMPUTE_ZONE]` (or `NULL` to skip)
+# @param region The desired `[COMPUTE_REGION]` (or `NULL` to skip)
+#
+# @references \url{https://cloud.google.com/sdk/gcloud/reference/config/set}
+#
+# @return If everything has gone as expected, `TRUE`
 gcloud_set_config <- function(project = NULL, zone = NULL, region = NULL) {
   if (!is.null(project)) {
     sys("Setting project", "gcloud config set project ", project)
@@ -47,7 +47,8 @@ gcloud_set_config <- function(project = NULL, zone = NULL, region = NULL) {
 #' @description This function extracts the names of all important kuber
 #' parameters stored in the `.kuber` hidden file.
 #'
-#' @param path Path to the kuber directory
+#' @param path Path to task directory (if missing, defaults to the most recently
+#' created task)
 #' @param what What parameter to return: `all`, `cluster`, `location`,
 #' `region`, `num_nodes`, `bucket`, `image`, or `template`
 #' @param quiet Whether to skip printing output (`FALSE` by default)
@@ -55,6 +56,7 @@ gcloud_set_config <- function(project = NULL, zone = NULL, region = NULL) {
 #' @return A character vector with each parameter
 #' @export
 kub_get_config <- function(path, what = "all", quiet = FALSE) {
+  path <- default_path(path)
 
   # Extract information
   lines <- readLines(paste0(path, "/.kuber"))
@@ -75,13 +77,15 @@ kub_get_config <- function(path, what = "all", quiet = FALSE) {
 #' @description This function sets the names of the docker image and of the
 #' gcloud bucket in `job-tmpl.yaml` at a kuber folder.
 #'
-#' @param path Path to the kuber directory
+#' @param path Path to task directory (if missing, defaults to the most recently
+#' created task)
 #' @param parameters A list with parameters to change: `cluster`, `bucket`,
 #' and/or `image` plus their respective values (or `NULL` to keep)
 #'
 #' @return If everything has gone as expected, `TRUE`
 #' @export
 kub_set_config <- function(path, parameters = list("cluster" = NULL, "bucket" = NULL, "image" = NULL)) {
+  path <- default_path(path)
 
   # Read files
   config <- kub_get_config(path, quiet = TRUE)

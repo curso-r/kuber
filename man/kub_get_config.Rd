@@ -7,7 +7,8 @@
 kub_get_config(path, what = "all", quiet = FALSE)
 }
 \arguments{
-\item{path}{Path to the kuber directory}
+\item{path}{Path to task directory (if missing, defaults to the most recently
+created task)}
 
 \item{what}{What parameter to return: \code{all}, \code{cluster}, \code{location},
 \code{region}, \code{num_nodes}, \code{bucket}, \code{image}, or \code{template}}

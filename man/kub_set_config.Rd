@@ -8,7 +8,8 @@ kub_set_config(path, parameters = list(cluster = NULL, bucket = NULL,
   image = NULL))
 }
 \arguments{
-\item{path}{Path to the kuber directory}
+\item{path}{Path to task directory (if missing, defaults to the most recently
+created task)}
 
 \item{parameters}{A list with parameters to change: \code{cluster}, \code{bucket},
 and/or \code{image} plus their respective values (or \code{NULL} to keep)}

@@ -40,3 +40,22 @@ parse_table <- function(table) {
 
   utils::read.csv(file, stringsAsFactors = FALSE)
 }
+
+# Set path as default
+default_path <- function(path, set = FALSE) {
+
+  if (missing(path)) {
+    op <- options()
+    if ("kuber.default_path" %in% names(op)) {
+      path <- op$kuber.default_path
+    } else {
+      stop("Please set a default path with `options(kuber.default_path = path)`")
+    }
+  } else {
+    if (set) {
+      options(kuber.default_path = path)
+    }
+  }
+
+  return(path)
+}

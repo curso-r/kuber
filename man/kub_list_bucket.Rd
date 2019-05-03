@@ -7,9 +7,10 @@
 kub_list_bucket(path, folder = "", recursive = FALSE)
 }
 \arguments{
-\item{path}{Path to the image folder}
+\item{path}{Path to task directory (if missing, defaults to the most recently
+created task)}
 
-\item{folder}{List files in which directory from the bucket}
+\item{folder}{Bucket directory from where to list files}
 
 \item{recursive}{Whether to list files inside folders (\code{FALSE} by default)}
 }

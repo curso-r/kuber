@@ -1,4 +1,4 @@
-# kuber
+# Kuber
 
 ## Overview
 
@@ -21,7 +21,9 @@ to deploy your scripts.
 ## Example
 
 A simple example of how you could use Kuber to help you deploy a parallel task
-via [expansion](https://kubernetes.io/docs/tasks/job/parallel-processing-expansion/):
+via [expansion](https://kubernetes.io/docs/tasks/job/parallel-processing-expansion/)
+is reproduced below. For a more complete guide, see the "Getting started" and
+"Toy example" vignettes.
 
 ``` r
 library(kuber)
@@ -68,11 +70,12 @@ kub_list_pods("~/my-dir")
   - [X] Vignettes and packagedown
   - [X] Reference to vignettes
   - [X] Documentation for auth
-  - [ ] Possibility to add project path as global option
+  - [X] Possibility to add project path as global option
+  - [X] Functions with plurals
 - Major 1.0.0
   - [ ] Automate auth creation
   - [ ] Install everything without sudo
-  - [ ] If a function fails, revert what happeded
+  - [ ] If a function fails, revert what happened
 - Major 2.0.0
   - [ ] Support for mac and windows
   - [ ] Automated testing

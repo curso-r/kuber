@@ -53,7 +53,8 @@
 #' on the account and generate a key as a JSON file. This file will be downloaded
 #' to your computer and can be referenced via the `service_account` argument.
 #'
-#' @param path Directory where to initialize kuber
+#' @param path Directory where to initialize task (will be set as default for
+#' other Kuber functions)
 #' @param cluster_name Name of the cluster where to execute jobs (must exist
 #' already)
 #' @param bucket_name Name of the storage bucket where the files will be stored
@@ -72,6 +73,7 @@
 #' @return Path where the kuber folder was created
 #' @export
 kub_create_task <- function(path, cluster_name, bucket_name, image_name, service_account) {
+  path <- default_path(path, TRUE)
 
   # Create empty directory
   dir.create(path, showWarnings = FALSE, recursive = TRUE)

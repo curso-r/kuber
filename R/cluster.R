@@ -22,7 +22,7 @@
 #'   flags = list("tags" = "k8s", "enable-autoupgrade" = "", "disk-type" = "pd-ssd")
 #' )
 #' }
-#' 
+#'
 #' @return The name of the cluster
 #' @export
 kub_create_cluster <- function(name, machine_type = "g1-small", num_nodes = 3L,
@@ -81,17 +81,17 @@ kub_kill_cluster <- function(name, zone = NULL) {
 #'
 #' @return A table with clusters' information
 #' @export
-kub_list_cluster <- function() {
+kub_list_clusters <- function() {
   table <- sys("Fetching clusters", "gcloud container clusters list")
   parse_table(table)
 }
 
-#' Fetch cluster information
-#'
-#' @description This function returns the row of information about a cluster
-#' named `name_cluster` from the results in `gcloud container clusters list`.
-#'
-#' @param cluster_name Name of the cluster (must exist)
+# Fetch cluster information
+#
+# @description This function returns the row of information about a cluster
+# named `name_cluster` from the results in `gcloud container clusters list`.
+#
+# @param cluster_name Name of the cluster (must exist)
 cluster_info <- function(cluster_name) {
   table <- sys("Fetching cluster information", "gcloud container clusters list")
 

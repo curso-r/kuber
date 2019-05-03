@@ -7,7 +7,8 @@
 kub_list_pods(path)
 }
 \arguments{
-\item{path}{Path to the kuber directory}
+\item{path}{Path to task directory (if missing, defaults to the most recently
+created task)}
 }
 \value{
 A table with pods' status information

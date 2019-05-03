@@ -1,9 +1,9 @@
 
-#' Check whether current user has docker setup
-#'
-#' @description This function checks two things: if the curent user has docker
-#' installed (via the `which docker` shell command) and if docker can be run
-#' without sudo privileges (by testing the `docker info` command).
+# Check whether current user has docker setup
+#
+# @description This function checks two things: if the curent user has docker
+# installed (via the `which docker` shell command) and if docker can be run
+# without sudo privileges (by testing the `docker info` command).
 has_docker <- function() {
 
   # Docker is installed
