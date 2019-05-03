@@ -14,7 +14,8 @@ This function can run two routines: full docker installation
 if the user doesn't have it or correct privilege setup if the user runs
 docker with sudo. The first method fetches and runs the script located
 at \url{https://get.docker.com} and the second only runs
-\code{sudo usermod -aG docker $USER}.
+\code{sudo usermod -aG docker $USER}. For more information, see the "Getting
+started" vignette.
 }
 \section{Sudo}{
 

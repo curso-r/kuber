@@ -17,7 +17,8 @@ has_gcloud <- function() {
 #'
 #' @description This function runs the gcloud installation routine via
 #' `apt-get install google-cloud-sdk`. It also installs the `kubectl`
-#' package for Kubernetes functionality.
+#' package for Kubernetes functionality. For more information, see the
+#' "Getting started" vignette.
 #'
 #' @section Sudo:
 #' To install gcloud, this function requires sudo privileges. To do that, it

@@ -50,7 +50,9 @@ files for your script, this is where you should add them.
 
 The \code{exec.R} file is only a guide for what your script should probably be
 doing. It gets the number of the current job as its only argument, saves a
-result file as an RDS and uploads that file to the desired bucket.
+result file as an RDS and uploads that file to the desired bucket. For more
+information, see the "Toy example" vignette; if you're having problems, see
+the "Debugging exec.R" vignette.
 }
 
 \section{Job-tmpl.yaml}{
@@ -78,7 +80,8 @@ script just by extracting the element with index equal to the job number
 at index \code{[[N]]}). To illustrate this concept, take for example a webscraping
 script: \code{list.rds} would contain a list where each element is a character
 vector of URLs to scrape; each job would therefore read the file but only
-scrape \code{list[[N]]} so that it doesn't overlap with any other job.
+scrape \code{list[[N]]} so that it doesn't overlap with any other job. Fore more
+information, see the "Toy example" vignette.
 }
 
 \section{Service account}{

@@ -66,7 +66,7 @@ kub_list_pods("~/my-dir")
 
 - Patch 0.3.1
   - [X] Vignettes and packagedown
-  - [ ] Reference to vignettes
+  - [X] Reference to vignettes
   - [X] Documentation for auth
   - [ ] Possibility to add project path as global option
 - Major 1.0.0

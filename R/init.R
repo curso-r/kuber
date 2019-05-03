@@ -19,7 +19,9 @@
 #' @section Exec.R:
 #' The `exec.R` file is only a guide for what your script should probably be
 #' doing. It gets the number of the current job as its only argument, saves a
-#' result file as an RDS and uploads that file to the desired bucket.
+#' result file as an RDS and uploads that file to the desired bucket. For more
+#' information, see the "Toy example" vignette; if you're having problems, see
+#' the "Debugging exec.R" vignette.
 #'
 #' @section Job-tmpl.yaml:
 #' The job template is a very simple file that describes how the job should be
@@ -41,7 +43,8 @@
 #' at index `[[N]]`). To illustrate this concept, take for example a webscraping
 #' script: `list.rds` would contain a list where each element is a character
 #' vector of URLs to scrape; each job would therefore read the file but only
-#' scrape `list[[N]]` so that it doesn't overlap with any other job.
+#' scrape `list[[N]]` so that it doesn't overlap with any other job. Fore more
+#' information, see the "Toy example" vignette.
 #'
 #' @section Service account:
 #' In order to create a service account (necessary to manage storage resources

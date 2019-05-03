@@ -1,6 +1,6 @@
 
 .onLoad <- function(libname, pkgname) {
   if (!has_docker() || !has_gcloud()) {
-    warning("Environment not setup")
+    warning("Environment not setup. See 'Getting started' vignette.")
   }
 }

@@ -29,7 +29,8 @@ has_docker <- function() {
 #' if the user doesn't have it or correct privilege setup if the user runs
 #' docker with sudo. The first method fetches and runs the script located
 #' at \url{https://get.docker.com} and the second only runs
-#' `sudo usermod -aG docker $USER`.
+#' `sudo usermod -aG docker $USER`. For more information, see the "Getting
+#' started" vignette.
 #'
 #' @section Sudo:
 #' To install docker, this function requires sudo privileges. To do that, it

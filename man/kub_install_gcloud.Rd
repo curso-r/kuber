@@ -12,7 +12,8 @@ The path where gcloud was installed
 \description{
 This function runs the gcloud installation routine via
 \code{apt-get install google-cloud-sdk}. It also installs the \code{kubectl}
-package for Kubernetes functionality.
+package for Kubernetes functionality. For more information, see the
+"Getting started" vignette.
 }
 \section{Sudo}{
 
