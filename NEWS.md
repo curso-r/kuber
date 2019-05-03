@@ -1,3 +1,11 @@
+# kuber 0.3.1
+
+* Vignettes and packagedown
+* Reference to vignettes
+* Documentation for auth
+* Possibility to add project path as global option
+* Functions with plurals
+
 # kuber 0.3.0
 
 * googleCloudStorageR removed from Dockerfile

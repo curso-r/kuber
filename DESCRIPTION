@@ -1,6 +1,6 @@
 Package: kuber
 Title: Automate cluster execution via Kubernetes
-Version: 0.3.0
+Version: 0.3.1
 Authors@R: 
     person(given = "Caio",
            family = "Lente",

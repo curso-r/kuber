@@ -71,12 +71,6 @@ kub_list_pods("~/my-dir")
 
 ## Roadmap
 
-- Patch 0.3.1
-  - [X] Vignettes and packagedown
-  - [X] Reference to vignettes
-  - [X] Documentation for auth
-  - [X] Possibility to add project path as global option
-  - [X] Functions with plurals
 - Major 1.0.0
   - [ ] Automate auth creation
   - [ ] Install everything without sudo
