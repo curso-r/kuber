@@ -1,11 +1,11 @@
 Package: kuber
 Title: Automate cluster execution via Kubernetes
-Version: 0.3.1
+Version: 0.3.1.9000
 Authors@R: 
-    person(given = "Caio",
+    person(given = "C",
            family = "Lente",
            role = c("aut", "cre"),
-           email = "ctlente@platipus.com.br")
+           email = "ctlente@curso-r.com")
 Description: Small toolkit for massively parallel tasks that leverages GCP APIs for Kubernetes clusters and Storage buckets.
 License: GPL-3
 URL: https://github.com/platipusc/kuber
