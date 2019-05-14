@@ -8,8 +8,8 @@ Authors@R:
            email = "ctlente@curso-r.com")
 Description: Small toolkit for massively parallel tasks that leverages GCP APIs for Kubernetes clusters and Storage buckets.
 License: GPL-3
-URL: https://github.com/platipusc/kuber
-BugReports: https://github.com/platipusc/kuber/issues
+URL: https://github.com/curso-r/kuber
+BugReports: https://github.com/curso-r/kuber/issues
 Suggests: 
     callr,
     clisymbols,

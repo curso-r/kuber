@@ -553,7 +553,7 @@ and each file should have at least the “copyright” line and a pointer to
 where the full notice is found.
 
     Small toolkit for massively parallel tasks that leverages GCP APIs for Kubernetes clusters and Storage buckets.
-    Copyright (C) 2019 Platipus Consultoria
+    Copyright (C) 2019 Curso-R Consultoria
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -573,7 +573,7 @@ Also add information on how to contact you by electronic and paper mail.
 If the program does terminal interaction, make it output a short notice like this
 when it starts in an interactive mode:
 
-    kuber Copyright (C) 2019 Platipus Consultoria
+    kuber Copyright (C) 2019 Curso-R Consultoria
     This program comes with ABSOLUTELY NO WARRANTY; for details type 'show w'.
     This is free software, and you are welcome to redistribute it
     under certain conditions; type 'show c' for details.

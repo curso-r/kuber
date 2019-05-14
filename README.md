@@ -17,7 +17,7 @@ For now Kuber can only be installed from Github:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("platipusc/kuber")
+devtools::install_github("curso-r/kuber")
 ```
 
 Before installing, make sure you have a [GCP](https://cloud.google.com/) project
