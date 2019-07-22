@@ -126,4 +126,4 @@ allows you to run any shell command you want, run R scripts in the local
 environment or even edit any files that might not be setup properly.
 
 If even this doesn't help you debug your deployment, please create an issue
-on [Github](https://github.com/platipusc/kuber).
+on [Github](https://github.com/curso-r/kuber).

@@ -141,7 +141,7 @@ kub_create_task <- function(path, cluster_name, bucket_name, image_name, service
     "",
     "# Use this function to save your results",
     "save_path <- function(path) {",
-    '  file_ <- gsub("\\./", "", path)',
+    '  file_ <- gsub("\\\\./", "", path)',
     '  system(paste0("gsutil cp -r ", file_, " gs://", bucket, "/", gsub("/.+", "", file_)))',
     "  do.call(file.remove, list(list.files(path, full.names = TRUE)))",
     "  return(path)",
