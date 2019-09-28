@@ -8,21 +8,25 @@
 
 <title>Create a docker directory with the kuber template for parallelism by expansion — kub_create_task • kuber</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -30,8 +34,8 @@
 
 
 
-<meta property="og:title" content="Create a docker directory with the kuber template for parallelism by expansion — kub_create_task" />
 
+<meta property="og:title" content="Create a docker directory with the kuber template for parallelism by expansion — kub_create_task" />
 <meta property="og:description" content="This function creates a directory with 5 components from the
 kuber template: a Dockerfile (that is designed for expanded parallel taks),
 an R file exec.R (which contains some code that guides how your program
@@ -44,6 +48,7 @@ For more information, please see the sections below." />
 
 
 
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -52,6 +57,7 @@ For more information, please see the sections below." />
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
 
 
   </head>
@@ -78,7 +84,7 @@ For more information, please see the sections below." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -107,11 +113,10 @@ For more information, please see the sections below." />
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/curso-r/kuber">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -122,6 +127,7 @@ For more information, please see the sections below." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -133,21 +139,19 @@ For more information, please see the sections below." />
     </div>
 
     <div class="ref-description">
-    
     <p>This function creates a directory with 5 components from the
 kuber template: a <code>Dockerfile</code> (that is designed for expanded parallel taks),
 an R file <code>exec.R</code> (which contains some code that guides how your program
 should work), a <code>job-tmpl.yaml</code> (a template for the yaml files that will lauch
-the docker jobs), an RDS <code>list.rds</code> (which contains <code><a href='https://www.rdocumentation.org/packages/base/topics/list'>as.list(seq(1, 10))</a></code> just
+the docker jobs), an RDS <code>list.rds</code> (which contains <code><a href='https://rdrr.io/r/base/list.html'>as.list(seq(1, 10))</a></code> just
 so you don't forget to setup the inputs that each job will take) and a <code>jobs/</code>
 folder (where the actual job yaml files will go once you run <code><a href='kub_push_task.html'>kub_push_task()</a></code>).
 For more information, please see the sections below.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>kub_create_task</span>(<span class='no'>path</span>, <span class='no'>cluster_name</span>, <span class='no'>bucket_name</span>, <span class='no'>image_name</span>,
   <span class='no'>service_account</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -180,48 +184,48 @@ used to authenticate <code>gsutil</code> inside each container (must be a storag
 administrator)</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>Path where the kuber folder was created</p>
-    
     <h2 class="hasAnchor" id="dockerfile"><a class="anchor" href="#dockerfile"></a>Dockerfile</h2>
 
     
-    <p>This is a very simple <code>Dockerfile</code> based on <code>rocker/tidyverse</code> that installs
+
+<p>This is a very simple <code>Dockerfile</code> based on <code>rocker/tidyverse</code> that installs
 <code>tidyverse</code>, <code>devtools</code> and <code>abjutils</code>, and copies <code>exec.R</code> and <code>list.rds</code> to
 the home directory. If you have any extra dependencies or want to use more
 files for your script, this is where you should add them.</p>
-    
     <h2 class="hasAnchor" id="exec-r"><a class="anchor" href="#exec-r"></a>Exec.R</h2>
 
     
-    <p>The <code>exec.R</code> file is only a guide for what your script should probably be
+
+<p>The <code>exec.R</code> file is only a guide for what your script should probably be
 doing. It gets the number of the current job as its only argument, saves a
 result file as an RDS and uploads that file to the desired bucket. For more
 information, see the "Toy example" vignette; if you're having problems, see
 the "Debugging exec.R" vignette.</p>
-    
     <h2 class="hasAnchor" id="job-tmpl-yaml"><a class="anchor" href="#job-tmpl-yaml"></a>Job-tmpl.yaml</h2>
 
     
-    <p>The job template is a very simple file that describes how the job should be
+
+<p>The job template is a very simple file that describes how the job should be
 run once it is activated by the pod, which is essentially running
 <code>Rscript --vanilla exec.R [JOB_NUMBER]</code>. Since this template uses parallelism
 via expansion, <code><a href='kub_push_task.html'>kub_push_task()</a></code> will expand this template into as many job
 files as you want.</p>
-    
     <h2 class="hasAnchor" id="jobs-"><a class="anchor" href="#jobs-"></a>Jobs/</h2>
 
     
-    <p>This is simply a folder that will store the job files once the template is
+
+<p>This is simply a folder that will store the job files once the template is
 expanded.</p>
-    
     <h2 class="hasAnchor" id="list-rds"><a class="anchor" href="#list-rds"></a>List.rds</h2>
 
     
-    <p>This is more of a suggestion than a required file. It contains (by default)
-a <code><a href='https://www.rdocumentation.org/packages/base/topics/list'>list()</a></code> with each integer from 1 to 10, but actually it could be any list
+
+<p>This is more of a suggestion than a required file. It contains (by default)
+a <code><a href='https://rdrr.io/r/base/list.html'>list()</a></code> with each integer from 1 to 10, but actually it could be any list
 of your choosing. The goal here is to be able to get the arguments for your
 script just by extracting the element with index equal to the job number
 (meaning that job number <code>N</code> might read and use everything stored in <code>list.rds</code>
@@ -230,47 +234,38 @@ script: <code>list.rds</code> would contain a list where each element is a chara
 vector of URLs to scrape; each job would therefore read the file but only
 scrape <code>list[[N]]</code> so that it doesn't overlap with any other job. Fore more
 information, see the "Toy example" vignette.</p>
-    
     <h2 class="hasAnchor" id="service-account"><a class="anchor" href="#service-account"></a>Service account</h2>
 
     
-    <p>In order to create a service account (necessary to manage storage resources
+
+<p>In order to create a service account (necessary to manage storage resources
 remotely) you must access <a href='https://console.cloud.google.com/iam-admin/serviceaccounts'>https://console.cloud.google.com/iam-admin/serviceaccounts</a>
 and add to it the "storage object administrator" role. You should then click
 on the account and generate a key as a JSON file. This file will be downloaded
 to your computer and can be referenced via the <code>service_account</code> argument.</p>
-    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p><a href='https://kubernetes.io/docs/tasks/job/parallel-processing-expansion/'>https://kubernetes.io/docs/tasks/job/parallel-processing-expansion/</a>
 <a href='https://cloud.google.com/container-registry/docs/quickstart'>https://cloud.google.com/container-registry/docs/quickstart</a></p>
-    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#dockerfile">Dockerfile</a></li>
-
       <li><a href="#exec-r">Exec.R</a></li>
-
       <li><a href="#job-tmpl-yaml">Job-tmpl.yaml</a></li>
-
       <li><a href="#jobs-">Jobs/</a></li>
-
       <li><a href="#list-rds">List.rds</a></li>
-
       <li><a href="#service-account">Service account</a></li>
-
       <li><a href="#references">References</a></li>
-          </ul>
+    </ul>
 
   </div>
 </div>
+
 
       <footer>
       <div class="copyright">
@@ -278,13 +273,16 @@ to your computer and can be referenced via the <code>service_account</code> argu
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 

@@ -1,6 +1,5 @@
 ---
 title: "Toy example"
-author: "Caio Lente"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >

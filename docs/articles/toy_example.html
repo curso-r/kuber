@@ -7,8 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Toy example • kuber</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="Toy example">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
@@ -38,7 +39,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -70,7 +71,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/curso-r/kuber">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -83,13 +84,13 @@
 <!--/.navbar -->
 
       
+
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1>Toy example</h1>
-                        <h4 class="author">Caio Lente</h4>
             
-            <h4 class="date">2019-05-14</h4>
+            <h4 class="date">2019-09-28</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/curso-r/kuber/blob/master/vignettes/toy_example.Rmd"><code>vignettes/toy_example.Rmd</code></a></small>
       <div class="hidden name"><code>toy_example.Rmd</code></div>
@@ -105,33 +106,33 @@
 <a href="#the-task-itself" class="anchor"></a>The task itself</h2>
 <p>Kuber’s main advantage over most parallelisation packages (like Parallel or Future/Furrr) is that it automatically creates a computing cluster that runs your task via container orchestration. This can be very useful for e.g. web scraping because (1) each node has a different IP, (2) saving scraped HTMLs is easy with GCS, and (3) the process can be picked up/put down at any point.</p>
 <p>In this tutorial, the function to be parallelized is the following:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="co"># Scrape a character vector of URLs</span></a>
-<a class="sourceLine" id="cb1-2" title="2">scrape_urls &lt;-<span class="st"> </span><span class="cf">function</span>(urls) {</a>
-<a class="sourceLine" id="cb1-3" title="3"></a>
-<a class="sourceLine" id="cb1-4" title="4">  <span class="co"># Create a directory</span></a>
-<a class="sourceLine" id="cb1-5" title="5">  dir &lt;-<span class="st"> </span>fs<span class="op">::</span><span class="kw"><a href="http://fs.r-lib.org/reference/create.html">dir_create</a></span>(<span class="st">"scraped"</span>)</a>
-<a class="sourceLine" id="cb1-6" title="6"></a>
-<a class="sourceLine" id="cb1-7" title="7">  <span class="co"># Iterate over URLs</span></a>
-<a class="sourceLine" id="cb1-8" title="8">  paths &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>()</a>
-<a class="sourceLine" id="cb1-9" title="9">  <span class="cf">for</span> (url <span class="cf">in</span> urls) {</a>
-<a class="sourceLine" id="cb1-10" title="10">    path &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/paste">paste0</a></span>(dir, <span class="st">"/"</span>, stringr<span class="op">::</span><span class="kw"><a href="https://stringr.tidyverse.org/reference/str_remove.html">str_remove_all</a></span>(url, <span class="st">"[^a-z]"</span>), <span class="st">".html"</span>)</a>
-<a class="sourceLine" id="cb1-11" title="11">    paths &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/append">append</a></span>(paths, path)</a>
-<a class="sourceLine" id="cb1-12" title="12">    </a>
-<a class="sourceLine" id="cb1-13" title="13">    httr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/httr/topics/GET">GET</a></span>(url, httr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/httr/topics/write_disk">write_disk</a></span>(path, <span class="dt">overwrite =</span> <span class="ot">TRUE</span>))</a>
-<a class="sourceLine" id="cb1-14" title="14">  }</a>
-<a class="sourceLine" id="cb1-15" title="15"></a>
-<a class="sourceLine" id="cb1-16" title="16">  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/function">return</a></span>(paths)</a>
-<a class="sourceLine" id="cb1-17" title="17">}</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># Scrape a character vector of URLs</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a>scrape_urls &lt;-<span class="st"> </span><span class="cf">function</span>(urls) {</span>
+<span id="cb1-3"><a href="#cb1-3"></a></span>
+<span id="cb1-4"><a href="#cb1-4"></a>  <span class="co"># Create a directory</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a>  dir &lt;-<span class="st"> </span>fs<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/fs/man/create.html">dir_create</a></span>(<span class="st">"scraped"</span>)</span>
+<span id="cb1-6"><a href="#cb1-6"></a></span>
+<span id="cb1-7"><a href="#cb1-7"></a>  <span class="co"># Iterate over URLs</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a>  paths &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>()</span>
+<span id="cb1-9"><a href="#cb1-9"></a>  <span class="cf">for</span> (url <span class="cf">in</span> urls) {</span>
+<span id="cb1-10"><a href="#cb1-10"></a>    path &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(dir, <span class="st">"/"</span>, stringr<span class="op">::</span><span class="kw"><a href="https://stringr.tidyverse.org/reference/str_remove.html">str_remove_all</a></span>(url, <span class="st">"[^a-z]"</span>), <span class="st">".html"</span>)</span>
+<span id="cb1-11"><a href="#cb1-11"></a>    paths &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/append.html">append</a></span>(paths, path)</span>
+<span id="cb1-12"><a href="#cb1-12"></a>    </span>
+<span id="cb1-13"><a href="#cb1-13"></a>    httr<span class="op">::</span><span class="kw"><a href="https://httr.r-lib.org/reference/GET.html">GET</a></span>(url, httr<span class="op">::</span><span class="kw"><a href="https://httr.r-lib.org/reference/write_disk.html">write_disk</a></span>(path, <span class="dt">overwrite =</span> <span class="ot">TRUE</span>))</span>
+<span id="cb1-14"><a href="#cb1-14"></a>  }</span>
+<span id="cb1-15"><a href="#cb1-15"></a></span>
+<span id="cb1-16"><a href="#cb1-16"></a>  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span>(paths)</span>
+<span id="cb1-17"><a href="#cb1-17"></a>}</span></code></pre></div>
 <p>Simple enough, this function takes a character vector of URLS, scrapes them, and saves the resulting HTMLs in a local directory.</p>
 </div>
 <div id="creating-the-cluster" class="section level2">
 <h2 class="hasAnchor">
 <a href="#creating-the-cluster" class="anchor"></a>Creating the cluster</h2>
 <p>Now on to Kuber. If everything was installed correctly, you should be able to create a simple cluster with the following command:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(kuber)</a>
-<a class="sourceLine" id="cb2-2" title="2"></a>
-<a class="sourceLine" id="cb2-3" title="3"><span class="kw"><a href="../reference/kub_create_cluster.html">kub_create_cluster</a></span>(<span class="st">"toy-cluster"</span>, <span class="dt">machine_type =</span> <span class="st">"f1-micro"</span>)</a>
-<a class="sourceLine" id="cb2-4" title="4"><span class="co">#&gt; ✔  Creating cluster</span></a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(kuber)</span>
+<span id="cb2-2"><a href="#cb2-2"></a></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="kw"><a href="../reference/kub_create_cluster.html">kub_create_cluster</a></span>(<span class="st">"toy-cluster"</span>, <span class="dt">machine_type =</span> <span class="st">"f1-micro"</span>)</span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="co">#&gt; ✔  Creating cluster</span></span></code></pre></div>
 <p>With <code>flags = list("preemptible" = "")</code>, you can create a preemptible cluster. This can be set because <code>scrape_urls()</code> can be stopped without any consequences and preemptible machines are cheaper. To learn more, consult the documentation on <a href="https://cloud.google.com/compute/docs/instances/preemptible">preemptible instances</a>.</p>
 <p>Head over to the <a href="https://console.cloud.google.com/kubernetes/list">Kubernetes console</a> to see if everything worked. Don’t worry if you get a bunch of warnings, most of them are about the SDK’s version.</p>
 </div>
@@ -139,20 +140,20 @@
 <h2 class="hasAnchor">
 <a href="#creating-the-task" class="anchor"></a>Creating the task</h2>
 <p>The most important function on Kuber is probably the next one. It creates a directory on your local machine that describes the parallel computation and its cluster, bucket, image, and service account. To run the command below, only <code>toy-key.json</code> (the service account key downloaded in the “Getting started” vignette) must already exist at the indicated location; the rest is all created for you.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="../reference/kub_create_task.html">kub_create_task</a></span>(<span class="st">"~/toy-dir"</span>, <span class="st">"toy-cluster"</span>, <span class="st">"toy-bucket"</span>, <span class="st">"toy-image"</span>, <span class="st">"~/toy-key.json"</span>)</a>
-<a class="sourceLine" id="cb3-2" title="2"><span class="co">#&gt; ✔  Fetching cluster information</span></a>
-<a class="sourceLine" id="cb3-3" title="3"><span class="co">#&gt; ✔  Fetching bucket information</span></a>
-<a class="sourceLine" id="cb3-4" title="4"><span class="co">#&gt; ✔  Creating bucket</span></a>
-<a class="sourceLine" id="cb3-5" title="5"><span class="co">#&gt; ●  Edit `~/toy-dir/exec.R`</span></a>
-<a class="sourceLine" id="cb3-6" title="6"><span class="co">#&gt; ●  Create `~/toy-dir/list.rds` with usable parameters</span></a>
-<a class="sourceLine" id="cb3-7" title="7"><span class="co">#&gt; ●  Run `kub_push_task("~/toy-dir")`</span></a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw"><a href="../reference/kub_create_task.html">kub_create_task</a></span>(<span class="st">"~/toy-dir"</span>, <span class="st">"toy-cluster"</span>, <span class="st">"toy-bucket"</span>, <span class="st">"toy-image"</span>, <span class="st">"~/toy-key.json"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="co">#&gt; ✔  Fetching cluster information</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="co">#&gt; ✔  Fetching bucket information</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="co">#&gt; ✔  Creating bucket</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="co">#&gt; ●  Edit `~/toy-dir/exec.R`</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a><span class="co">#&gt; ●  Create `~/toy-dir/list.rds` with usable parameters</span></span>
+<span id="cb3-7"><a href="#cb3-7"></a><span class="co">#&gt; ●  Run `kub_push_task("~/toy-dir")`</span></span></code></pre></div>
 <p>If you get a working that reads something like “Bucket toy-bucket already exists”, you must try and create a bucket with a different name. Bucket names must be unique between <em>all</em> GCS buckets, so most of the good ones are already taken. To try again, run something like the following commands:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw"><a href="../reference/kub_create_bucket.html">kub_create_bucket</a></span>(<span class="st">"another-toy-bucket"</span>)</a>
-<a class="sourceLine" id="cb4-2" title="2"><span class="co">#&gt; ✔  Fetching bucket information</span></a>
-<a class="sourceLine" id="cb4-3" title="3"><span class="co">#&gt; ✔  Creating bucket</span></a>
-<a class="sourceLine" id="cb4-4" title="4"> </a>
-<a class="sourceLine" id="cb4-5" title="5"><span class="kw"><a href="../reference/kub_set_config.html">kub_set_config</a></span>(<span class="st">"~/toy-dir"</span>, <span class="dt">parameters =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">bucket =</span> <span class="st">"another-toy-bucket"</span>))</a>
-<a class="sourceLine" id="cb4-6" title="6"><span class="co">#&gt; ✔  Fetching bucket information</span></a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw"><a href="../reference/kub_create_bucket.html">kub_create_bucket</a></span>(<span class="st">"another-toy-bucket"</span>)</span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="co">#&gt; ✔  Fetching bucket information</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="co">#&gt; ✔  Creating bucket</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a> </span>
+<span id="cb4-5"><a href="#cb4-5"></a><span class="kw"><a href="../reference/kub_set_config.html">kub_set_config</a></span>(<span class="st">"~/toy-dir"</span>, <span class="dt">parameters =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="dt">bucket =</span> <span class="st">"another-toy-bucket"</span>))</span>
+<span id="cb4-6"><a href="#cb4-6"></a><span class="co">#&gt; ✔  Fetching bucket information</span></span></code></pre></div>
 </div>
 <div id="editing-exec-r-and-list-rds" class="section level2">
 <h2 class="hasAnchor">
@@ -225,70 +226,71 @@ for (path in paths) {
 }</code></pre>
 <p>As you might have guessed from the calls above, <code>obj</code> contains the URLs to be scraped. This makes sense because, as described earlier, <code>list.rds</code> has every object that every node needs for its own <code>exec.R</code>; in this case, every node needs a character vector of URLs to be scraped, and <code>idx</code> is simply the ID of each node (so that no two nodes scrapes the same URLs). That’s it.</p>
 <p>Now the only thing left is creating <code>list.rds</code>, that is, the list of URLs broken in one chunk for each cluster. Since in this toy example, toy-cluster was created with the default number of nodes (3), <code>list.rds</code> will be a list with 3 elements. The following commands should be run in your local machine:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="co"># URLs to be scraped, chunked by nodes</span></a>
-<a class="sourceLine" id="cb7-2" title="2">url_list &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(</a>
-<a class="sourceLine" id="cb7-3" title="3">  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"google.com"</span>, <span class="st">"duckduckgo.com"</span>),</a>
-<a class="sourceLine" id="cb7-4" title="4">  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"wikipedia.org"</span>),</a>
-<a class="sourceLine" id="cb7-5" title="5">  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"facebook.com"</span>, <span class="st">"twitter.com"</span>, <span class="st">"instagram.com"</span>)</a>
-<a class="sourceLine" id="cb7-6" title="6">)</a>
-<a class="sourceLine" id="cb7-7" title="7"></a>
-<a class="sourceLine" id="cb7-8" title="8"><span class="co"># Overwrite sample list.rds with list of URLs</span></a>
-<a class="sourceLine" id="cb7-9" title="9">readr<span class="op">::</span><span class="kw"><a href="https://readr.tidyverse.org/reference/read_rds.html">write_rds</a></span>(url_list, <span class="st">"~/toy-dir/list.rds"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="co"># URLs to be scraped, chunked by nodes</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a>url_list &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(</span>
+<span id="cb7-3"><a href="#cb7-3"></a>  <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"google.com"</span>, <span class="st">"duckduckgo.com"</span>),</span>
+<span id="cb7-4"><a href="#cb7-4"></a>  <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"wikipedia.org"</span>),</span>
+<span id="cb7-5"><a href="#cb7-5"></a>  <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"facebook.com"</span>, <span class="st">"twitter.com"</span>, <span class="st">"instagram.com"</span>)</span>
+<span id="cb7-6"><a href="#cb7-6"></a>)</span>
+<span id="cb7-7"><a href="#cb7-7"></a></span>
+<span id="cb7-8"><a href="#cb7-8"></a><span class="co"># Overwrite sample list.rds with list of URLs</span></span>
+<span id="cb7-9"><a href="#cb7-9"></a>readr<span class="op">::</span><span class="kw"><a href="https://readr.tidyverse.org/reference/read_rds.html">write_rds</a></span>(url_list, <span class="st">"~/toy-dir/list.rds"</span>)</span></code></pre></div>
 <p>With this <code>list.rds</code>, the first node will scrape search engines, the second will scrape Wikipedia, and the third will scrape social media.</p>
 </div>
 <div id="pushing-and-running-the-task" class="section level2">
 <h2 class="hasAnchor">
 <a href="#pushing-and-running-the-task" class="anchor"></a>Pushing and running the task</h2>
 <p>Last but not least, the task must be pushed to Google <a href="https://console.cloud.google.com/gcr/images">Container Registry</a> (GCR), which is where Kuber’s docker images will live. This guarantees version control to all task and allows them to be run from another computer, but may take a while to run the first time you create a task.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="kw"><a href="../reference/kub_push_task.html">kub_push_task</a></span>(<span class="st">"~/toy-dir"</span>)</a>
-<a class="sourceLine" id="cb8-2" title="2"><span class="co">#&gt; ✔  Building image</span></a>
-<a class="sourceLine" id="cb8-3" title="3"><span class="co">#&gt; ✔  Authenticating</span></a>
-<a class="sourceLine" id="cb8-4" title="4"><span class="co">#&gt; ✔  Pushing image</span></a>
-<a class="sourceLine" id="cb8-5" title="5"><span class="co">#&gt; ✔  Removing old jobs</span></a>
-<a class="sourceLine" id="cb8-6" title="6"><span class="co">#&gt; ✔  Creating new jobs</span></a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="kw"><a href="../reference/kub_push_task.html">kub_push_task</a></span>(<span class="st">"~/toy-dir"</span>)</span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="co">#&gt; ✔  Building image</span></span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="co">#&gt; ✔  Authenticating</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a><span class="co">#&gt; ✔  Pushing image</span></span>
+<span id="cb8-5"><a href="#cb8-5"></a><span class="co">#&gt; ✔  Removing old jobs</span></span>
+<span id="cb8-6"><a href="#cb8-6"></a><span class="co">#&gt; ✔  Creating new jobs</span></span></code></pre></div>
 <p>If everything up to here worked, the last mandatory command is running the task:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw"><a href="../reference/kub_run_task.html">kub_run_task</a></span>(<span class="st">"~/toy-dir"</span>)</a>
-<a class="sourceLine" id="cb9-2" title="2"><span class="co">#&gt; ✔  Authenticating</span></a>
-<a class="sourceLine" id="cb9-3" title="3"><span class="co">#&gt; ✔  Setting cluster context</span></a>
-<a class="sourceLine" id="cb9-4" title="4"><span class="co">#&gt; ✔  Creating jobs</span></a>
-<a class="sourceLine" id="cb9-5" title="5"><span class="co">#&gt; ●  Run `kub_list_pods()` to follow up on the pods</span></a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw"><a href="../reference/kub_run_task.html">kub_run_task</a></span>(<span class="st">"~/toy-dir"</span>)</span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="co">#&gt; ✔  Authenticating</span></span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="co">#&gt; ✔  Setting cluster context</span></span>
+<span id="cb9-4"><a href="#cb9-4"></a><span class="co">#&gt; ✔  Creating jobs</span></span>
+<span id="cb9-5"><a href="#cb9-5"></a><span class="co">#&gt; ●  Run `kub_list_pods()` to follow up on the pods</span></span></code></pre></div>
 </div>
 <div id="checking-up-on-the-task" class="section level2">
 <h2 class="hasAnchor">
 <a href="#checking-up-on-the-task" class="anchor"></a>Checking up on the task</h2>
 <p>There are two main ways to check the progress of a task: listing the currently active pods and listing the files uploaded to the bucket. The weird strings in the name of each process is a unique identifier generated by Kuber to track those pods.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="kw"><a href="../reference/kub_list_pods.html">kub_list_pods</a></span>(<span class="st">"~/toy-dir"</span>)</a>
-<a class="sourceLine" id="cb10-2" title="2"><span class="co">#&gt; ✔  Setting cluster context</span></a>
-<a class="sourceLine" id="cb10-3" title="3"><span class="co">#&gt; ✔  Fetching pods</span></a>
-<a class="sourceLine" id="cb10-4" title="4"><span class="co">#&gt;                          NAME READY  STATUS RESTARTS AGE</span></a>
-<a class="sourceLine" id="cb10-5" title="5"><span class="co">#&gt; 1 process-mkewsr-item-1-8kpg7   1/1 Running        0  1m</span></a>
-<a class="sourceLine" id="cb10-6" title="6"><span class="co">#&gt; 2 process-mkewsr-item-2-cph8z   1/1 Running        0  1m</span></a>
-<a class="sourceLine" id="cb10-7" title="7"><span class="co">#&gt; 3 process-mkewsr-item-3-kpn5f   1/1 Running        0  1m</span></a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="kw"><a href="../reference/kub_list_pods.html">kub_list_pods</a></span>(<span class="st">"~/toy-dir"</span>)</span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="co">#&gt; ✔  Setting cluster context</span></span>
+<span id="cb10-3"><a href="#cb10-3"></a><span class="co">#&gt; ✔  Fetching pods</span></span>
+<span id="cb10-4"><a href="#cb10-4"></a><span class="co">#&gt;                          NAME READY  STATUS RESTARTS AGE</span></span>
+<span id="cb10-5"><a href="#cb10-5"></a><span class="co">#&gt; 1 process-mkewsr-item-1-8kpg7   1/1 Running        0  1m</span></span>
+<span id="cb10-6"><a href="#cb10-6"></a><span class="co">#&gt; 2 process-mkewsr-item-2-cph8z   1/1 Running        0  1m</span></span>
+<span id="cb10-7"><a href="#cb10-7"></a><span class="co">#&gt; 3 process-mkewsr-item-3-kpn5f   1/1 Running        0  1m</span></span></code></pre></div>
 <p>If your <a href="https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/">pods’ statuses</a> denote something bad, you might need to debug your <code>exec.R</code> file. This is absolutely normal and it can take multiple attempts until your task is running correctly. If you need help debugging your task, take a look at the “Debugging exec.R” vignette.</p>
 <p>The command bellow lists every file in a bucket. You can also specify a folder inside the bucket and whether the listing should be done recursively or not. Here it’s possible to see that every download finished running correctly.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="kw"><a href="../reference/kub_list_bucket.html">kub_list_bucket</a></span>(<span class="st">"~/toy-dir"</span>, <span class="dt">folder =</span> <span class="st">"scraped"</span>)</a>
-<a class="sourceLine" id="cb11-2" title="2"><span class="co">#&gt; ✔  Listing content</span></a>
-<a class="sourceLine" id="cb11-3" title="3"><span class="co">#&gt; [1] "googlecom.html"     "duckduckgocom.html" "wikipediaorg.html" </span></a>
-<a class="sourceLine" id="cb11-4" title="4"><span class="co">#&gt; [4] "facebookcom.html"   "twittercom.html"    "instagramcom.html" </span></a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="kw"><a href="../reference/kub_list_bucket.html">kub_list_bucket</a></span>(<span class="st">"~/toy-dir"</span>, <span class="dt">folder =</span> <span class="st">"scraped"</span>)</span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="co">#&gt; ✔  Listing content</span></span>
+<span id="cb11-3"><a href="#cb11-3"></a><span class="co">#&gt; [1] "googlecom.html"     "duckduckgocom.html" "wikipediaorg.html" </span></span>
+<span id="cb11-4"><a href="#cb11-4"></a><span class="co">#&gt; [4] "facebookcom.html"   "twittercom.html"    "instagramcom.html" </span></span></code></pre></div>
 </div>
 <div id="killing-the-cluster" class="section level2">
 <h2 class="hasAnchor">
 <a href="#killing-the-cluster" class="anchor"></a>Killing the cluster</h2>
 <p>After you task is done, be sure to kill every unused resource so you don’t spend unnecessary money. There are some useful commands for this built into Kuber, but also check your cloud console to make sure everything was deleted.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw"><a href="../reference/kub_kill_task.html">kub_kill_task</a></span>(<span class="st">"~/toy-dir"</span>)</a>
-<a class="sourceLine" id="cb12-2" title="2"><span class="co">#&gt; ✔  Setting cluster context</span></a>
-<a class="sourceLine" id="cb12-3" title="3"><span class="co">#&gt; ✔  Deleting jobs</span></a>
-<a class="sourceLine" id="cb12-4" title="4"><span class="co">#&gt; ✔  Deleting pods</span></a>
-<a class="sourceLine" id="cb12-5" title="5"></a>
-<a class="sourceLine" id="cb12-6" title="6"><span class="kw"><a href="../reference/kub_kill_cluster.html">kub_kill_cluster</a></span>(<span class="st">"toy-cluster"</span>)</a>
-<a class="sourceLine" id="cb12-7" title="7"><span class="co">#&gt; ✔  Deleting cluster</span></a>
-<a class="sourceLine" id="cb12-8" title="8"></a>
-<a class="sourceLine" id="cb12-9" title="9"><span class="kw"><a href="../reference/kub_kill_bucket.html">kub_kill_bucket</a></span>(<span class="st">"toy-bucket"</span>)</a>
-<a class="sourceLine" id="cb12-10" title="10"><span class="co">#&gt; ✔  Deleting bucket</span></a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="kw"><a href="../reference/kub_kill_task.html">kub_kill_task</a></span>(<span class="st">"~/toy-dir"</span>)</span>
+<span id="cb12-2"><a href="#cb12-2"></a><span class="co">#&gt; ✔  Setting cluster context</span></span>
+<span id="cb12-3"><a href="#cb12-3"></a><span class="co">#&gt; ✔  Deleting jobs</span></span>
+<span id="cb12-4"><a href="#cb12-4"></a><span class="co">#&gt; ✔  Deleting pods</span></span>
+<span id="cb12-5"><a href="#cb12-5"></a></span>
+<span id="cb12-6"><a href="#cb12-6"></a><span class="kw"><a href="../reference/kub_kill_cluster.html">kub_kill_cluster</a></span>(<span class="st">"toy-cluster"</span>)</span>
+<span id="cb12-7"><a href="#cb12-7"></a><span class="co">#&gt; ✔  Deleting cluster</span></span>
+<span id="cb12-8"><a href="#cb12-8"></a></span>
+<span id="cb12-9"><a href="#cb12-9"></a><span class="kw"><a href="../reference/kub_kill_bucket.html">kub_kill_bucket</a></span>(<span class="st">"toy-bucket"</span>)</span>
+<span id="cb12-10"><a href="#cb12-10"></a><span class="co">#&gt; ✔  Deleting bucket</span></span></code></pre></div>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+
         <div id="tocnav">
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
@@ -307,17 +309,20 @@ for (path in paths) {
 </div>
 
 
+
       <footer><div class="copyright">
   <p>Developed by C Lente.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
+
       </footer>
 </div>
 
   
+
 
   </body>
 </html>
